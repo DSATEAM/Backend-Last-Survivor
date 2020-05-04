@@ -49,7 +49,7 @@ public class Main {
 
         beanConfig.setHost("localhost:8080");
         beanConfig.setBasePath("/BDD-DAO");
-        beanConfig.setContact("DSA_1_Team@estudiantat.upc.edu");
+        beanConfig.setContact("DSA_3_Team@estudiantat.upc.edu");
         beanConfig.setDescription("REST API for BDD-DAO Manager");
         beanConfig.setLicenseUrl("http://www.apache.org/licenses/LICENSE-2.0.html");
         beanConfig.setResourcePackage("edu.upc.eetac.dsa.services");

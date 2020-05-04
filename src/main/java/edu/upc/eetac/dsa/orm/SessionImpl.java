@@ -27,7 +27,7 @@ public class SessionImpl implements Session {
         try {
             pstm = conn.prepareStatement(insertQuery);
             ObjectHelper.setter(entity,"ID",ID);
-            //pstm.setObject(1,ID );
+
             int i = 1;
             //Only Primitive Types Int String
             for (String field: ObjectHelper.getStrFields(entity)) {
@@ -109,18 +109,16 @@ public class SessionImpl implements Session {
             ResultSet resultSet = pstm.executeQuery();
             while(resultSet.next()) {
                 Object obj = theClass.newInstance();
-                String[] strFields = ObjectHelper.getStrFields(obj);
-                Field[] fields = ObjectHelper.getFields(obj);
                 ResultSetMetaData resultSetMetaData = resultSet.getMetaData();
                 for(int i=1;i<=resultSetMetaData.getColumnCount();i++){
                     String name = resultSetMetaData.getColumnName(i);
                     obj = ObjectHelper.setter(obj,name, resultSet.getObject(i));
                 }
                 //We have filled all of the fields inside the Object of type <E>
-               // theClass.cast(obj);
                 objList.add(obj);
                 String test = "";
             }
+
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -132,9 +130,21 @@ public class SessionImpl implements Session {
         PreparedStatement pstm = null;
         try {
             pstm = conn.prepareStatement(updateQuery);
+            int i = 1;
+            Object obj;
+            //Only Primitive Types Int String
+            for (String field: ObjectHelper.getStrFields(object)) {
+                obj = ObjectHelper.getter(object,field);
+                pstm.setObject(i, obj);
+                i++;
+            }
+            String field=ObjectHelper.getStrFields(object)[0];
+            obj = ObjectHelper.getter(object,field);
+            pstm.setObject(i, obj);
+
             pstm.executeQuery();
 
-        } catch (SQLException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         finally {

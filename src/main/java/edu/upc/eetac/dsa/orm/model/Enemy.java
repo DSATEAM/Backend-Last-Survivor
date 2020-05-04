@@ -5,6 +5,7 @@ public class Enemy {
     //Basic values
     private String ID;
     private String name;
+    private String description;
     private int power;
     private int health;
 
@@ -12,9 +13,9 @@ public class Enemy {
     public Enemy() { }
 
     //Constructor
-    public Enemy(String ID, String name, int power, int health){
-        this.ID=ID;
+    public Enemy(String name,String description, int power, int health){
         this.name=name;
+        this.description=description;
         this.power=power;
         this.health=health;
     }
@@ -44,7 +45,11 @@ public class Enemy {
     public void setHealth(int health) {
         this.health = health;
     }
+    public String getDescription() { return description; }
+    public void setDescription(String description) { this.description = description; }
 
-
-
+    @Override
+    public String toString() {
+        return "Enemy [ID= " + this.getID() + ", name= " + this.getName() + ", description = " + this.getDescription() + ", power= " + this.getPower() + ", health= " + this.getHealth() + "]";
+    }
 }

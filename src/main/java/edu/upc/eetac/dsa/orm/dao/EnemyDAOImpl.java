@@ -8,13 +8,13 @@ import java.util.List;
 
 public class EnemyDAOImpl implements IEnemyDAO{
 
-    public int addEnemy(String enemyID, String name, int power, int health) {
+    public String addEnemy(String name, String description, int power, int health) {
         Session session = null;
-        int employeeID = 0;
+        String ID=null;
         try {
             session = FactorySession.openSession();
-            Enemy enemy = new Enemy(enemyID, name, power, health);
-            session.save(enemy);
+            Enemy enemy = new Enemy(name, description, power, health);
+            ID=session.save(enemy);
         }
         catch (Exception e) {
             // LOG
@@ -23,7 +23,7 @@ public class EnemyDAOImpl implements IEnemyDAO{
             session.close();
         }
 
-        return employeeID;
+        return ID;
     }
 
 
@@ -33,10 +33,12 @@ public class EnemyDAOImpl implements IEnemyDAO{
         try {
             session = FactorySession.openSession();
             enemy = (Enemy)session.get(Enemy.class, enemyID);
+
         }
         catch (Exception e) {
             // LOG
         }
+
         finally {
             session.close();
         }
@@ -45,16 +47,19 @@ public class EnemyDAOImpl implements IEnemyDAO{
     }
 
 
-    public void updateEnemy(String enemyID, String name, int power, int health) {
-        Enemy employee = this.getEnemy(enemyID);
-        employee.setName(name);
-        employee.setPower(power);
-        employee.setHealth(health);
+    public int updateEnemy(String enemyID, String name,String description, int power, int health) {
+        Enemy enemy = this.getEnemy(enemyID);
+        enemy.setName(name);
+        enemy.setDescription(description);
+        enemy.setPower(power);
+        enemy.setHealth(health);
+        int res = 0;
 
         Session session = null;
         try {
             session = FactorySession.openSession();
-            session.update(Enemy.class);
+            session.update(enemy);
+            res=1;
         }
         catch (Exception e) {
             // LOG
@@ -62,15 +67,18 @@ public class EnemyDAOImpl implements IEnemyDAO{
         finally {
             session.close();
         }
+        return res;
     }
 
 
-    public void deleteEnemy(String enemyID) {
+    public int deleteEnemy(String enemyID) {
         Enemy enemy = this.getEnemy(enemyID);
         Session session = null;
+        int res = 0;
         try {
             session = FactorySession.openSession();
-            session.delete(Enemy.class);
+            session.delete(enemy);
+            res=1;
         }
         catch (Exception e) {
             // LOG
@@ -78,6 +86,8 @@ public class EnemyDAOImpl implements IEnemyDAO{
         finally {
             session.close();
         }
+
+        return res;
 
     }
 

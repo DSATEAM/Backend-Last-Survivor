@@ -56,16 +56,16 @@ public class QueryHelper {
         return sb.toString();
     }
     public static String createQueryUPDATE(Object entity) {
-        StringBuffer sb = new StringBuffer("UPDATE");
+        StringBuffer sb = new StringBuffer("UPDATE ");
         sb.append(entity.getClass().getSimpleName());
         sb.append(" SET ");
 
         String [] fields = ObjectHelper.getStrFields(entity);
 
-        sb.append("ID = ?");
         for (String field: fields) {
-            sb.append(",").append(field).append(" = ?");
+            sb.append(field).append(" = ?,");
         }
+        sb.deleteCharAt(sb.length()-1);
         sb.append(" WHERE ID = ?");
 
         return sb.toString();
