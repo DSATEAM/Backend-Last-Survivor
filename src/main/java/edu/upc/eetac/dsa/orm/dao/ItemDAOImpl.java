@@ -28,11 +28,67 @@ public class ItemDAOImpl implements IItemDAO{
 
         return ID;
     }
-    public String addItemMaterials(Item item) {
+    @Override
+    public String addItem(Item item) {
         Session session = null; String ID = "";
         try {
             session = FactorySession.openSession();
-             session.saveList(item);
+            ID = session.save(item);
+        }
+        catch (Exception e) {
+            // LOG
+            e.printStackTrace();
+        }
+        finally {
+            session.close();
+        }
+        return ID;
+    }
+    public int updateItemMaterials(Item item){
+        Session session = null; int res;
+        List<Material> listMaterialsItem;
+        try {
+            session = FactorySession.openSession();
+            //Check if there are new materials if not don't add
+            listMaterialsItem = item.getListMaterials();
+
+            for(int i=0;i<listMaterialsItem.size();i++){
+                session.update(listMaterialsItem.get(i));
+            }
+            res = 1;
+        }
+        catch (Exception e) {
+            // LOG
+            e.printStackTrace();
+            res = -1;
+        }
+        finally {
+            session.close();
+        }
+        return res;
+    }
+    //Adds material which don't have ID to the DB and returns item with ID assigned
+    //to materials
+    public Item addItemMaterials(Item item) {
+        Session session = null; String ID = "";
+        List<Material> listMaterialsItem = null;
+        try {
+            session = FactorySession.openSession();
+            //Check if there are new materials if not don't add
+            listMaterialsItem = item.getListMaterials();
+            //Checking if new materials in the item
+                //Items actually contains materials
+            Material material = null;
+            for(int i=0;i<listMaterialsItem.size();i++){
+                //Check if the material has id, if not than save
+                if(listMaterialsItem.get(i).getID().equals("")){
+                   ID =  session.save(listMaterialsItem.get(i));
+                   material = listMaterialsItem.get(i);
+                   material.setID(ID);
+                    listMaterialsItem.set(i,material);
+                }
+            }
+            item.setListMaterials(listMaterialsItem);
         }
         catch (Exception e) {
             // LOG
@@ -42,7 +98,7 @@ public class ItemDAOImpl implements IItemDAO{
             session.close();
         }
 
-        return ID;
+        return item;
     }
     @Override
     public Item getItem(String itemID) {
@@ -64,44 +120,66 @@ public class ItemDAOImpl implements IItemDAO{
     }
 
     @Override
-    public void updateItem(String parentID, String name, String type, String rarity, String description, int offense, int defense) {
-        Session session = null;
-        Item item = null;
-        item = new Item(parentID,name,type,rarity,description,null,offense,defense);
+    public int updateItem(Item item) {
+        Session session = null;int res;
         try {
             session = FactorySession.openSession();
             //TODO MAKE UPDATE FUNCTION ALIVE
-            //session.update(item);
+            session.update(item);
+            res = 1;
         }
         catch (Exception e) {
             // LOG
             e.printStackTrace();
+            res = -1;
         }
         finally {
             session.close();
         }
+        return res;
     }
 
     @Override
-    public void deleteItem(String itemID) {
-        Session session = null;
-        Item item = null;
+    public int deleteItem(String itemID) {
+        Session session = null; int res;
+        Item item = new Item();
         try {
             session = FactorySession.openSession();
-            //TODO MAKE DELETE FUNCTION ALIVE
-            //session.update(item);
+            item.setID(itemID);
+            session.delete(item);
+            res =1;
         }
         catch (Exception e) {
             // LOG
             e.printStackTrace();
+            res = -1;
         }
         finally {
             session.close();
         }
+        return res;
     }
-
     @Override
-    public List<Item> getListItems() {
+    public int deleteMaterialItem(Material material) {
+        Session session = null;int res=1;
+        Item item = new Item();
+        try {
+            session = FactorySession.openSession();
+            session.delete(material);
+
+        }
+        catch (Exception e) {
+            // LOG
+            e.printStackTrace();
+            res = -1;
+        }
+        finally {
+            session.close();
+        }
+        return res;
+    }
+    @Override
+    public List<Item> getListStandardItems() {
         Session session = null;
         List<Item> listMaterials = null;
         Item item = null;

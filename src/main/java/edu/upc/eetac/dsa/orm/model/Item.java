@@ -1,5 +1,6 @@
 package edu.upc.eetac.dsa.orm.model;
 
+import java.util.LinkedList;
 import java.util.List;
 
 public class Item {
@@ -74,10 +75,16 @@ public class Item {
         return listMaterials;
     }
 
-    public void setListMaterials(List<Material> listMaterials) {
-        this.listMaterials = listMaterials;
+    public void setListMaterials(List<Material> listMaterials) {this.listMaterials = listMaterials;
     }
-
+    public void addListMaterial(Material material){
+        if(this.listMaterials==null){
+            this.listMaterials = new LinkedList<Material>();
+            this.listMaterials.add(material);
+        }else{
+            this.listMaterials.add(material);
+        }
+    }
     public int getOffense() {
         return offense;
     }

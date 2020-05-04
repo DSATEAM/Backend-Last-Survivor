@@ -4,7 +4,7 @@ import java.util.List;
 
 public class Material {
 
-    private String ID;
+    private String ID="";
     private String parentID="";
     private String name;
     private String description;
@@ -12,8 +12,8 @@ public class Material {
     //Empty Constructor
     public Material() {
     }
-    public Material(String ID, String name, String description, int quantity) {
-        this.ID = ID;
+    public Material( String name, String description, int quantity) {
+        //ID WILL BE ASSIGNED WHEN SAVED IN DB
         this.name = name;
         this.description = description;
         this.quantity = quantity;

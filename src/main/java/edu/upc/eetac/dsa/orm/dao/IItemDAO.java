@@ -6,12 +6,14 @@ import edu.upc.eetac.dsa.orm.model.Material;
 import java.util.List;
 
 public interface IItemDAO {
-
+    String addItem(Item item);
     String addItem(String parentID, String name, String type, String rarity, String description, int offense, int defense);
-    String addItemMaterials(Item item);
+    Item addItemMaterials(Item item);
     Item getItem(String itemID);
-    void updateItem(String parentID,String name,String type,String rarity, String description,int offense, int defense);
-    void deleteItem(String itemID);
-    List<Item> getListItems();//getsItems with Zero Material as this are standard items
+    int updateItem(Item item);
+    int updateItemMaterials(Item item);
+    int deleteItem(String itemID);
+    int deleteMaterialItem(Material material);
+    List<Item> getListStandardItems();//getsItems with Zero Material as this are standard items
     List <Material> getListMaterialsByItemID(String itemId);
 }

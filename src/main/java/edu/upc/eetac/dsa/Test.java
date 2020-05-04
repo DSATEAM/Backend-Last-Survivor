@@ -20,8 +20,8 @@ public class Test{
             this.aBoolean = true;
             this.anInt = 3;
             listName = new LinkedList<Material>();
-            listName.add(new Material("001","wood","Madera",1));
-            listName.add(new Material("002","iron","Hierro",5));
+            //listName.add(new Material("001","wood","Madera",1));
+            //listName.add(new Material("002","iron","Hierro",5));
         }
         public void DeleteTest() throws Exception {
             Connection conn=DBUtils.getConnection();

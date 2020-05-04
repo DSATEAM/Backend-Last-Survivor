@@ -23,7 +23,7 @@ public class SessionImpl implements Session {
         String insertQuery = QueryHelper.createQueryINSERT(entity);
         RandomUtils randomUtils = new RandomUtils();
         PreparedStatement pstm = null;
-        String ID = randomUtils.generateID(sizeID);
+        String ID = RandomUtils.generateID(sizeID);
         try {
             pstm = conn.prepareStatement(insertQuery);
             ObjectHelper.setter(entity,"ID",ID);
@@ -127,7 +127,7 @@ public class SessionImpl implements Session {
     // TODO FINISH THE MOFICATION OF THE OBJECT GIVEN THE UPDATED OBJECT
     public void update(Object object) {
         String updateQuery = QueryHelper.createQueryUPDATE(object);
-        PreparedStatement pstm = null;
+        PreparedStatement pstm;
         try {
             pstm = conn.prepareStatement(updateQuery);
             int i = 1;
@@ -141,16 +141,11 @@ public class SessionImpl implements Session {
             String field=ObjectHelper.getStrFields(object)[0];
             obj = ObjectHelper.getter(object,field);
             pstm.setObject(i, obj);
-
             pstm.executeQuery();
 
         } catch (Exception e) {
             e.printStackTrace();
         }
-        finally {
-            close();
-        }
-
     }
     // TODO FINISH THE DELETE OBJECT FROM DB GIVEN THE OBJECT
     public void delete(Object o) throws Exception {
@@ -162,9 +157,8 @@ public class SessionImpl implements Session {
                 if(field.equals("ID")) {
                     pstm.setObject(1, ObjectHelper.getter(o, field));
                 }
-                pstm.executeQuery();
             }
-
+            pstm.executeQuery();
         }
         catch (SQLException e){
             e.printStackTrace();
