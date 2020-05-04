@@ -9,6 +9,7 @@ import edu.upc.eetac.dsa.orm.model.Player;
 import java.util.List;
 
 public class PlayerDAOImpl implements IPlayerDAO {
+
     public String addPlayer(String username, String password, int gamesPlayed, int kills, int deaths, int experience, int wins) {
         Session session = null;
         Player pl = new Player(username, password, gamesPlayed, kills, deaths, experience, wins);
