@@ -12,7 +12,7 @@ import org.junit.Before;
 import org.junit.Test;
 import java.util.*;
 public class MaterialDAOImplTest{
-   MaterialDAOImpl materialdao= new MaterialDAOImpl();
+    MaterialDAOImpl materialdao= new MaterialDAOImpl();
     Material material = null;
     @Before
     public void setUp() {
@@ -20,7 +20,7 @@ public class MaterialDAOImplTest{
     }
     @Test
     public void addMaterialTest(){
-        Assert.assertNotNull(playerdao.addPlayer("Madera","Es madera", 2));
+        Assert.assertNotNull(materialdao.addMaterial("Madera","Es madera", 2));
     }
     @Test
     public void getMaterialTest(){

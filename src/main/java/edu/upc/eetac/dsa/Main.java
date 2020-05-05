@@ -78,7 +78,7 @@ public class Main {
         logger.warn("Warning Test Message!");
         logger.error("Error Test Message!");
         // Server Initialization Code
-       /* final HttpServer server = startServer();
+        final HttpServer server = startServer();
         StaticHttpHandler staticHttpHandler = new StaticHttpHandler("./public/");
         server.getServerConfiguration().addHttpHandler(staticHttpHandler, "/");
 
@@ -92,9 +92,6 @@ public class Main {
         System.out.println(String.format("RestApi Started at " + "%s\nHit enter to stop it...", swagger_uri));
          System.in.read();
         server.shutdownNow();
-        */
-         Test t = new Test();
-         t.DeleteTest();
         
     }
 }
