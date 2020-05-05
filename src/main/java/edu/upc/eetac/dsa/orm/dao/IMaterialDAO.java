@@ -5,9 +5,11 @@ import edu.upc.eetac.dsa.orm.model.Material;
 import java.util.List;
 
 public interface IMaterialDAO {
-    int addMaterial(String ID, String name, String description, int quantity);
-    Material getMaterial();
-    void updateMaterial(String materialID);
+    String addMaterial(String name, String description, int quantity);
+    Material getMaterial(String ID);
+    void updateMaterial(String materialID, String name, String description, int quantity);
+
+
     void deleteMaterial(String materialID);
     List<Material> getAllMaterials();
 }
