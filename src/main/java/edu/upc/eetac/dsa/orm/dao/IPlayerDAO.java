@@ -8,8 +8,9 @@ import java.util.List;
 
 public interface IPlayerDAO {
     String addPlayer(String username, String password, int gamesPlayed, int kills, int deaths, int experience, int wins);
+    String getID(String username, String password);
     Player getPlayer(String id);
-    void deletePlayer(String id);
-    void updatePlayer(String ID, String username, String password, int gamesPlayed, int kills, int deaths, int experience, int wins, List<Item> listItems, List<Material> listMaterial);
+    int deletePlayer(String id);
+    int updatePlayer(Player player);
     List<Player> getPlayers();
 }

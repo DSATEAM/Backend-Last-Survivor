@@ -27,6 +27,11 @@ public class PlayerDAOImpl implements IPlayerDAO {
         }
         return ID;
     }
+    //TODO getID of the User given username and password
+    public String getID(String username,String password){
+
+        return null;
+    }
     public Player getPlayer(String id){
         Session session = null;
         Player player = null;
@@ -42,48 +47,45 @@ public class PlayerDAOImpl implements IPlayerDAO {
         }
         return player;
     }
-    public void deletePlayer(String id){
+    public int deletePlayer(String id){
         Player player = this.getPlayer(id);
+        int res;
         Session session = null;
         try {
             session = FactorySession.openSession();
             session.delete(player);
+            res = 1;
         }
         catch (Exception e) {
             // LOG
+            res = -1;
         }
         finally {
             session.close();
         }
-
-
+        return res;
     }
-    public void updatePlayer(String ID, String username, String password, int gamesPlayed, int kills, int deaths, int experience, int wins, List<Item> listItems, List<Material> listMaterial) {
-        Player pl = this.getPlayer(ID);
-        pl.setUsername(username);
-        pl.setPassword(password);
-        pl.setGamesPlayed(gamesPlayed);
-        pl.setKills(kills);
-        pl.setDeaths(deaths);
-        pl.setExperience(experience);
-        pl.setWins(wins);
-        pl.setListItems(listItems);
-        pl.setListMaterials(listMaterial);
+    public int updatePlayer(Player player) {
+        int res;
         Session session = null;
         try {
             session = FactorySession.openSession();
-            session.update(pl);
+            session.update(player);
+            res = 1;
         }
         catch (Exception e) {
             // LOG
+            e.printStackTrace();
+            res = -1;
         }
         finally {
             session.close();
         }
+        return res;
     }
     public List<Player> getPlayers() {
         Session session = null;
-        List<Player> playerList=null;
+        List playerList=null;
         try {
             session = FactorySession.openSession();
             playerList = session.findAll(Player.class);

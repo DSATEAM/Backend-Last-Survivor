@@ -13,7 +13,7 @@ import org.junit.Before;
 import org.junit.Test;
 import java.util.*;
 public class PlayerDAOImplTest{
-    PlayerDAOImpl playerdao= new PlayerDAOImpl();
+    PlayerDAOImpl playerdao = new PlayerDAOImpl();
     Player player = null;
     @Before
     public void setUp() {
@@ -25,8 +25,8 @@ public class PlayerDAOImplTest{
     }
     @Test
     public void getPlayerTest(){
-       String id= playerdao.addPlayer("Yo", "pass", 5, 4, 2, 23, 2);
-       Assert.assertNotNull(playerdao.getPlayer(id));
+       String Id = playerdao.addPlayer("Yo", "pass", 5, 4, 2, 23, 2);
+       Assert.assertNotNull(playerdao.getPlayer(Id));
     }
     @Test
     public void getPlayersTest(){
