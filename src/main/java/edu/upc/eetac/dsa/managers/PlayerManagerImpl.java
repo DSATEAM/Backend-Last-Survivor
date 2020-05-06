@@ -23,9 +23,13 @@ public class PlayerManagerImpl implements PlayerManager {
 
     @Override
     public int signUp(String username,String password) {
-        String playerID =  playerDAO.addPlayer(username,password,0,0,0,0,0);
-        if(playerID.isEmpty()) return -1;
-        return 1;
+        String playerID = playerDAO.getID(username,password);
+        if(playerID==null) {
+           playerID =  playerDAO.addPlayer(username,password,0,0,0,0,0);
+           return 1;
+        }else{
+           return -1;
+        }
     }
 
     @Override
@@ -38,18 +42,18 @@ public class PlayerManagerImpl implements PlayerManager {
     @Override
     public int signOut(String playerID) {
         //Remove the Player Local Instance from the List<Players> ?? MAYBE
-        //Also Update
+        //WHATS THE USE??
         return 0;
     }
 
     @Override
     public Player getPlayer(String playerID) {
+        //Returns Player with Items and Materials list included!
         return playerDAO.getPlayer(playerID);
     }
 
     @Override
     public int updatePlayer(Player player) {
-        //1 Good -1 Error
         return playerDAO.updatePlayer(player);
     }
 

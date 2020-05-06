@@ -6,6 +6,7 @@ import edu.upc.eetac.dsa.orm.model.Item;
 import edu.upc.eetac.dsa.orm.model.Material;
 import edu.upc.eetac.dsa.orm.model.Player;
 
+import java.util.LinkedList;
 import java.util.List;
 
 public class PlayerDAOImpl implements IPlayerDAO {
@@ -29,15 +30,40 @@ public class PlayerDAOImpl implements IPlayerDAO {
     }
     //TODO getID of the User given username and password
     public String getID(String username,String password){
-
-        return null;
-    }
-    public Player getPlayer(String id){
         Session session = null;
-        Player player = null;
+        String playerID = null; List ids;
         try {
             session = FactorySession.openSession();
-            player = (Player)session.get(Player.class, id);
+            String query = "SELECT ID FROM player WHERE username = ? AND password = ?"; List<String> paramsList = new LinkedList<>();
+            paramsList.add(username);paramsList.add(password);
+            ids = (List) session.queryExecute(String.class, query,paramsList);
+            if(ids.isEmpty()) return null;
+            for(Object id : ids){
+                playerID = (String) id;
+            }
+        }
+        catch (Exception e) {
+            // LOG
+        }
+        finally {
+            session.close();
+        }
+        return playerID;
+    }
+    public Player getPlayer(String playerID){
+        Session session = null;
+        Player player = null;
+        List<Item> listItems = null;
+        List<Material> listMaterials = null;
+        try {
+            session = FactorySession.openSession();
+            player = (Player)session.get(Player.class, playerID);
+            //Now that we have the player we must add the items and materials of the player
+            listItems =(List) session.getList(Item.class, playerID);
+            player.setListItems(listItems);
+            //Materials of player
+            listMaterials =(List) session.getList(Material.class, playerID);
+            player.setListMaterials(listMaterials);
         }
         catch (Exception e) {
             // LOG
@@ -88,7 +114,7 @@ public class PlayerDAOImpl implements IPlayerDAO {
         List playerList=null;
         try {
             session = FactorySession.openSession();
-            playerList = session.findAll(Player.class);
+            playerList = (List) session.findAll(Player.class);
         }
         catch (Exception e) {
             // LOG

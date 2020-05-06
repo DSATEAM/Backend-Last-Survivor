@@ -148,7 +148,7 @@ public class SessionImpl implements Session {
         }
     }
     // TODO FINISH THE DELETE OBJECT FROM DB GIVEN THE OBJECT
-    public void delete(Object o) throws Exception {
+    public void delete(Object o) {
         String delete = QueryHelper.createQueryDELETE(o);
         PreparedStatement pstm = null;
         try {
@@ -160,17 +160,18 @@ public class SessionImpl implements Session {
             }
             pstm.executeQuery();
         }
-        catch (SQLException e){
+        catch (Exception e){
             e.printStackTrace();
         }
 
 
     }
     // TODO FINISH THE GET ALL OF THE DATA FROM DB GIVEN THE CLASS(model)
-    public List<Object> findAll(Class theclass) throws SQLException {
-        String findall = QueryHelper.createQuerySELECT(theclass);
+    public List<Object> findAll(Class theclass){
+
         PreparedStatement pstm = null;
         try {
+        String findall = QueryHelper.createQuerySELECT(theclass.newInstance());
         pstm = conn.prepareStatement(findall);
         List<Object> tableNames = new ArrayList<>();
         ResultSet rs = pstm.executeQuery();
@@ -178,19 +179,39 @@ public class SessionImpl implements Session {
             tableNames.add(rs.getObject(1));
         }
         return tableNames;
-        } catch (SQLException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
-
-
         return null;
     }
     // TODO FINISH THE GET ALL OF THE DATA FROM DB GIVEN THE CLASS(model) & THE PARAMETERS WHICH MATCH THE HASH
     public List<Object> findAll(Class theClass, HashMap params) {
         return null;
     }
-    // TODO FINISH THE SUBJECTIVE QUEURY WHICH WILL BE PASS THROUGH AS A SENTENCE(USE STATEMENTS)
-    public List<Object> query(String query, Class theClass, HashMap params) {
-        return null;
+
+    @Override
+    public List<Object> queryExecute(Class theClass, String queryExecute, List params) {
+        List<Object> objList = new LinkedList<>();
+        PreparedStatement pstm;
+        try {
+            pstm = conn.prepareStatement(queryExecute);
+            int k = 1;
+            for(Object obj: params){
+                pstm.setObject(k, params.get(k-1));
+                k++;
+            }
+            ResultSet resultSet = pstm.executeQuery();
+            while(resultSet.next()) {
+                ResultSetMetaData resultSetMetaData = resultSet.getMetaData();
+                for(int i=1;i<=resultSetMetaData.getColumnCount();i++){
+                    objList.add(resultSet.getObject(i));
+                }
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return objList;
     }
+    // TODO FINISH THE SUBJECTIVE QUEURY WHICH WILL BE PASS THROUGH AS A SENTENCE(USE STATEMENTS)
+
 }

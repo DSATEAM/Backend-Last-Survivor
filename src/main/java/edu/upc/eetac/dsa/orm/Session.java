@@ -8,11 +8,11 @@ public interface Session<E> {
     String save(Object entity);
     void close();
     Object get(Class theClass, String ID);
-    List<Class> getList(Class theClass,String parentID);
+    List<Object> getList(Class theClass,String parentID);
     void saveList(Object entity);
     void update(Object object);
-    void delete(Object o) throws Exception;
-    List<Object> findAll(Class theClass) throws SQLException;
+    void delete(Object o);
+    List<Object> findAll(Class theClass) ;
     List<Object> findAll(Class theClass, HashMap params);
-    List<Object> query(String query, Class theClass, HashMap params);
+    List<Object> queryExecute(Class theClass, String queryExecute, List<Object> params);
 }

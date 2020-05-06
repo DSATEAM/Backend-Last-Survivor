@@ -1,36 +1,36 @@
 package ormtests;
-import edu.upc.eetac.dsa.orm.*;
-import edu.upc.eetac.dsa.orm.dao.*;
 import edu.upc.eetac.dsa.orm.dao.*;
 import edu.upc.eetac.dsa.orm.model.Player;
-import edu.upc.eetac.dsa.orm.model.Material;
-import org.apache.log4j.Logger;
 //Junit 4.13
-import org.apache.log4j.PropertyConfigurator;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import java.util.*;
+
 public class PlayerDAOImplTest{
-    PlayerDAOImpl playerdao = new PlayerDAOImpl();
+    PlayerDAOImpl playerDAO ;
     Player player = null;
     @Before
     public void setUp() {
         player = null;
+        playerDAO = new PlayerDAOImpl();
     }
     @Test
     public void addPlayerTest(){
-        Assert.assertNotNull(playerdao.addPlayer("Marc", "pass", 5, 4, 2, 23, 2));
+        String playerID = playerDAO.addPlayer("Marc", "pass", 5, 4, 2, 23, 2);
+        Assert.assertNotNull(playerID);
+        playerDAO.deletePlayer(playerID);
     }
     @Test
     public void getPlayerTest(){
-       String Id = playerdao.addPlayer("Yo", "pass", 5, 4, 2, 23, 2);
-       Assert.assertNotNull(playerdao.getPlayer(Id));
+       String playerID = playerDAO.addPlayer("Yo", "pass", 5, 4, 2, 23, 2);
+       Assert.assertNotNull(playerDAO.getPlayer(playerID));
+       playerDAO.deletePlayer(playerID);
     }
     @Test
     public void getPlayersTest(){
-        Assert.assertNotNull(playerdao.getPlayers());
+        //TODO REMEMBER TO REMOVE THIS COMMENT
+        //Assert.assertNotNull(playerDAO.getPlayers());
     }
     @After
     public void tearDown() {
