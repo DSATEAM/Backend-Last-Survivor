@@ -1,5 +1,4 @@
 package ormtests;
-import edu.upc.eetac.dsa.orm.*;
 import edu.upc.eetac.dsa.orm.dao.IItemDAO;
 import edu.upc.eetac.dsa.orm.dao.ItemDAOImpl;
 import edu.upc.eetac.dsa.orm.model.Item;
@@ -10,7 +9,6 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import sun.awt.image.ImageWatched;
 
 import java.util.*;
 public class ItemDAOImplTest {
@@ -19,7 +17,7 @@ public class ItemDAOImplTest {
     private static final Logger logger = Logger.getLogger(IItemDAO.class);
     IItemDAO ItemDAOImpl = new ItemDAOImpl();
     Item item = null;
-    String itemID;
+    String itemId;
     Material mat,mat2;
     @Before
     public void setUp() {
@@ -32,35 +30,35 @@ public class ItemDAOImplTest {
     //Metodo Test para crear un nuevo brote
     @Test
     public void addItemTest(){
-       itemID =  ItemDAOImpl.addItem(item);
-        Assert.assertNotNull(itemID);
-        ItemDAOImpl.deleteItem(itemID);
+       itemId =  ItemDAOImpl.addItem(item);
+        Assert.assertNotNull(itemId);
+        ItemDAOImpl.deleteItem(itemId);
     }
     @Test
     public void getItemTest(){
-        itemID = ItemDAOImpl.addItem(item);
-        Assert.assertNotNull(ItemDAOImpl.getItem(itemID));
-        ItemDAOImpl.deleteItem(itemID);
+        itemId = ItemDAOImpl.addItem(item);
+        Assert.assertNotNull(ItemDAOImpl.getItem(itemId));
+        ItemDAOImpl.deleteItem(itemId);
     }
     @Test
     public void getInItemMaterialsTest(){
-        itemID = ItemDAOImpl.addItem(item);
-        mat.setParentID(itemID);
-        mat2.setParentID(itemID);
+        itemId = ItemDAOImpl.addItem(item);
+        mat.setParentID(itemId);
+        mat2.setParentID(itemId);
         item.addListMaterial(mat);item.addListMaterial(mat2);
         item = ItemDAOImpl.addItemMaterials(item);
-        List<Material> mats = ItemDAOImpl.getListMaterialsByItemID(itemID);
+        List<Material> mats = ItemDAOImpl.getListMaterialsByItemID(itemId);
         Assert.assertEquals(2,mats.size());
         ItemDAOImpl.deleteMaterialItem(mat);ItemDAOImpl.deleteMaterialItem(mat2);
-        Assert.assertEquals(0,ItemDAOImpl.getListMaterialsByItemID(itemID).size());
-        ItemDAOImpl.deleteItem(itemID);
+        Assert.assertEquals(0,ItemDAOImpl.getListMaterialsByItemID(itemId).size());
+        ItemDAOImpl.deleteItem(itemId);
     }
     @Test
     //Test to delete an Item
     public void deleteItemTest(){
         logger.info("Delete Item Test");
-        itemID =  ItemDAOImpl.addItem(item);
-        int res = ItemDAOImpl.deleteItem(itemID);
+        itemId =  ItemDAOImpl.addItem(item);
+        int res = ItemDAOImpl.deleteItem(itemId);
         Assert.assertEquals(1,res);
         logger.info("Item deleted");
     }
@@ -68,36 +66,36 @@ public class ItemDAOImplTest {
     //Test to delete an Item
     public void updateItemTest() {
         logger.info("Update Item Test");
-        itemID =  ItemDAOImpl.addItem(item);
-        item = ItemDAOImpl.getItem(itemID);
+        itemId =  ItemDAOImpl.addItem(item);
+        item = ItemDAOImpl.getItem(itemId);
         logger.info("Current Item");
         logger.info(item.toString());
         item.setName("UpdatedTestName");
         int res = ItemDAOImpl.updateItem(item);
         Assert.assertEquals(1,res);
-        item = ItemDAOImpl.getItem(itemID);
+        item = ItemDAOImpl.getItem(itemId);
         logger.info("Updated item");
         logger.info(item.toString());
-        ItemDAOImpl.deleteItem(itemID);
+        ItemDAOImpl.deleteItem(itemId);
     }
     @Test
     public void addMaterialsFromItem(){
-        itemID = ItemDAOImpl.addItem(item);
-        mat.setParentID(itemID);
-        mat2.setParentID(itemID);
+        itemId = ItemDAOImpl.addItem(item);
+        mat.setParentID(itemId);
+        mat2.setParentID(itemId);
         item.addListMaterial(mat);item.addListMaterial(mat2);
         item = ItemDAOImpl.addItemMaterials(item);
-        Assert.assertNotNull(item.getListMaterials().get(0).getID());
+        Assert.assertNotNull(item.getListMaterials().get(0).getId());
         ItemDAOImpl.deleteMaterialItem(mat);ItemDAOImpl.deleteMaterialItem(mat2);
-        Assert.assertEquals(0,ItemDAOImpl.getListMaterialsByItemID(itemID).size());
-        ItemDAOImpl.deleteItem(itemID);
+        Assert.assertEquals(0,ItemDAOImpl.getListMaterialsByItemID(itemId).size());
+        ItemDAOImpl.deleteItem(itemId);
     }
     @Test
     public void updateItemMaterialsTest(){
 
-        itemID = ItemDAOImpl.addItem(item);
-        mat.setParentID(itemID);
-        mat2.setParentID(itemID);
+        itemId = ItemDAOImpl.addItem(item);
+        mat.setParentID(itemId);
+        mat2.setParentID(itemId);
         List<Material> mats =new  LinkedList<Material>();
         mats.add(mat);mats.add(mat2);
         item.addListMaterial(mat);item.addListMaterial(mat2);
@@ -108,7 +106,7 @@ public class ItemDAOImplTest {
         item.setListMaterials(mats);
         int res = ItemDAOImpl.updateItemMaterials(item);
         Assert.assertEquals(1,res);
-        ItemDAOImpl.deleteItem(itemID);
+        ItemDAOImpl.deleteItem(itemId);
         ItemDAOImpl.deleteMaterialItem(mat);ItemDAOImpl.deleteMaterialItem(mat2);
     }
     @After

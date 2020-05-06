@@ -14,10 +14,10 @@ public class PlayerDAOImpl implements IPlayerDAO {
     public String addPlayer(String username, String password, int gamesPlayed, int kills, int deaths, int experience, int wins) {
         Session session = null;
         Player pl = new Player(username, password, gamesPlayed, kills, deaths, experience, wins);
-        String ID=null;
+        String id=null;
         try {
             session = FactorySession.openSession();
-            ID=session.save(pl);
+            id=session.save(pl);
         }
         catch (Exception e) {
             // LOG
@@ -26,12 +26,12 @@ public class PlayerDAOImpl implements IPlayerDAO {
         finally {
             session.close();
         }
-        return ID;
+        return id;
     }
     //TODO getID of the User given username and password
-    public String getID(String username,String password){
+    public String getId(String username,String password){
         Session session = null;
-        String playerID = null; List ids;
+        String playerId = null; List ids;
         try {
             session = FactorySession.openSession();
             String query = "SELECT ID FROM player WHERE username = ? AND password = ?"; List<String> paramsList = new LinkedList<>();
@@ -39,7 +39,7 @@ public class PlayerDAOImpl implements IPlayerDAO {
             ids = (List) session.queryExecute(String.class, query,paramsList);
             if(ids.isEmpty()) return null;
             for(Object id : ids){
-                playerID = (String) id;
+                playerId = (String) id;
             }
         }
         catch (Exception e) {
@@ -48,21 +48,21 @@ public class PlayerDAOImpl implements IPlayerDAO {
         finally {
             session.close();
         }
-        return playerID;
+        return playerId;
     }
-    public Player getPlayer(String playerID){
+    public Player getPlayer(String playerId){
         Session session = null;
         Player player = null;
         List<Item> listItems = null;
         List<Material> listMaterials = null;
         try {
             session = FactorySession.openSession();
-            player = (Player)session.get(Player.class, playerID);
+            player = (Player)session.get(Player.class, playerId);
             //Now that we have the player we must add the items and materials of the player
-            listItems =(List) session.getList(Item.class, playerID);
+            listItems =(List) session.getList(Item.class, playerId);
             player.setListItems(listItems);
             //Materials of player
-            listMaterials =(List) session.getList(Material.class, playerID);
+            listMaterials =(List) session.getList(Material.class, playerId);
             player.setListMaterials(listMaterials);
         }
         catch (Exception e) {

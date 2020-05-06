@@ -6,9 +6,9 @@ import java.util.List;
 
 public interface IEnemyDAO {
     String addEnemy(String name, String description, int power, int health);
-    Enemy getEnemy(String enemyID);
-    int updateEnemy(String enemyID, String name, String description, int power, int health);
-    int deleteEnemy(String enemyID);
+    Enemy getEnemy(String enemyId);
+    int updateEnemy(String enemyId, String name, String description, int power, int health);
+    int deleteEnemy(String enemyId);
     List<Enemy> getEnemies();
 }
 

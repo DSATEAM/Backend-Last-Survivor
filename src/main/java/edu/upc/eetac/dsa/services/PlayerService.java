@@ -2,31 +2,18 @@ package edu.upc.eetac.dsa.services;
 
 import edu.upc.eetac.dsa.managers.PlayerManager;
 import edu.upc.eetac.dsa.managers.PlayerManagerImpl;
-import edu.upc.eetac.dsa.orm.dao.IPlayerDAO;
-import edu.upc.eetac.dsa.orm.dao.PlayerDAOImpl;
-import edu.upc.eetac.dsa.orm.dao.IMaterialDAO;
-import edu.upc.eetac.dsa.orm.dao.MaterialDAOImpl;
-import edu.upc.eetac.dsa.orm.dao.IItemDAO;
-import edu.upc.eetac.dsa.orm.dao.ItemDAOImpl;
 import edu.upc.eetac.dsa.orm.model.Player;
-import edu.upc.eetac.dsa.orm.model.Item;
-import edu.upc.eetac.dsa.orm.model.Material;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 
 import org.apache.log4j.Logger;
-import org.apache.log4j.PropertyConfigurator;
+
 import javax.ws.rs.*;
-import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import javax.xml.bind.JAXBElement;
 
-import java.util.Date;
-import java.util.LinkedList;
-import java.util.List;
 @Api(value = "/PlayerService", description = "Endpoint to Player Service")
 @Path("/access")
 public class PlayerService {
@@ -50,21 +37,23 @@ public class PlayerService {
         if(res==1) return Response.status(201).build();
         else return  Response.status(409).build();
     }
-    @GET
+    @POST
     @ApiOperation(value = "signIn Player", notes = "Retrieves the Player ID from username,password")
     @ApiResponses(value = {
-            @ApiResponse(code = 201, message = "Successful", response = String.class),
-            @ApiResponse(code = 404, message = "Not Found", response = String.class),
-            @ApiResponse(code = 401, message = "Not Authorized", response = String.class),
+            @ApiResponse(code = 201, message = "Successful", response = Player.class),
+            @ApiResponse(code = 404, message = "Not Found", response = Player.class),
+            @ApiResponse(code = 401, message = "Not Authorized", response = Player.class),
     })
-    @Path("/signIn/{username}/{password}")
+    @Path("/signIn")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response signIn(@PathParam("username") String username,@PathParam("password") String password ) {
+    public Response signIn(Player player) {
+        logger.info("signIn: Username "+player.getUsername()+" ,Password "+player.getPassword() +" END");
+        if (player.getUsername()==null || player.getPassword()==null)  return Response.status(404).entity(null).build();
 
-        if (username.isEmpty() || password.isEmpty())  return Response.status(404).build();
-        String ID = this.manager.signIn(username,password);
-        if(ID.contains("")) return Response.status(401).entity(ID).build();
-        return Response.status(201).entity(ID).build();
+        String playerId = this.manager.signIn(player.getUsername(),player.getPassword());
+        if(playerId == null) return Response.status(401).entity(Player.class).build();
+        player.setId(playerId);
+        return Response.status(201).entity(player).build();
     }
     @GET
     @ApiOperation(value = "get Player", notes = "Retrieves the Player from PlayerID")
@@ -73,12 +62,12 @@ public class PlayerService {
             @ApiResponse(code = 404, message = "Not Found", response = Player.class),
             @ApiResponse(code = 400, message = "Bad Request",response = Player.class)
     })
-    @Path("/getPlayer/{playerID}")
+    @Path("/getPlayer/{playerId}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getPlayer(@PathParam("playerID") String playerID ) {
+    public Response getPlayer(@PathParam("playerId") String playerId) {
 
-        if (playerID.isEmpty() )  return Response.status(400).entity(new Player()).build();
-        Player player = this.manager.getPlayer(playerID);
+        if (playerId.isEmpty() )  return Response.status(400).entity(new Player()).build();
+        Player player = this.manager.getPlayer(playerId);
         if(player == null) return Response.status(404).entity(new Player()).build();
         return Response.status(201).entity(player).build();
     }
@@ -106,33 +95,33 @@ public class PlayerService {
             @ApiResponse(code = 404, message = "Not Found"),
             @ApiResponse(code = 400, message = "Bad Request")
     })
-    @Path("/updatePlayerFields/{playerID}/{username}/{password}/{gamesPlayed}/{kills}/{deaths}/{experience}/{wins}")
+    @Path("/updatePlayerFields/{playerId}/{username}/{password}/{gamesPlayed}/{kills}/{deaths}/{experience}/{wins}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response updatePlayer(@PathParam("playerID") String playerID ,@PathParam("username") String username
+    public Response updatePlayer(@PathParam("playerId") String playerId ,@PathParam("username") String username
             ,@PathParam("password") String password,@PathParam("gamesPlayed") int gamesPlayed
             ,@PathParam("kills") int kills,@PathParam("deaths") int deaths,@PathParam("experience") int experience
             ,@PathParam("wins") int wins) {
         //As int cannot be null
-        if (username.isEmpty()||playerID.isEmpty()||password.isEmpty() )  return Response.status(400).build();
+        if (username.isEmpty()||playerId.isEmpty()||password.isEmpty() )  return Response.status(400).build();
         Player player = new Player(username,password,gamesPlayed,kills,deaths,experience,wins);
-        player.setID(playerID);
+        player.setId(playerId);
         int res  = this.manager.updatePlayer(player);
         if(res == -1) return Response.status(404).build();
         return Response.status(201).build();
     }
 
     @DELETE
-    @ApiOperation(value = "Delete Player", notes = "Delete Player given PlayerID")
+    @ApiOperation(value = "Delete Player", notes = "Delete Player given PlayerId")
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "Successful"),
             @ApiResponse(code = 404, message = "Not Found"),
             @ApiResponse(code = 400, message = "Bad Request")
     })
-    @Path("/deletePlayer/{playerID}")
+    @Path("/deletePlayer/{playerId}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response deletePlayer(@PathParam("playerID") String playerID) {
-        if (playerID.isEmpty() ||playerID.equals("") )  return Response.status(400).entity(new Player()).build();
-        int res = this.manager.deletePlayer(playerID);
+    public Response deletePlayer(@PathParam("playerId") String playerId) {
+        if (playerId.isEmpty() ||playerId.equals("") )  return Response.status(400).entity(new Player()).build();
+        int res = this.manager.deletePlayer(playerId);
         if(res == -1) return Response.status(404).build();
         return Response.status(201).build();
     }

@@ -3,7 +3,7 @@ package edu.upc.eetac.dsa.orm.model;
 public class Enemy {
 
     //Basic values
-    private String ID;
+    private String id;
     private String name;
     private String description;
     private int power;
@@ -21,11 +21,11 @@ public class Enemy {
     }
 
     //Setters and Getters
-    public String getID() {
-        return ID;
+    public String getId() {
+        return id;
     }
-    public void setID(String ID) {
-        this.ID = ID;
+    public void setId(String id) {
+        this.id = id;
     }
     public String getName() {
         return name;
@@ -50,6 +50,6 @@ public class Enemy {
 
     @Override
     public String toString() {
-        return "Enemy [ID= " + this.getID() + ", name= " + this.getName() + ", description = " + this.getDescription() + ", power= " + this.getPower() + ", health= " + this.getHealth() + "]";
+        return "Enemy [ID= " + this.getId() + ", name= " + this.getName() + ", description = " + this.getDescription() + ", power= " + this.getPower() + ", health= " + this.getHealth() + "]";
     }
 }

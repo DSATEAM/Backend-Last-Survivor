@@ -11,12 +11,17 @@ import java.util.List;
 public class ItemDAOImpl implements IItemDAO{
     static final Logger logger = Logger.getLogger(ItemDAOImpl.class);
     @Override
-    public String addItem(String parentID, String name, String type, String rarity, String description, int offense, int defense) {
-        Item item = new Item(parentID,name,type,rarity,description,null,offense,defense);
-        Session session = null; String ID = "";
+    public String addItem(String parentId, String name, String type, String rarity, String description, int offense, int defense) {
+        Item item = new Item(parentId,name,type,rarity,description,null,offense,defense);
+        return saveItem(item);
+    }
+
+    private String saveItem(Item item) {
+        Session session = null;
+        String id = "";
         try {
             session = FactorySession.openSession();
-            ID = session.save(item);
+            id = session.save(item);
         }
         catch (Exception e) {
             // LOG
@@ -26,23 +31,12 @@ public class ItemDAOImpl implements IItemDAO{
             session.close();
         }
 
-        return ID;
+        return id;
     }
+
     @Override
     public String addItem(Item item) {
-        Session session = null; String ID = "";
-        try {
-            session = FactorySession.openSession();
-            ID = session.save(item);
-        }
-        catch (Exception e) {
-            // LOG
-            e.printStackTrace();
-        }
-        finally {
-            session.close();
-        }
-        return ID;
+        return saveItem(item);
     }
     public int updateItemMaterials(Item item){
         Session session = null; int res;
@@ -70,7 +64,7 @@ public class ItemDAOImpl implements IItemDAO{
     //Adds material which don't have ID to the DB and returns item with ID assigned
     //to materials
     public Item addItemMaterials(Item item) {
-        Session session = null; String ID = "";
+        Session session = null; String id = "";
         List<Material> listMaterialsItem = null;
         try {
             session = FactorySession.openSession();
@@ -81,10 +75,10 @@ public class ItemDAOImpl implements IItemDAO{
             Material material = null;
             for(int i=0;i<listMaterialsItem.size();i++){
                 //Check if the material has id, if not than save
-                if(listMaterialsItem.get(i).getID().equals("")){
-                   ID =  session.save(listMaterialsItem.get(i));
+                if(listMaterialsItem.get(i).getId().equals("")){
+                   id =  session.save(listMaterialsItem.get(i));
                    material = listMaterialsItem.get(i);
-                   material.setID(ID);
+                   material.setId(id);
                     listMaterialsItem.set(i,material);
                 }
             }
@@ -101,12 +95,12 @@ public class ItemDAOImpl implements IItemDAO{
         return item;
     }
     @Override
-    public Item getItem(String itemID) {
+    public Item getItem(String itemId) {
         Session session = null;
         Item item = null;
         try {
             session = FactorySession.openSession();
-            item = (Item) session.get(Item.class, itemID);
+            item = (Item) session.get(Item.class, itemId);
         }
         catch (Exception e) {
             // LOG
@@ -140,12 +134,12 @@ public class ItemDAOImpl implements IItemDAO{
     }
 
     @Override
-    public int deleteItem(String itemID) {
+    public int deleteItem(String itemId) {
         Session session = null; int res;
         Item item = new Item();
         try {
             session = FactorySession.openSession();
-            item.setID(itemID);
+            item.setId(itemId);
             session.delete(item);
             res =1;
         }
@@ -199,13 +193,13 @@ public class ItemDAOImpl implements IItemDAO{
     }
 
     @Override
-    public List<Material> getListMaterialsByItemID(String itemID) {
+    public List<Material> getListMaterialsByItemID(String itemId) {
         Session session = null;
         List<Material> listMaterials = null;
         Item item = null;
         try {
             session = FactorySession.openSession();
-            listMaterials =(List) session.getList(Material.class, itemID);
+            listMaterials =(List) session.getList(Material.class, itemId);
         }
         catch (Exception e) {
             // LOG

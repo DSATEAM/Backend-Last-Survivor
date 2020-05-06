@@ -1,10 +1,8 @@
 package edu.upc.eetac.dsa.orm.model;
 
-import java.util.List;
-
 public class Material {
 
-    private String ID="";
+    private String id ="";
     private String parentID="";
     private String name;
     private String description;
@@ -19,12 +17,12 @@ public class Material {
         this.quantity = quantity;
     }
 
-    public String getID() {
-        return ID;
+    public String getId() {
+        return id;
     }
 
-    public void setID(String ID) {
-        this.ID = ID;
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getParentID() { return parentID;}
@@ -56,6 +54,6 @@ public class Material {
 
     @Override
     public String toString() {
-        return "ID "+ this.getID() +" name: "+ this.name;
+        return "ID "+ this.getId() +" name: "+ this.name;
     }
 }

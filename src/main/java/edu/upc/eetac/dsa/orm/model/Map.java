@@ -3,7 +3,7 @@ package edu.upc.eetac.dsa.orm.model;
 public class Map {
 
     //Basic values
-    private String ID;
+    private String id;
     private int sizeX;
     private int sizeY;
     private String designGrid;
@@ -12,19 +12,19 @@ public class Map {
     public Map() {}
 
     //Constructor
-    public Map(String ID, int sizeX, int sizeY, String designGrid) {
-        this.ID = ID;
+    public Map(String id, int sizeX, int sizeY, String designGrid) {
+        this.id = id;
         this.sizeX = sizeX;
         this.sizeY = sizeY;
         this.designGrid = designGrid;
     }
 
     //Setters and Getters
-    public String getID() {
-        return ID;
+    public String getId() {
+        return id;
     }
-    public void setID(String ID) {
-        this.ID = ID;
+    public void setId(String id) {
+        this.id = id;
     }
     public int getSizeX() {
         return sizeX;

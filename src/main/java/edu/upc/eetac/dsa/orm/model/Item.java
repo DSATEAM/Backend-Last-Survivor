@@ -5,7 +5,7 @@ import java.util.List;
 
 public class Item {
 
-    private String ID;
+    private String id;
     private String parentID="";
     private String name;
     private String type;
@@ -17,8 +17,8 @@ public class Item {
     //Empty Constructor
     public Item() {
     }
-    public Item(String parentID, String name, String type, String rarity, String description, List<Material> listMaterials, int offense, int defense) {
-        this.parentID = parentID;
+    public Item(String parentId, String name, String type, String rarity, String description, List<Material> listMaterials, int offense, int defense) {
+        this.parentID = parentId;
         this.name = name;
         this.type = type;
         this.rarity = rarity;
@@ -27,12 +27,12 @@ public class Item {
         this.offense = offense;
         this.defense = defense;
     }
-    public String getID() {
-        return ID;
+    public String getId() {
+        return id;
     }
 
-    public void setID(String ID) {
-        this.ID = ID;
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getParentID() { return parentID;}

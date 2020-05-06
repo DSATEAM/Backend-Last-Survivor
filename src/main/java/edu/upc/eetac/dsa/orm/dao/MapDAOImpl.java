@@ -2,21 +2,19 @@ package edu.upc.eetac.dsa.orm.dao;
 
 import edu.upc.eetac.dsa.orm.FactorySession;
 import edu.upc.eetac.dsa.orm.Session;
-import edu.upc.eetac.dsa.orm.model.Employee;
 import edu.upc.eetac.dsa.orm.model.Map;
-import edu.upc.eetac.dsa.orm.model.Player;
 
 import java.util.List;
 
 public class MapDAOImpl implements IMapDAO {
 
-    public String addMap(String ID, int sizeX, int sizeY, String designGrid) {
+    public String addMap(String id, int sizeX, int sizeY, String designGrid) {
 
         Session session = null;
         String mapID = "";//o null
         try {
             session = FactorySession.openSession();
-            Map map1 = new Map(ID,sizeX,sizeY,designGrid);
+            Map map1 = new Map(id,sizeX,sizeY,designGrid);
             session.save(map1);
         }
         catch (Exception e) {
@@ -28,13 +26,13 @@ public class MapDAOImpl implements IMapDAO {
         return mapID;
     }
 
-    public Map getMap(String mapID) {
+    public Map getMap(String mapId) {
 
         Session session = null;
         Map map1 = null;
         try {
             session = FactorySession.openSession();
-            map1 = (Map)session.get(Map.class, mapID);
+            map1 = (Map)session.get(Map.class, mapId);
 
         }
         catch (Exception e) {
@@ -47,8 +45,8 @@ public class MapDAOImpl implements IMapDAO {
         return map1;
     }
 
-    public void updateMap(String mapID, int sizeX, int sizeY, String designGrid) {
-        Map map1 = this.getMap(mapID);
+    public void updateMap(String mapId, int sizeX, int sizeY, String designGrid) {
+        Map map1 = this.getMap(mapId);
         map1.setSizeX(sizeX);
         map1.setSizeY(sizeY);
         map1.setDesignGrid(designGrid);
@@ -66,8 +64,8 @@ public class MapDAOImpl implements IMapDAO {
     }
 
 
-    public void deleteMap(String mapID, int sizeX, int sizeY, String designGrid) {
-        Map map1 = this.getMap(mapID);
+    public void deleteMap(String mapId, int sizeX, int sizeY, String designGrid) {
+        Map map1 = this.getMap(mapId);
         Session session = null;
         try {
             session = FactorySession.openSession();

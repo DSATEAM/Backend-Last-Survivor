@@ -10,11 +10,11 @@ public class EnemyDAOImpl implements IEnemyDAO{
 
     public String addEnemy(String name, String description, int power, int health) {
         Session session = null;
-        String ID=null;
+        String id=null;
         try {
             session = FactorySession.openSession();
             Enemy enemy = new Enemy(name, description, power, health);
-            ID=session.save(enemy);
+            id=session.save(enemy);
         }
         catch (Exception e) {
             // LOG
@@ -23,7 +23,7 @@ public class EnemyDAOImpl implements IEnemyDAO{
             session.close();
         }
 
-        return ID;
+        return id;
     }
 
 

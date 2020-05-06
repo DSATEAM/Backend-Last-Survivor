@@ -1,11 +1,9 @@
 package edu.upc.eetac.dsa.orm.model;
 
-import edu.upc.eetac.dsa.RandomUtils;
-
 import java.util.List;
 
 public class Player {
-    private String ID;
+    private String id;
     private String username;
     private String password;
     private int gamesPlayed;
@@ -27,11 +25,11 @@ public class Player {
         this.experience = experience;
         this.wins = wins;
     }
-    public String getID() {
-        return ID;
+    public String getId() {
+        return id;
     }
-    public void setID(String ID) {
-        this.ID = ID;
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getUsername() {

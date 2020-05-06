@@ -12,10 +12,10 @@ public class MaterialDAOImpl implements IMaterialDAO{
     public String addMaterial(String name, String description, int quantity) {
             Session session = null;
             Material mat = new Material(name, description, quantity);
-            String IDen=null;
+            String materialId=null;
             try {
                 session = FactorySession.openSession();
-                IDen=session.save(mat);
+                materialId=session.save(mat);
             }
             catch (Exception e) {
                 // LOG
@@ -24,7 +24,7 @@ public class MaterialDAOImpl implements IMaterialDAO{
             finally {
                 session.close();
             }
-            return IDen;
+            return materialId;
     }
     @Override
     public Material getMaterial(String ID) {

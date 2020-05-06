@@ -25,7 +25,7 @@ public class PlayerManagerTest {
         logger.info("SignIn Test");
         String ID;
         ID = playerDAO.addPlayer("kru", "kru", 0, 0, 0, 0, 0);
-        String signInID = playerDAO.getID("kru","kru");
+        String signInID = playerDAO.getId("kru","kru");
         Assert.assertEquals(ID,signInID);
         playerDAO.deletePlayer(ID);
     }
@@ -37,7 +37,7 @@ public class PlayerManagerTest {
         Assert.assertEquals(1,res);
         res = manager.signUp("kru","kru");
         Assert.assertEquals(-1,res);
-        String signInID = playerDAO.getID("kru","kru");
+        String signInID = playerDAO.getId("kru","kru");
         playerDAO.deletePlayer(signInID);
     }
     @Test
@@ -56,9 +56,9 @@ public class PlayerManagerTest {
     public void deletePlayerTest(){
         logger.info("Delete Player Test");
         int res = manager.signUp("kru","kru");
-        String signInID = playerDAO.getID("kru","kru");
+        String signInID = playerDAO.getId("kru","kru");
         manager.deletePlayer(signInID);
-        Assert.assertNull(playerDAO.getID("kru","kru"));
+        Assert.assertNull(playerDAO.getId("kru","kru"));
     }
     @After
     public void tearDown() {

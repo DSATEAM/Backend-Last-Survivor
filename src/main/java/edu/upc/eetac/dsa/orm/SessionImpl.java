@@ -14,7 +14,7 @@ import java.util.List;
 
 public class SessionImpl implements Session {
     private final Connection conn;
-    private static final int sizeID = 16;
+    private static final int sizeId = 16;
     public SessionImpl(Connection conn) {
         this.conn = conn;
     }
@@ -23,10 +23,10 @@ public class SessionImpl implements Session {
         String insertQuery = QueryHelper.createQueryINSERT(entity);
         RandomUtils randomUtils = new RandomUtils();
         PreparedStatement pstm = null;
-        String ID = RandomUtils.generateID(sizeID);
+        String id = RandomUtils.generateID(sizeId);
         try {
             pstm = conn.prepareStatement(insertQuery);
-            ObjectHelper.setter(entity,"ID",ID);
+            ObjectHelper.setter(entity,"id",id);
 
             int i = 1;
             //Only Primitive Types Int String
@@ -39,7 +39,7 @@ public class SessionImpl implements Session {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return ID;
+        return id;
     }
     //SAVES THE LIST OF OBJECT(Item,Materials) GIVEN Object(Player) Not Recursive
     public void saveList(Object entity){
@@ -71,7 +71,7 @@ public class SessionImpl implements Session {
         }
     }
     //Completed getObject(Player..) with list as null, use getList for that!
-    public Object get(Class theClass, String ID) {
+    public Object get(Class theClass, String id) {
 
         Object obj = null; PreparedStatement pstm = null;
         //Instantiating a object of type class for the getters
@@ -80,8 +80,9 @@ public class SessionImpl implements Session {
 
             obj = theClass.newInstance();
             pstm = conn.prepareStatement(selectQuery);
-            pstm.setObject(1, ID);
-            ResultSet resultSet =  pstm.executeQuery();int i = 0;
+            pstm.setObject(1, id);
+            ResultSet resultSet =  pstm.executeQuery();
+            int i = 0;
             //INVOKE SETTER FOR EACH CORRESPONDING PROPERTY OF THE TABLE TO MAP WITH OBJECT
             while (resultSet.next()){
                 //SQL WILL NEVER RETURN LIST AS A RESULT
@@ -97,15 +98,15 @@ public class SessionImpl implements Session {
         return obj;
     }
     // Given Class (Item,Player) with parentID returns list<Material,Item>
-    public List<Object> getList(Class theClass,String parentID){
+    public List<Object> getList(Class theClass,String parentId){
 
          PreparedStatement pstm = null;
         //Instantiating a object of type class for the getters
         List<Object> objList = new LinkedList<>();
         try {
-            String selectQuery = QueryHelper.createParentIDQuerySELECT(theClass.newInstance());
+            String selectQuery = QueryHelper.createParentIdQuerySELECT(theClass.newInstance());
             pstm = conn.prepareStatement(selectQuery);
-            pstm.setObject(1, parentID);
+            pstm.setObject(1, parentId);
             ResultSet resultSet = pstm.executeQuery();
             while(resultSet.next()) {
                 Object obj = theClass.newInstance();
@@ -116,7 +117,6 @@ public class SessionImpl implements Session {
                 }
                 //We have filled all of the fields inside the Object of type <E>
                 objList.add(obj);
-                String test = "";
             }
 
         }catch (Exception e){
@@ -148,14 +148,14 @@ public class SessionImpl implements Session {
         }
     }
     // TODO FINISH THE DELETE OBJECT FROM DB GIVEN THE OBJECT
-    public void delete(Object o) {
-        String delete = QueryHelper.createQueryDELETE(o);
+    public void delete(Object object) {
+        String delete = QueryHelper.createQueryDELETE(object);
         PreparedStatement pstm = null;
         try {
             pstm=conn.prepareStatement(delete);
-            for(String field: ObjectHelper.getStrFields(o)){
-                if(field.equals("ID")) {
-                    pstm.setObject(1, ObjectHelper.getter(o, field));
+            for(String field: ObjectHelper.getStrFields(object)){
+                if(field.equals("id")) {
+                    pstm.setObject(1, ObjectHelper.getter(object, field));
                 }
             }
             pstm.executeQuery();

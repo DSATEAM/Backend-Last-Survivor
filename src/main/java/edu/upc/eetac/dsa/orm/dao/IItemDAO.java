@@ -7,12 +7,12 @@ import java.util.List;
 
 public interface IItemDAO {
     String addItem(Item item);
-    String addItem(String parentID, String name, String type, String rarity, String description, int offense, int defense);
+    String addItem(String parentId, String name, String type, String rarity, String description, int offense, int defense);
     Item addItemMaterials(Item item);
-    Item getItem(String itemID);
+    Item getItem(String itemId);
     int updateItem(Item item);
     int updateItemMaterials(Item item);
-    int deleteItem(String itemID);
+    int deleteItem(String itemId);
     int deleteMaterialItem(Material material);
     List<Item> getListStandardItems();//getsItems with Zero Material as this are standard items
     List <Material> getListMaterialsByItemID(String itemId);
