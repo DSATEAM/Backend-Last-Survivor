@@ -43,8 +43,8 @@ public class ItemDAOImplTest {
     @Test
     public void getInItemMaterialsTest(){
         itemId = ItemDAOImpl.addItem(item);
-        mat.setParentID(itemId);
-        mat2.setParentID(itemId);
+        mat.setParentId(itemId);
+        mat2.setParentId(itemId);
         item.addListMaterial(mat);item.addListMaterial(mat2);
         item = ItemDAOImpl.addItemMaterials(item);
         List<Material> mats = ItemDAOImpl.getListMaterialsByItemID(itemId);
@@ -81,8 +81,8 @@ public class ItemDAOImplTest {
     @Test
     public void addMaterialsFromItem(){
         itemId = ItemDAOImpl.addItem(item);
-        mat.setParentID(itemId);
-        mat2.setParentID(itemId);
+        mat.setParentId(itemId);
+        mat2.setParentId(itemId);
         item.addListMaterial(mat);item.addListMaterial(mat2);
         item = ItemDAOImpl.addItemMaterials(item);
         Assert.assertNotNull(item.getListMaterials().get(0).getId());
@@ -94,8 +94,8 @@ public class ItemDAOImplTest {
     public void updateItemMaterialsTest(){
 
         itemId = ItemDAOImpl.addItem(item);
-        mat.setParentID(itemId);
-        mat2.setParentID(itemId);
+        mat.setParentId(itemId);
+        mat2.setParentId(itemId);
         List<Material> mats =new  LinkedList<Material>();
         mats.add(mat);mats.add(mat2);
         item.addListMaterial(mat);item.addListMaterial(mat2);

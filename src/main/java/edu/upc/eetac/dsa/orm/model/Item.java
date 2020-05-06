@@ -6,7 +6,7 @@ import java.util.List;
 public class Item {
 
     private String id;
-    private String parentID="";
+    private String parentId ="";
     private String name;
     private String type;
     private String rarity;
@@ -18,7 +18,7 @@ public class Item {
     public Item() {
     }
     public Item(String parentId, String name, String type, String rarity, String description, List<Material> listMaterials, int offense, int defense) {
-        this.parentID = parentId;
+        this.parentId = parentId;
         this.name = name;
         this.type = type;
         this.rarity = rarity;
@@ -35,9 +35,9 @@ public class Item {
         this.id = id;
     }
 
-    public String getParentID() { return parentID;}
+    public String getParentId() { return parentId;}
 
-    public void setParentID(String parentID) {this.parentID = parentID;}
+    public void setParentId(String parentId) {this.parentId = parentId;}
 
     public String getName() {
         return name;

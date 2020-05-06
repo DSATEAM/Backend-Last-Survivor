@@ -23,7 +23,7 @@ public class PlayerManagerImpl implements PlayerManager {
 
     @Override
     public int signUp(String username,String password) {
-        String playerID = playerDAO.getID(username,password);
+        String playerID = playerDAO.getId(username,password);
         if(playerID==null) {
            playerID =  playerDAO.addPlayer(username,password,0,0,0,0,0);
            return 1;
@@ -35,7 +35,7 @@ public class PlayerManagerImpl implements PlayerManager {
     @Override
     public String signIn(String username,String password) {
         //If correct return id, else empty String(Not Null)
-        String playerID = playerDAO.getID(username,password);
+        String playerID = playerDAO.getId(username,password);
         return playerID;
     }
 

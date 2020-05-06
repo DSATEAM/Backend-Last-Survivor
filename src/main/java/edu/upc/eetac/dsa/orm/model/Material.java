@@ -3,7 +3,7 @@ package edu.upc.eetac.dsa.orm.model;
 public class Material {
 
     private String id ="";
-    private String parentID="";
+    private String parentId ="";
     private String name;
     private String description;
     private int quantity;
@@ -25,9 +25,9 @@ public class Material {
         this.id = id;
     }
 
-    public String getParentID() { return parentID;}
+    public String getParentId() { return parentId;}
 
-    public void setParentID(String parentID) {this.parentID = parentID;}
+    public void setParentId(String parentId) {this.parentId = parentId;}
 
     public String getName() {
         return name;
