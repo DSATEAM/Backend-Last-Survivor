@@ -104,4 +104,8 @@ public class Player {
         this.listMaterials = listMaterials;
     }
 
+    @Override
+    public String toString() {
+        return "Player user" + username + " pass " + password + " id " +id;
+    }
 }

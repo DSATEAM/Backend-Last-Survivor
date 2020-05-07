@@ -28,6 +28,27 @@ public class PlayerDAOImpl implements IPlayerDAO {
         }
         return id;
     }
+    public Boolean existUsername(String username){
+        Session session = null;
+        int users; List ids;
+        try {
+            session = FactorySession.openSession();
+            String query = "SELECT COUNT(player.username) FROM player WHERE username = ?"; List<String> paramsList = new LinkedList<>();
+            paramsList.add(username);
+            ids = (List) session.queryExecute(String.class, query,paramsList);
+            if(ids.isEmpty()) return null;
+            for(Object id : ids){
+                return true;
+            }
+        }
+        catch (Exception e) {
+            // LOG
+        }
+        finally {
+            session.close();
+        }
+        return false;
+    }
     //TODO getID of the User given username and password
     public String getId(String username,String password){
         Session session = null;

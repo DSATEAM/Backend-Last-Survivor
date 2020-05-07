@@ -23,12 +23,11 @@ public class PlayerManagerImpl implements PlayerManager {
 
     @Override
     public int signUp(String username,String password) {
-        String playerID = playerDAO.getId(username,password);
-        if(playerID==null) {
-           playerID =  playerDAO.addPlayer(username,password,0,0,0,0,0);
-           return 1;
+        if(playerDAO.existUsername(username)) {
+            playerDAO.addPlayer(username, password, 0, 0, 0, 0, 0);
+            return 1;
         }else{
-           return -1;
+            return -1;
         }
     }
 

@@ -27,7 +27,7 @@ import java.sql.DriverManager;
 
 public class Main {
     static final Logger logger = Logger.getLogger(Main.class);
-    public static final String BASE_URI = "http://localhost:8080/BDD-DAO/";
+    public static final String BASE_URI = "http://localhost:8080/Backend/";
     private static Object Item;
 
     /**
@@ -45,9 +45,9 @@ public class Main {
         BeanConfig beanConfig = new BeanConfig();
 
         beanConfig.setHost("localhost:8080");
-        beanConfig.setBasePath("/BDD-DAO");
+        beanConfig.setBasePath("/Backend");
         beanConfig.setContact("DSA_3_Team@estudiantat.upc.edu");
-        beanConfig.setDescription("REST API for BDD-DAO Manager");
+        beanConfig.setDescription("REST API for Backend LastSurvivor");
         beanConfig.setLicenseUrl("http://www.apache.org/licenses/LICENSE-2.0.html");
         beanConfig.setResourcePackage("edu.upc.eetac.dsa.services");
         beanConfig.setTermsOfServiceUrl("http://www.example.com/resources/eula");
@@ -83,7 +83,7 @@ public class Main {
         //   + "%s application.wadl\nHit enter to stop it...", BASE_URI));
         //Formatting BASE_URI FOR SWAGGER
         String swagger_uri = BASE_URI;
-        String target = "BDD-DAO";
+        String target = "Backend";
         String replacement = "swagger3";
         swagger_uri = swagger_uri.replace(target, replacement);
         System.out.println(String.format("RestApi Started at " + "%s\nHit enter to stop it...", swagger_uri));

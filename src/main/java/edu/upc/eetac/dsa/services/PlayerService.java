@@ -25,17 +25,18 @@ public class PlayerService {
     @POST
     @ApiOperation(value = "signUp", notes = "Adds a new Player given name, password")
     @ApiResponses(value = {
-            @ApiResponse(code = 201, message = "Successful"),
-            @ApiResponse(code = 409, message = "Conflict"),
-            @ApiResponse(code = 400, message = "Bad Request")
+            @ApiResponse(code = 201, message = "Successful", response = Integer.class),
+            @ApiResponse(code = 409, message = "Conflict, User Exists", response = Integer.class),
+            @ApiResponse(code = 400, message = "Bad Request", response = Integer.class)
     })
-    @Path("/signUp/{username}/{password}")
+    @Path("/signUp")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response signUp(@PathParam("username") String username,@PathParam("password") String password ) {
-        if (username.isEmpty() || password.isEmpty())  return Response.status(400).build();
-        int res = this.manager.signUp(username,password);
-        if(res==1) return Response.status(201).build();
-        else return  Response.status(409).build();
+    public Response signUp(Player player) {
+        if(player.getPassword() ==null || player.getUsername() ==null)  return Response.status(400).build();
+        if (player.getUsername().isEmpty() || player.getPassword().isEmpty())  return Response.status(400).build();
+        int res = this.manager.signUp(player.getUsername(),player.getPassword());
+        if(res==1) return Response.status(201).entity(1).build();
+        else return  Response.status(409).entity(-1).build();
     }
     @POST
     @ApiOperation(value = "signIn Player", notes = "Retrieves the Player ID from username,password")
@@ -47,28 +48,14 @@ public class PlayerService {
     @Path("/signIn")
     @Produces(MediaType.APPLICATION_JSON)
     public Response signIn(Player player) {
-        logger.info("signIn: Username "+player.getUsername()+" ,Password "+player.getPassword() +" END");
+        logger.info("signIn: Username "+player.getUsername()+" ,Password "+player.getPassword());
+        System.out.println("SignIn "+ player.toString());
         if (player.getUsername()==null || player.getPassword()==null)  return Response.status(404).entity(null).build();
-
+        //Not Authorized or no user with the password or Vice versa
         String playerId = this.manager.signIn(player.getUsername(),player.getPassword());
         if(playerId == null) return Response.status(401).entity(Player.class).build();
-        player.setId(playerId);
-        return Response.status(201).entity(player).build();
-    }
-    @GET
-    @ApiOperation(value = "get Player", notes = "Retrieves the Player from PlayerID")
-    @ApiResponses(value = {
-            @ApiResponse(code = 201, message = "Successful", response = Player.class),
-            @ApiResponse(code = 404, message = "Not Found", response = Player.class),
-            @ApiResponse(code = 400, message = "Bad Request",response = Player.class)
-    })
-    @Path("/getPlayer/{playerId}")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response getPlayer(@PathParam("playerId") String playerId) {
-
-        if (playerId.isEmpty() )  return Response.status(400).entity(new Player()).build();
-        Player player = this.manager.getPlayer(playerId);
-        if(player == null) return Response.status(404).entity(new Player()).build();
+        //Means we have found the player thus we can return the player as a object filled with its data
+        player = this.manager.getPlayer(playerId);
         return Response.status(201).entity(player).build();
     }
     //TODO PREGUNTAR POR COMO RECIBIR UN OBJETO
@@ -87,29 +74,6 @@ public class PlayerService {
         if(res == -1) return Response.status(404).build();
         return Response.status(201).build();
     }
-
-    @PUT
-    @ApiOperation(value = "update Player", notes = "Retrieves the new Player given Fields")
-    @ApiResponses(value = {
-            @ApiResponse(code = 201, message = "Successful"),
-            @ApiResponse(code = 404, message = "Not Found"),
-            @ApiResponse(code = 400, message = "Bad Request")
-    })
-    @Path("/updatePlayerFields/{playerId}/{username}/{password}/{gamesPlayed}/{kills}/{deaths}/{experience}/{wins}")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response updatePlayer(@PathParam("playerId") String playerId ,@PathParam("username") String username
-            ,@PathParam("password") String password,@PathParam("gamesPlayed") int gamesPlayed
-            ,@PathParam("kills") int kills,@PathParam("deaths") int deaths,@PathParam("experience") int experience
-            ,@PathParam("wins") int wins) {
-        //As int cannot be null
-        if (username.isEmpty()||playerId.isEmpty()||password.isEmpty() )  return Response.status(400).build();
-        Player player = new Player(username,password,gamesPlayed,kills,deaths,experience,wins);
-        player.setId(playerId);
-        int res  = this.manager.updatePlayer(player);
-        if(res == -1) return Response.status(404).build();
-        return Response.status(201).build();
-    }
-
     @DELETE
     @ApiOperation(value = "Delete Player", notes = "Delete Player given PlayerId")
     @ApiResponses(value = {
