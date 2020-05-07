@@ -167,22 +167,32 @@ public class SessionImpl implements Session {
 
     }
     // TODO FINISH THE GET ALL OF THE DATA FROM DB GIVEN THE CLASS(model)
-    public List<Object> findAll(Class theclass){
+    public List<Object> findAll(Class theClass){
 
         PreparedStatement pstm = null;
+        //Instantiating a object of type class for the getters
+        List<Object> objList = new LinkedList<>();
         try {
-        String findall = QueryHelper.createQuerySELECT(theclass.newInstance());
-        pstm = conn.prepareStatement(findall);
-        List<Object> tableNames = new ArrayList<>();
-        ResultSet rs = pstm.executeQuery();
-        while (rs.next()) {
-            tableNames.add(rs.getObject(1));
-        }
-        return tableNames;
-        } catch (Exception e) {
+            String selectQuery = QueryHelper.createParentIdQuerySELECT(theClass.newInstance());
+            pstm = conn.prepareStatement(selectQuery);
+            pstm.setObject(1, theClass);
+            ResultSet resultSet = pstm.executeQuery();
+            while(resultSet.next()) {
+                Object obj = theClass.newInstance();
+                ResultSetMetaData resultSetMetaData = resultSet.getMetaData();
+                for(int i=1;i<=resultSetMetaData.getColumnCount();i++){
+                    String name = resultSetMetaData.getColumnName(i);
+                    obj = ObjectHelper.setter(obj,name, resultSet.getObject(i));
+                }
+                //We have filled all of the fields inside the Object of type <E>
+                objList.add(obj);
+            }
+
+        }catch (Exception e){
             e.printStackTrace();
         }
-        return null;
+        return objList;
+
     }
     // TODO FINISH THE GET ALL OF THE DATA FROM DB GIVEN THE CLASS(model) & THE PARAMETERS WHICH MATCH THE HASH
     public List<Object> findAll(Class theClass, HashMap params) {
