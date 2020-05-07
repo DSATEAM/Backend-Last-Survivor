@@ -5,8 +5,8 @@ import java.util.List;
 public interface IMapDAO {
     String addMap(String Id, int sizeX,int sizeY, String designGrid);
     Map getMap(String mapID);
-    void updateMap(String mapId,int sizeX,int sizeY, String designGrid);
-    void deleteMap(String mapId,int sizeX,int sizeY, String designGrid);//con el ID seria suficiente
+    int updateMap(String mapId,int sizeX,int sizeY, String designGrid);
+    int deleteMap(String mapId,int sizeX,int sizeY, String designGrid);//con el ID seria suficiente
     List<Map> getMaps();
 
 }

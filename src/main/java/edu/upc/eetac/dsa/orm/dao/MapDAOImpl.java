@@ -45,15 +45,17 @@ public class MapDAOImpl implements IMapDAO {
         return map1;
     }
 
-    public void updateMap(String mapId, int sizeX, int sizeY, String designGrid) {
+    public int updateMap(String mapId, int sizeX, int sizeY, String designGrid) {
         Map map1 = this.getMap(mapId);
         map1.setSizeX(sizeX);
         map1.setSizeY(sizeY);
         map1.setDesignGrid(designGrid);
         Session session=null;
+        int res=0;
         try {
             session = FactorySession.openSession();
             session.update(map1);
+            res= 1;
         }
         catch (Exception e) {
             // LOG
@@ -61,15 +63,18 @@ public class MapDAOImpl implements IMapDAO {
         finally {
             session.close();
         }
+        return res;
     }
 
 
-    public void deleteMap(String mapId, int sizeX, int sizeY, String designGrid) {
+    public int deleteMap(String mapId, int sizeX, int sizeY, String designGrid) {
         Map map1 = this.getMap(mapId);
         Session session = null;
+        int res=0;
         try {
             session = FactorySession.openSession();
             session.delete(map1);
+            res=1;
         }
         catch (Exception e) {
             // LOG
@@ -77,6 +82,7 @@ public class MapDAOImpl implements IMapDAO {
         finally {
             session.close();
         }
+       return  res;
 
     }
 
