@@ -33,10 +33,10 @@ public class PlayerManagerTest {
     //Test to get an enemy
     public void signUpTest(){
         logger.info("SignUp Test");
-        int res = manager.signUp("kru","kru");
-        Assert.assertEquals(1,res);
-        res = manager.signUp("kru","kru");
-        Assert.assertEquals(-1,res);
+        String playerId= manager.signUp("kru","kru");
+        Assert.assertNotNull(playerId);
+        playerId= manager.signUp("kru","kru");
+        Assert.assertNull(playerId);
         String signInID = playerDAO.getId("kru","kru");
         playerDAO.deletePlayer(signInID);
     }
@@ -55,9 +55,8 @@ public class PlayerManagerTest {
     //Test to get an enemy
     public void deletePlayerTest(){
         logger.info("Delete Player Test");
-        int res = manager.signUp("kru","kru");
-        String signInID = playerDAO.getId("kru","kru");
-        manager.deletePlayer(signInID);
+        String playerID = manager.signUp("kru","kru");
+        manager.deletePlayer(playerID);
         Assert.assertNull(playerDAO.getId("kru","kru"));
     }
     @After

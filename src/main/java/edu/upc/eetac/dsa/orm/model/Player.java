@@ -106,6 +106,6 @@ public class Player {
 
     @Override
     public String toString() {
-        return "Player user" + username + " pass " + password + " id " +id;
+        return "Player [username= " + username + ", password= " + password + ", id=" +id +"]";
     }
 }

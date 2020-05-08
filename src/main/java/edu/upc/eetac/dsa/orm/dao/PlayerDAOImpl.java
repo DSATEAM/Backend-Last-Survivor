@@ -33,13 +33,10 @@ public class PlayerDAOImpl implements IPlayerDAO {
         int users; List ids;
         try {
             session = FactorySession.openSession();
-            String query = "SELECT COUNT(player.username) FROM player WHERE username = ?"; List<String> paramsList = new LinkedList<>();
+            String query = "SELECT * FROM player WHERE username = ?"; List<String> paramsList = new LinkedList<>();
             paramsList.add(username);
             ids = (List) session.queryExecute(String.class, query,paramsList);
-            if(ids.isEmpty()) return null;
-            for(Object id : ids){
-                return true;
-            }
+            return !ids.isEmpty();
         }
         catch (Exception e) {
             // LOG
