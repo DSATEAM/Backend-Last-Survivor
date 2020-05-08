@@ -25,18 +25,18 @@ public class PlayerService {
     @POST
     @ApiOperation(value = "signUp", notes = "Adds a new Player given name, password")
     @ApiResponses(value = {
-            @ApiResponse(code = 201, message = "Successful", response = Integer.class),
-            @ApiResponse(code = 409, message = "Conflict, User Exists", response = Integer.class),
-            @ApiResponse(code = 400, message = "Bad Request", response = Integer.class)
+            @ApiResponse(code = 201, message = "Successful", response = String.class),
+            @ApiResponse(code = 409, message = "Conflict, User Exists", response = String.class),
+            @ApiResponse(code = 400, message = "Bad Request", response = String.class)
     })
     @Path("/signUp")
     @Produces(MediaType.APPLICATION_JSON)
     public Response signUp(Player player) {
-        if(player.getPassword() ==null || player.getUsername() ==null)  return Response.status(400).build();
-        if (player.getUsername().isEmpty() || player.getPassword().isEmpty())  return Response.status(400).build();
+        if(player.getPassword() ==null || player.getUsername() ==null)  return Response.status(400).entity("-1").build();
+        if (player.getUsername().isEmpty() || player.getPassword().isEmpty())  return Response.status(400).entity("-1").build();
         int res = this.manager.signUp(player.getUsername(),player.getPassword());
-        if(res==1) return Response.status(201).entity(1).build();
-        else return  Response.status(409).entity(-1).build();
+        if(res==1) return Response.status(201).entity("1").build();
+        else return  Response.status(409).entity("-1").build();
     }
     @POST
     @ApiOperation(value = "signIn Player", notes = "Retrieves the Player ID from username,password")
