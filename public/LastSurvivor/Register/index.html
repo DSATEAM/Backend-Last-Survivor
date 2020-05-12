@@ -12,7 +12,8 @@
   <script>
     $(document).ready(function(){
       <!-- When the search button is clicked -->
-      $("btn-signin").click(function(){
+      $("#register").load("/register.html");
+      $('#btn-signin').click(function(){
         <!-- Get from GitHub Api a User Repository Data  -->
         $.get( "http://localhost:8080/Backend/access/signIn/" + $("#inputUsername").val() + "/" + $("#inputPassword").val(), function(data, status){
           if (status==201) {
@@ -27,7 +28,7 @@
   </script>
 </head>
 <body>
-
+<div id="register"></div>
   <div class="modal-dialog text-center">
     <div class="col-sm-8 main-section">
       <div class ="modal-content">
