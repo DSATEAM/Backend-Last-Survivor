@@ -13,18 +13,18 @@
     $(document).ready(function(){
       <!-- When the search button is clicked -->
       $("#register").load("/register.html");
-      $('#btn-signin').click(function(){
+      $("#btn-signin").click(function(){
         <!-- Get from GitHub Api a User Repository Data  -->
-        $.get( "http://localhost:8080/Backend/access/signIn/" + $("#inputUsername").val() + "/" + $("#inputPassword").val(), function(data, status){
-          if (status==201) {
-            $('#success').show();
-          }
-          else{
-            $('#warning').show();
-          }
-        });
+        $.post("http://localhost:8080/Backend/access/signIn",
+                {
+                  name: $("inputUsername").val(),
+                  password: $("inputPassword").val()
+                },
+                function(data,status){
+                  alert("Data: " + data + "\nStatus: " + status);
+                });
       });
-      });
+    });
   </script>
 </head>
 <body>
