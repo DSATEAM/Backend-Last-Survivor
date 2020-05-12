@@ -25,27 +25,24 @@ public class PlayerService {
     @POST
     @ApiOperation(value = "signUp", notes = "Adds a new Player given name, password")
     @ApiResponses(value = {
-            @ApiResponse(code = 201, message = "Successful", response = Player.class),
-            @ApiResponse(code = 409, message = "Conflict, User Exists"),
-            @ApiResponse(code = 400, message = "Bad Request"),
+            @ApiResponse(code = 201, message = "Successful", response = String.class),
+            @ApiResponse(code = 409, message = "Conflict, User Exists", response = String.class),
+            @ApiResponse(code = 400, message = "Bad Request", response = String.class)
     })
     @Path("/signUp")
     @Produces(MediaType.APPLICATION_JSON)
     public Response signUp(Player player) {
-        logger.info("signIn: Username "+player.getUsername()+" ,Password "+player.getPassword());
-        System.out.println("SignUp "+ player.toString());
-        if(player.getUsername()=="" || player.getPassword()==""||player.getUsername().isEmpty()|| player.getPassword().isEmpty())  return Response.status(400).build();
-        String playerId = this.manager.signUp(player.getUsername(),player.getPassword());
-        if(playerId == null) return Response.status(409).build();
-        //Means we have found the player thus we can return the player as a object filled with its data
-        player = this.manager.getPlayer(playerId);
-        return Response.status(201).entity(player).build();
+        if(player.getPassword() ==null || player.getUsername() ==null)  return Response.status(400).entity("-1").build();
+        if (player.getUsername().isEmpty() || player.getPassword().isEmpty())  return Response.status(400).entity("-1").build();
+        int res = this.manager.signUp(player.getUsername(),player.getPassword());
+        if(res==1) return Response.status(201).entity("1").build();
+        else return  Response.status(409).entity("-1").build();
     }
     @POST
     @ApiOperation(value = "signIn Player", notes = "Retrieves the Player ID from username,password")
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "Successful", response = Player.class),
-            @ApiResponse(code = 400, message = "Bad Request", response = Player.class),
+            @ApiResponse(code = 404, message = "Not Found", response = Player.class),
             @ApiResponse(code = 401, message = "Not Authorized", response = Player.class),
     })
     @Path("/signIn")
@@ -53,10 +50,10 @@ public class PlayerService {
     public Response signIn(Player player) {
         logger.info("signIn: Username "+player.getUsername()+" ,Password "+player.getPassword());
         System.out.println("SignIn "+ player.toString());
-        if (player.getUsername()=="" || player.getPassword()==""||player.getUsername().isEmpty()|| player.getPassword().isEmpty())  return Response.status(400).build();
+        if (player.getUsername()==null || player.getPassword()==null)  return Response.status(404).entity(null).build();
         //Not Authorized or no user with the password or Vice versa
         String playerId = this.manager.signIn(player.getUsername(),player.getPassword());
-        if(playerId == null) return Response.status(401).build();
+        if(playerId == null) return Response.status(401).entity(Player.class).build();
         //Means we have found the player thus we can return the player as a object filled with its data
         player = this.manager.getPlayer(playerId);
         return Response.status(201).entity(player).build();
