@@ -27,7 +27,7 @@ import java.sql.DriverManager;
 
 public class Main {
     static final Logger logger = Logger.getLogger(Main.class);
-    public static final String BASE_URI = "http://localhost:8080/Backend/";
+    public static final String BASE_URI = "http://147.83.7.205:8080/Backend/";
     private static Object Item;
 
     /**

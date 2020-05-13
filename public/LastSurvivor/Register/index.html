@@ -9,20 +9,30 @@
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/solid.css">
   <script src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"></script>
   <link rel="stylesheet" type="text/css" href="style.css">
+  <script src = "JSON_Player.js"></script>
   <script>
     $(document).ready(function(){
-      <!-- When the search button is clicked -->
-      $("#register").load("/register.html");
-      $("#btn-signin").click(function(){
-        <!-- Get from GitHub Api a User Repository Data  -->
-        $.post("http://localhost:8080/Backend/access/signIn",
-                {
-                  name: $("inputUsername").val(),
-                  password: $("inputPassword").val()
-                },
-                function(data,status){
-                  alert("Data: " + data + "\nStatus: " + status);
-                });
+
+      $('#btn-signin').click(function(){
+
+        $.ajax
+        ({
+          type: "POST",
+          //the url where you want to sent the userName and password to
+          url: 'http://localhost:8080/Backend/access/signIn',
+          dataType: 'json',
+          async: false,
+          contentType: 'application/json',
+          data: JSON.stringify(getData()),
+          success: function () {
+            alert("You are logged in");
+          },
+          error: function () {
+            alert("Something went wrong");
+
+          }
+        })
+
       });
     });
   </script>
@@ -38,13 +48,16 @@
 
         <form class="col-12">
           <div class="form-group">
+            <i class="fas fa-user"></i>
             <input type="text" id= inputUsername class="form-control" placeholder="Enter Username">
           </div>
           <div class="form-group">
+            <i class="fas fa-lock"></i>
             <input type="password" id= inputPassword class="form-control" placeholder="Enter Password">
           </div>
           <button class="btn" type="button" id="btn-signin"><i class="fas fa-sign-in-alt"></i> Sign In </button>
         </form>
+
         <div class="col-12 signup">
           <a href="register.html">Don't have an account?</a>
         </div>
