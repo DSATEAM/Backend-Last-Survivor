@@ -1,8 +1,5 @@
 package edu.upc.eetac.dsa;
 
-import edu.upc.eetac.dsa.orm.SessionImpl;
-import edu.upc.eetac.dsa.orm.dao.*;
-import edu.upc.eetac.dsa.orm.util.ObjectHelper;
 import io.swagger.jaxrs.config.BeanConfig;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
@@ -13,23 +10,17 @@ import org.glassfish.jersey.server.ResourceConfig;
 
 import java.io.FileReader;
 import java.io.IOException;
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
-import java.lang.reflect.ParameterizedType;
-import java.lang.reflect.TypeVariable;
 import java.net.URI;
 import java.sql.*;
 import java.util.Properties;
-import edu.upc.eetac.dsa.orm.model.*;
 import java.sql.Connection;
 import java.sql.DriverManager;
 // REST AND SWAGGER
 
 public class Main {
     static final Logger logger = Logger.getLogger(Main.class);
-    public static final String BASE_URI = "http://localhost:8080/Backend/";
-    private static Object Item;
-
+    public static final String host_address = "localhost:8080"; //Substitute with 147.83.7.205
+    public static final String BASE_URI = "http://"+host_address+"/Backend/";
     /**
      * Starts Grizzly HTTP server exposing JAX-RS resources defined in this application.
      * @return Grizzly HTTP server.
@@ -44,7 +35,7 @@ public class Main {
 
         BeanConfig beanConfig = new BeanConfig();
 
-        beanConfig.setHost("localhost:8080");
+        beanConfig.setHost(host_address);
         beanConfig.setBasePath("/Backend");
         beanConfig.setContact("DSA_3_Team@estudiantat.upc.edu");
         beanConfig.setDescription("REST API for Backend LastSurvivor");
@@ -82,10 +73,7 @@ public class Main {
         // System.out.println(String.format("Jersey app started with WADL available at "
         //   + "%s application.wadl\nHit enter to stop it...", BASE_URI));
         //Formatting BASE_URI FOR SWAGGER
-        String swagger_uri = BASE_URI;
-        String target = "Backend";
-        String replacement = "swagger3";
-        swagger_uri = swagger_uri.replace(target, replacement);
+        String swagger_uri = "http://"+host_address+"/swagger3/";
         System.out.println(String.format("RestApi Started at " + "%s\nHit enter to stop it...", swagger_uri));
          System.in.read();
         server.shutdownNow();

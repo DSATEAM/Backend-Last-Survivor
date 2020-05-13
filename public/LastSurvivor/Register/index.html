@@ -15,7 +15,7 @@
       $("#register").load("/register.html");
       $("#btn-signin").click(function(){
         <!-- Get from GitHub Api a User Repository Data  -->
-        $.post("http://localhost:8080/Backend/access/signIn",
+        $.post("/Backend/access/signIn",
                 {
                   name: $("inputUsername").val(),
                   password: $("inputPassword").val()
