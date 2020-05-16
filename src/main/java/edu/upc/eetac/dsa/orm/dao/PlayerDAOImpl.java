@@ -133,6 +133,7 @@ public class PlayerDAOImpl implements IPlayerDAO {
         try {
             session = FactorySession.openSession();
             playerList = (List) session.findAll(Player.class);
+            System.out.println("La lista es "+playerList);
         }
         catch (Exception e) {
             // LOG

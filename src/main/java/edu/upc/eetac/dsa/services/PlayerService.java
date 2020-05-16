@@ -43,18 +43,6 @@ public class PlayerService {
         return Response.status(201).entity(player).build();
     }
 
-    @GET
-    @Path("/pepito")
-    public String pepito(){
-        logger.info("Recibido");
-        return "hola";
-    }
-
-
-
-
-
-
     @POST
     @ApiOperation(value = "signIn Player", notes = "Retrieves the Player ID from username,password")
     @ApiResponses(value = {

@@ -4,6 +4,8 @@ import edu.upc.eetac.dsa.orm.dao.PlayerDAOImpl;
 import edu.upc.eetac.dsa.orm.model.Player;
 import org.apache.log4j.Logger;
 
+import java.util.List;
+
 public class PlayerManagerImpl implements PlayerManager {
     private static PlayerManager instance;
     PlayerDAOImpl playerDAO = new PlayerDAOImpl();
@@ -59,5 +61,11 @@ public class PlayerManagerImpl implements PlayerManager {
     @Override
     public int deletePlayer(String playerID) {
        return playerDAO.deletePlayer(playerID);
+    }
+
+    @Override
+    public List<Player> getPlayers() {
+
+        return playerDAO.getPlayers();
     }
 }

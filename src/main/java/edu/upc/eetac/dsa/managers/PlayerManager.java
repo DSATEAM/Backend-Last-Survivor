@@ -2,6 +2,8 @@ package edu.upc.eetac.dsa.managers;
 
 import edu.upc.eetac.dsa.orm.model.Player;
 
+import java.util.List;
+
 public interface PlayerManager {
 
     String signUp(String userName, String Password);
@@ -10,4 +12,5 @@ public interface PlayerManager {
     Player getPlayer(String ID);
     int updatePlayer(Player player);
     int deletePlayer(String ID);
+    List<Player> getPlayers();
 }
