@@ -64,7 +64,7 @@ public class PlayerService {
         player = this.manager.getPlayer(playerId);
         return Response.status(201).entity(player).build();
     }
-    //TODO PREGUNTAR POR COMO RECIBIR UN OBJETO
+
     @PUT
     @ApiOperation(value = "update Player", notes = "updates Player and returns code result")
     @ApiResponses(value = {

@@ -1,9 +1,7 @@
 package edu.upc.eetac.dsa.orm.dao;
-import edu.upc.eetac.dsa.RandomUtils;
 import edu.upc.eetac.dsa.orm.FactorySession;
 import edu.upc.eetac.dsa.orm.Session;
 import edu.upc.eetac.dsa.orm.model.Item;
-import edu.upc.eetac.dsa.orm.model.Material;
 import edu.upc.eetac.dsa.orm.model.Player;
 
 import java.util.LinkedList;
@@ -11,9 +9,9 @@ import java.util.List;
 
 public class PlayerDAOImpl implements IPlayerDAO {
 
-    public String addPlayer(String username, String password, int gamesPlayed, int kills, int deaths, int experience, int wins) {
+    public String addPlayer(String username, String password, int gamesPlayed, int kills, int experience, int credits) {
         Session session = null;
-        Player pl = new Player(username, password, gamesPlayed, kills, deaths, experience, wins);
+        Player pl = new Player(username, password, gamesPlayed, kills, experience, credits);
         String id=null;
         try {
             session = FactorySession.openSession();
@@ -72,16 +70,12 @@ public class PlayerDAOImpl implements IPlayerDAO {
         Session session = null;
         Player player = null;
         List<Item> listItems = null;
-        List<Material> listMaterials = null;
         try {
             session = FactorySession.openSession();
             player = (Player)session.get(Player.class, playerId);
             //Now that we have the player we must add the items and materials of the player
             listItems =(List) session.getList(Item.class, playerId);
             player.setListItems(listItems);
-            //Materials of player
-            listMaterials =(List) session.getList(Material.class, playerId);
-            player.setListMaterials(listMaterials);
         }
         catch (Exception e) {
             // LOG
