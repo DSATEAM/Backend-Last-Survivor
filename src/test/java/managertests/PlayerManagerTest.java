@@ -11,26 +11,24 @@ import org.junit.Test;
 
 public class PlayerManagerTest {
     private static final Logger logger = Logger.getLogger(PlayerManagerTest.class);
-    //IEnemyDAO EnemyDAOImpl = new EnemyDAOImpl();
     PlayerDAOImpl playerDAO = new PlayerDAOImpl();
     PlayerManager manager;
     @Before
     public void setUp() {
         manager = PlayerManagerImpl.getInstance();
     }
-    //Tests
-    //Test to add a new enemy
+
     @Test
     public void signInTest(){
         logger.info("SignIn Test");
         String ID;
-        ID = playerDAO.addPlayer("kru", "kru", 0, 0, 0, 0, 0);
+        ID = playerDAO.addPlayer("kru", "kru", 0, 0, 0, 0);
         String signInID = playerDAO.getId("kru","kru");
         Assert.assertEquals(ID,signInID);
         playerDAO.deletePlayer(ID);
     }
     @Test
-    //Test to get an enemy
+
     public void signUpTest(){
         logger.info("SignUp Test");
         String playerId= manager.signUp("kru","kru");
@@ -41,18 +39,15 @@ public class PlayerManagerTest {
         playerDAO.deletePlayer(signInID);
     }
     @Test
-    //Test to get an enemy
     public void signOutTest(){
         logger.info("SignOut Test-->What's the use?");
     }
     @Test
-    //Test to get an enemy
     public void updatePlayerTest(){
         logger.info("Update Player Test-->Same as PlayerDAOImpl");
 
     }
     @Test
-    //Test to get an enemy
     public void deletePlayerTest(){
         logger.info("Delete Player Test");
         String playerID = manager.signUp("kru","kru");

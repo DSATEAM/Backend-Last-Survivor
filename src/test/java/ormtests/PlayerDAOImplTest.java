@@ -17,13 +17,13 @@ public class PlayerDAOImplTest{
     }
     @Test
     public void addPlayerTest(){
-        String playerID = playerDAO.addPlayer("Marc", "pass", 5, 4, 2, 23, 2);
+        String playerID = playerDAO.addPlayer("Marc", "pass", 5, 4, 2, 23);
         Assert.assertNotNull(playerID);
         playerDAO.deletePlayer(playerID);
     }
     @Test
     public void getPlayerTest(){
-       String playerId = playerDAO.addPlayer("Yo", "pass", 5, 4, 2, 23, 2);
+       String playerId = playerDAO.addPlayer("Yo", "pass", 5, 4, 2, 23);
        Assert.assertNotNull(playerDAO.getPlayer(playerId));
        playerDAO.deletePlayer(playerId);
     }
