@@ -8,22 +8,19 @@ public class Player {
     private String password;
     private int gamesPlayed;
     private int kills;
-    private int deaths;
     private int experience;
-    private int wins;
+    private int credits;
     //TODO Recursive Mapping of Objects Item and Material
     List<Item> listItems;
-    List<Material> listMaterials;
     //Empty Constructor
     public Player(){}
-    public Player(String username, String password, int gamesPlayed, int kills, int deaths, int experience, int wins) {
+    public Player(String username, String password, int gamesPlayed, int kills, int experience, int credits) {
         this.username = username;
         this.password = password;
         this.gamesPlayed = gamesPlayed;
         this.kills = kills;
-        this.deaths = deaths;
         this.experience = experience;
-        this.wins = wins;
+        this.credits = credits;
     }
     public String getId() {
         return id;
@@ -64,28 +61,12 @@ public class Player {
         this.kills = kills;
     }
 
-    public int getDeaths() {
-        return deaths;
-    }
-
-    public void setDeaths(int deaths) {
-        this.deaths = deaths;
-    }
-
     public int getExperience() {
         return experience;
     }
 
     public void setExperience(int experience) {
         this.experience = experience;
-    }
-
-    public int getWins() {
-        return wins;
-    }
-
-    public void setWins(int wins) {
-        this.wins = wins;
     }
 
     public List<Item> getListItems() {
@@ -96,13 +77,11 @@ public class Player {
         this.listItems = listItems;
     }
 
-    public List<Material> getListMaterials() {
-        return listMaterials;
+    public int getCredits() {
+        return credits;
     }
 
-    public void setListMaterials(List<Material> listMaterials) {
-        this.listMaterials = listMaterials;
-    }
+    public void setCredits(int credits) {this.credits = credits;}
 
     @Override
     public String toString() {

@@ -11,19 +11,19 @@ public class Item {
     private String type;
     private String rarity;
     private String description;
-    List<Material> listMaterials;
+    private int credit;
     private int offense;
     private int defense;
     //Empty Constructor
     public Item() {
     }
-    public Item(String parentId, String name, String type, String rarity, String description, List<Material> listMaterials, int offense, int defense) {
+    public Item(String parentId, String name, String type, String rarity, String description, int credit, int offense, int defense) {
         this.parentId = parentId;
         this.name = name;
         this.type = type;
         this.rarity = rarity;
         this.description = description;
-        this.listMaterials = listMaterials;
+        this.credit = credit;
         this.offense = offense;
         this.defense = defense;
     }
@@ -71,20 +71,12 @@ public class Item {
         this.description = description;
     }
 
-    public List<Material> getListMaterials() {
-        return listMaterials;
+    public int getCredit() {
+        return credit;
     }
 
-    public void setListMaterials(List<Material> listMaterials) {this.listMaterials = listMaterials;
-    }
-    public void addListMaterial(Material material){
-        if(this.listMaterials==null){
-            this.listMaterials = new LinkedList<Material>();
-            this.listMaterials.add(material);
-        }else{
-            this.listMaterials.add(material);
-        }
-    }
+    public void setCredit(int credit) {this.credit = credit;}
+
     public int getOffense() {
         return offense;
     }

@@ -28,7 +28,7 @@ public class PlayerManagerImpl implements PlayerManager {
         if(playerDAO.existUsername(username)) {
             return null;
         }else{
-            String playerID = playerDAO.addPlayer(username, password, 0, 0, 0, 0, 0);
+            String playerID = playerDAO.addPlayer(username, password, 0, 0, 0, 0);
             return playerID;
         }
     }
