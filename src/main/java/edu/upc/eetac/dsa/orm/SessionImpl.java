@@ -173,9 +173,8 @@ public class SessionImpl implements Session {
         //Instantiating a object of type class for the getters
         List<Object> objList = new LinkedList<>();
         try {
-            String selectQuery = QueryHelper.createParentIdQuerySELECT(theClass.newInstance());
+            String selectQuery = QueryHelper.createQuerySELECTALL(theClass.newInstance());
             pstm = conn.prepareStatement(selectQuery);
-            pstm.setObject(1, theClass);
             ResultSet resultSet = pstm.executeQuery();
             while(resultSet.next()) {
                 Object obj = theClass.newInstance();
