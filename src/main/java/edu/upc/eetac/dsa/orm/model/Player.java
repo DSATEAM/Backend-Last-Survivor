@@ -90,6 +90,6 @@ public class Player implements Comparable<Player> {
 
     @Override
     public int compareTo(Player o) {
-        return (int)(o.getKills()-this.getKills());
+        return (int)(o.getExperience()-this.getExperience());
     }
 }
