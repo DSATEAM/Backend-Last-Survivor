@@ -2,7 +2,7 @@ package edu.upc.eetac.dsa.orm.model;
 
 import java.util.List;
 
-public class Player {
+public class Player implements Comparable<Player> {
     private String id;
     private String username;
     private String password;
@@ -86,5 +86,10 @@ public class Player {
     @Override
     public String toString() {
         return "Player [username= " + username + ", password= " + password + ", id=" +id +"]";
+    }
+
+    @Override
+    public int compareTo(Player o) {
+        return (int)(o.getKills()-this.getKills());
     }
 }

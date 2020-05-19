@@ -1,6 +1,8 @@
 package edu.upc.eetac.dsa.services;
 import edu.upc.eetac.dsa.managers.PlayerManager;
 import edu.upc.eetac.dsa.managers.PlayerManagerImpl;
+import edu.upc.eetac.dsa.managers.RankingManager;
+import edu.upc.eetac.dsa.managers.RankingManagerImpl;
 import edu.upc.eetac.dsa.orm.model.Player;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -19,10 +21,10 @@ import java.util.List;
 @Path("/rank")
 public class RankingService {
     static final Logger logger = Logger.getLogger(RankingService.class);
-    private final PlayerManager manager;
+    private final RankingManager manager;
 
     public RankingService() {
-        manager = PlayerManagerImpl.getInstance();
+        manager = RankingManagerImpl.getInstance();
     }
 
     @GET
