@@ -38,7 +38,8 @@ public class RankingService {
     @Produces(MediaType.APPLICATION_JSON)
     public Response getPlayers() {
         List<Player> list = this.manager.getPlayers();
-        if (list == null) return Response.status(404).build();
+        logger.info("Ranking: "+list);
+        if (list == null|| list.equals("[]")) return Response.status(404).build();
         GenericEntity<List<Player>> entity = new GenericEntity<List<Player>>(list) {};
         return Response.status(201).entity(entity).build();
     }

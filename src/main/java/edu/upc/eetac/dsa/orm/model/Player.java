@@ -90,6 +90,14 @@ public class Player implements Comparable<Player> {
 
     @Override
     public int compareTo(Player o) {
-        return (int)(o.getExperience()-this.getExperience());
+        int expResult=o.getExperience()-this.getExperience();
+        if (expResult!=0){
+            return expResult;
+        }
+        int killsResult=o.getKills()-this.getKills();
+        if (killsResult!=0){
+            return killsResult;
+        }
+        return this.getGamesPlayed()-o.getGamesPlayed();
     }
 }
