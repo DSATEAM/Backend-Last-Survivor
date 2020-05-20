@@ -53,18 +53,17 @@ public class PlayerService {
     @Path("/signIn")
     @Produces(MediaType.APPLICATION_JSON)
     public Response signIn(Player player) {
-        logger.info("signIn: Username "+player.getUsername()+" ,Password "+player.getPassword());
+
         if(player.getPassword()==null || player.getUsername()==null) return Response.status(400).build();
-        System.out.println("SignIn "+ player.toString());
         if (player.getUsername()=="" || player.getPassword()==""||player.getUsername().isEmpty()|| player.getPassword().isEmpty())  return Response.status(400).build();
         //Not Authorized or no user with the password or Vice versa
+        logger.info("signIn: Username "+player.getUsername()+" ,Password "+player.getPassword());
         String playerId = this.manager.signIn(player.getUsername(),player.getPassword());
         if(playerId == null) return Response.status(401).build();
         //Means we have found the player thus we can return the player as a object filled with its data
         player = this.manager.getPlayer(playerId);
         return Response.status(201).entity(player).build();
     }
-
     @PUT
     @ApiOperation(value = "update Player", notes = "updates Player and returns code result")
     @ApiResponses(value = {
@@ -87,10 +86,15 @@ public class PlayerService {
             @ApiResponse(code = 404, message = "Not Found"),
             @ApiResponse(code = 400, message = "Bad Request")
     })
-    @Path("/deletePlayer/{playerId}")
+    @Path("/deletePlayer")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response deletePlayer(@PathParam("playerId") String playerId) {
-        if (playerId.isEmpty() ||playerId.equals("") )  return Response.status(400).entity(new Player()).build();
+    public Response deletePlayer(Player player) {
+        if(player.getPassword()==null || player.getUsername()==null|| player.getId() ==null) return Response.status(400).build();
+        if (player.getUsername()=="" || player.getPassword()==""||player.getUsername().isEmpty()|| player.getPassword().isEmpty()
+                || player.getId()==""||player.getId().isEmpty())  return Response.status(400).build();
+        //Not Authorized or no user with the password or Vice versa
+        logger.info("Delete User: Username "+player.getUsername()+" ,Password "+player.getPassword());
+        String playerId = this.manager.signIn(player.getUsername(),player.getPassword());
         int res = this.manager.deletePlayer(playerId);
         if(res == -1) return Response.status(404).build();
         return Response.status(201).build();

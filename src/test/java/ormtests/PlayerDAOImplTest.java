@@ -27,11 +27,6 @@ public class PlayerDAOImplTest{
        Assert.assertNotNull(playerDAO.getPlayer(playerId));
        playerDAO.deletePlayer(playerId);
     }
-    @Test
-    public void getPlayersTest(){
-        //TODO REMEMBER TO REMOVE THIS COMMENT
-        //Assert.assertNotNull(playerDAO.getPlayers());
-    }
     @After
     public void tearDown() {
     }

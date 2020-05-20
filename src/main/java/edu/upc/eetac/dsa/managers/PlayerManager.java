@@ -12,5 +12,4 @@ public interface PlayerManager {
     Player getPlayer(String ID);
     int updatePlayer(Player player);
     int deletePlayer(String ID);
-    List<Player> getPlayers();
 }

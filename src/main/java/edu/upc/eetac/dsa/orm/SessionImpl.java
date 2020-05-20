@@ -221,6 +221,5 @@ public class SessionImpl implements Session {
         }
         return objList;
     }
-    // TODO FINISH THE SUBJECTIVE QUEURY WHICH WILL BE PASS THROUGH AS A SENTENCE(USE STATEMENTS)
 
 }

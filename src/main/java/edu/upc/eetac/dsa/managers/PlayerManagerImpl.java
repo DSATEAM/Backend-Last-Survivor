@@ -62,10 +62,4 @@ public class PlayerManagerImpl implements PlayerManager {
     public int deletePlayer(String playerID) {
        return playerDAO.deletePlayer(playerID);
     }
-
-    @Override
-    public List<Player> getPlayers() {
-
-        return playerDAO.getPlayers();
-    }
 }
