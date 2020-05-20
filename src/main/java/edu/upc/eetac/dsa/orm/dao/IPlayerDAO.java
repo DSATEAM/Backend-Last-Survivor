@@ -1,6 +1,7 @@
 package edu.upc.eetac.dsa.orm.dao;
 
 import edu.upc.eetac.dsa.orm.model.Player;
+import edu.upc.eetac.dsa.orm.model.RankingDTO;
 
 import java.util.List;
 
@@ -11,5 +12,5 @@ public interface IPlayerDAO {
     Player getPlayer(String id);
     int deletePlayer(String id);
     int updatePlayer(Player player);
-    List<Player> getPlayers();
+    List<RankingDTO> getPlayers();
 }

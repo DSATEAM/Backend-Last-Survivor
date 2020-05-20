@@ -3,6 +3,7 @@ import edu.upc.eetac.dsa.orm.FactorySession;
 import edu.upc.eetac.dsa.orm.Session;
 import edu.upc.eetac.dsa.orm.model.Item;
 import edu.upc.eetac.dsa.orm.model.Player;
+import edu.upc.eetac.dsa.orm.model.RankingDTO;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -121,13 +122,13 @@ public class PlayerDAOImpl implements IPlayerDAO {
         }
         return res;
     }
-    public List<Player> getPlayers() {
+    public List<RankingDTO> getPlayers() {
         Session session = null;
-        List playerList=null;
+        List<RankingDTO> rankingList=null;
         try {
             session = FactorySession.openSession();
-            playerList = (List) session.findAll(Player.class);
-            System.out.println("La lista es "+playerList);
+            rankingList = (List<RankingDTO>) session.findAll(Player.class);
+            System.out.println("La lista es "+rankingList);
         }
         catch (Exception e) {
             // LOG
@@ -135,7 +136,7 @@ public class PlayerDAOImpl implements IPlayerDAO {
         finally {
             session.close();
         }
-        return playerList;
+        return rankingList;
     }
 
 }
