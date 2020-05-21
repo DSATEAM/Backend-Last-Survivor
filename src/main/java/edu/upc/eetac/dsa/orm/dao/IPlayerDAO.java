@@ -12,5 +12,5 @@ public interface IPlayerDAO {
     Player getPlayer(String id);
     int deletePlayer(String id);
     int updatePlayer(Player player);
-    List<RankingDTO> getPlayers();
+    List<Player> getPlayers();
 }

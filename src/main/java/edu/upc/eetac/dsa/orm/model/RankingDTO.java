@@ -1,6 +1,6 @@
 package edu.upc.eetac.dsa.orm.model;
 
-public class RankingDTO extends Player {
+public class RankingDTO implements Comparable<RankingDTO> {
     private int gamesPlayed;
     private int kills;
     private int experience;
@@ -44,4 +44,16 @@ public class RankingDTO extends Player {
     public void setCredits(int credits) {this.credits = credits;}
 
 
+    @Override
+    public int compareTo(RankingDTO o) {
+        int expResult=o.getExperience()-this.getExperience();
+        if (expResult!=0){
+            return expResult;
+        }
+        int killsResult=o.getKills()-this.getKills();
+        if (killsResult!=0){
+            return killsResult;
+        }
+        return this.getGamesPlayed()-o.getGamesPlayed();
+    }
 }

@@ -122,13 +122,14 @@ public class PlayerDAOImpl implements IPlayerDAO {
         }
         return res;
     }
-    public List<RankingDTO> getPlayers() {
+    public List<Player> getPlayers() {
         Session session = null;
-        List<RankingDTO> rankingList=null;
+        List rankingList=null;
         try {
             session = FactorySession.openSession();
-            rankingList = (List<RankingDTO>) session.findAll(Player.class);
-            System.out.println("La lista es "+rankingList);
+            rankingList = (List) session.findAll(Player.class);
+            System.out.println("La lista es " + rankingList);
+
         }
         catch (Exception e) {
             // LOG
