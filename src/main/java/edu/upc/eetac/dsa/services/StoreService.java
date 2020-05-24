@@ -2,6 +2,7 @@ package edu.upc.eetac.dsa.services;
 
 import edu.upc.eetac.dsa.managers.StoreManager;
 import edu.upc.eetac.dsa.managers.StoreManagerImpl;
+import edu.upc.eetac.dsa.orm.model.Item;
 import edu.upc.eetac.dsa.orm.model.Player;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -13,6 +14,7 @@ import org.apache.log4j.Logger;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.util.List;
 
 @Api(value = "/StoreService", description = "Endpoint to Store Service")
 @Path("/inventory")
@@ -22,7 +24,30 @@ public class StoreService {
     public StoreService(){
         manager = StoreManagerImpl.getInstance();
     }
-
+    //Add Item to Player
+    @POST
+    @ApiOperation(value = "addItem", notes = "Adds Item to Player given with Items in List")
+    @ApiResponses(value = {
+            @ApiResponse(code = 201, message = "Successful", response = Player.class),
+            @ApiResponse(code = 402, message = "Not Enough Credits"),
+            @ApiResponse(code = 409, message = "Conflict, Item Exists in Player,if more than 1 item Ignoring and just buying what doesn't exist"),
+            @ApiResponse(code = 400, message = "Bad Request"),
+    })
+    @Path("/addItem")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response addItem(Player player, List<Item> items) {
+        if(player.getPassword()==null || player.getUsername()==null|| items ==null) return Response.status(400).build();
+        logger.info("ItemAddd to: Username "+player.getUsername()+" ,Password "+player.getPassword());
+        if(player.getUsername()=="" || player.getPassword()==""||player.getUsername().isEmpty()|| player.getPassword().isEmpty()||items.isEmpty())  return Response.status(400).build();
+        //Check Credit
+        int resCode = this.manager.checkCredit(player,items);
+        if(resCode == 0) return Response.status(409).build();//"Conflict, Items Exists in Player"
+        if(resCode == -1) return Response.status(402).build();//"Not Enough Credits"
+        //If multiple items and 1 conflict than ignoring 1 and buying others
+        player = this.manager.addItem(player, items);
+        return Response.status(201).entity(player).build();
+    }
+    //  DELETE ITEM
     @DELETE
     @ApiOperation(value = "Delete Item", notes = "Delete Item given Player")
     @ApiResponses(value = {
