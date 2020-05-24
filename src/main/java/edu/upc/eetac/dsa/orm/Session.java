@@ -14,5 +14,8 @@ public interface Session<E> {
     void delete(Object object);
     List<Object> findAll(Class theClass) ;
     List<Object> findAll(Class theClass, HashMap params);
+    //Returns basic List of object types such as String and Integer
     List<Object> queryExecute(Class theClass, String queryExecute, List<Object> params);
+    //Returns Object of Type Object Like Player,Item,Map given basic params
+    public List<Object> queryExecuteGetObject(Class theClass, String queryExecute, List params);
 }

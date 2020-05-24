@@ -47,6 +47,13 @@ public class ItemDAOImplTest {
     }
     @Test
     //Test to delete an Item
+    public void getStandardItemTest(){
+        logger.info("get all Standard Item Test");
+        List<Item> list = ItemDAOImpl.getListStandardItems();
+        Assert.assertNotNull(list);
+    }
+    @Test
+    //Test to delete an Item
     public void updateItemTest() {
         logger.info("Update Item Test");
         itemId =  ItemDAOImpl.addItem(item);

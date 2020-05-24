@@ -24,6 +24,7 @@ public class PlayerDAOImplTest{
     @Test
     public void getPlayerTest(){
        String playerId = playerDAO.addPlayer("Yo", "pass", 5, 4, 2, 23);
+       Object obj = playerDAO.getId("Yo","pass");
        Assert.assertNotNull(playerDAO.getPlayer(playerId));
        playerDAO.deletePlayer(playerId);
     }

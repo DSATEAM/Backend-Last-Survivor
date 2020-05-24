@@ -51,7 +51,7 @@ public class PlayerDAOImpl implements IPlayerDAO {
         String playerId = null; List ids;
         try {
             session = FactorySession.openSession();
-            String query = "SELECT ID FROM player WHERE username = ? AND password = ?"; List<String> paramsList = new LinkedList<>();
+            String query = "SELECT id FROM player WHERE username = ? AND password = ?"; List<String> paramsList = new LinkedList<>();
             paramsList.add(username);paramsList.add(password);
             ids = (List) session.queryExecute(String.class, query,paramsList);
             if(ids.isEmpty()) return null;
