@@ -42,7 +42,7 @@ public class StoreService {
         int resCode = this.manager.checkPurchase(item);
         if(resCode == 0) return Response.status(409).build();//"Conflict, Items Exists in Player"
         if(resCode == -1) return Response.status(402).build();//"Not Enough Credits"
-        item = this.manager.addItem(item);
+        this.manager.addItem(item);
         return Response.status(201).entity(item).build();
     }
     @GET

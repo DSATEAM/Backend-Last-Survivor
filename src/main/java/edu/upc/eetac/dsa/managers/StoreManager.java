@@ -7,6 +7,6 @@ import java.util.List;
 
 public interface StoreManager {
     public int checkPurchase(Item items);
-    public Item addItem(Item items);
+    public void addItem(Item items);
     public List<Item> getItems();
 }

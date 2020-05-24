@@ -42,7 +42,6 @@ public class PlayerService {
         player = this.manager.getPlayer(playerId);
         return Response.status(201).entity(player).build();
     }
-
     @POST
     @ApiOperation(value = "signIn Player", notes = "Retrieves the Player ID from username,password")
     @ApiResponses(value = {
