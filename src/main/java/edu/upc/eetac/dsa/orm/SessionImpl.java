@@ -14,7 +14,7 @@ import java.util.List;
 
 public class SessionImpl implements Session {
     private final Connection conn;
-    private static final int sizeId = 16;
+    private static final int sizeId = 32;
     public SessionImpl(Connection conn) {
         this.conn = conn;
     }

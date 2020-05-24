@@ -3,10 +3,10 @@ import edu.upc.eetac.dsa.orm.model.Map;
 import java.util.List;
 
 public interface IMapDAO {
-    String addMap(String Id, int sizeX,int sizeY, String designGrid);
-    Map getMap(String mapID);
-    int updateMap(String mapId,int sizeX,int sizeY, String designGrid);
-    int deleteMap(String mapId,int sizeX,int sizeY, String designGrid);//con el ID seria suficiente
+    String addMap(String name,int level, String type1MapGrid, String type2PlayerPosition, String type2EntityPositions);
+    Map getMap(String id);
+    int updateMap(Map map);
+    int deleteMap(String id);
     List<Map> getMaps();
 
 }
