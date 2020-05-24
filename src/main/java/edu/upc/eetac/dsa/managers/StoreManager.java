@@ -6,7 +6,7 @@ import edu.upc.eetac.dsa.orm.model.Player;
 import java.util.List;
 
 public interface StoreManager {
-    public int checkPurchase(Player player, Item items);
-    public Player addItem(Player player, Item items);
+    public int checkPurchase(Item items);
+    public Item addItem(Item items);
     public List<Item> getItems();
 }

@@ -37,16 +37,13 @@ public class StoreService {
     })
     @Path("/addItem")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response addItem(Player player, Item item) {
-        if(player.getPassword()==null || player.getUsername()==null|| item ==null) return Response.status(400).build();
-        logger.info("ItemAddd to: Username "+player.getUsername()+" ,Password "+player.getPassword());
-        if(player.getUsername()=="" || player.getPassword()==""||player.getUsername().isEmpty()|| player.getPassword().isEmpty())  return Response.status(400).build();
+    public Response addItem(Item item) {
         //Check Credit
-        int resCode = this.manager.checkPurchase(player,item);
+        int resCode = this.manager.checkPurchase(item);
         if(resCode == 0) return Response.status(409).build();//"Conflict, Items Exists in Player"
         if(resCode == -1) return Response.status(402).build();//"Not Enough Credits"
-        player = this.manager.addItem(player, item);
-        return Response.status(201).entity(player).build();
+        item = this.manager.addItem(item);
+        return Response.status(201).entity(item).build();
     }
     @GET
     @ApiOperation(value = "getItems", notes = "gets Item in List")
