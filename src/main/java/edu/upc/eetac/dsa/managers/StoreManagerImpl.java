@@ -19,7 +19,7 @@ public class StoreManagerImpl implements StoreManager {
     }
 
     @Override
-    public int checkCredit(Player player, List<Item> items) {
+    public int checkPurchase(Player player, Item items) {
         //Now we can Continue checking if the player contains any credit for the items
             //If items already exist than ignore and go to next
                 //If all of the items same than return 0
@@ -27,8 +27,14 @@ public class StoreManagerImpl implements StoreManager {
     }
 
     @Override
-    public Player addItem(Player player, List<Item> items) {
+    public Player addItem(Player player, Item items) {
         //Now we can add to the player items and ignore the ones which already exist
         return null;
     }
+
+    @Override
+    public List<Item> getItems() {
+        return null;
+    }
+
 }
