@@ -11,6 +11,27 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/solid.css">
     <script src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"></script>
     <link rel="stylesheet" type="text/css" href="main.css">
+    <script>
+        $(document).ready(function() {
+            $.get("http://localhost:8080/Backend/inventory/getItems", function(data){
+                $.each(data,function(index, data){
+                    name = data.name;
+                    description = data.description;
+                    rarity = data.rarity;
+                    credit = data.credit;
+                    newDiv = document.createElement("div");
+                    newBtn = document.createElement("Button");
+                    newDiv.innerHTML = '<img src="img/' + name + '.png" align="left">' + name  + '<br>' + description + '<br>' + rarity + '<br>' + credit;
+                    document.body.insertBefore(newDiv,document.getElementById("mainstyle"));
+
+
+                    N_fila = '<tr>' + '<td>' + name + '</td>' + '<td>' + description + '</td>' + '<td>' + rarity + '</td>' + '<td>' + credit + '</td>' + '</tr>';
+                    $("#tabla").append(N_fila);
+                });
+
+            });
+        });
+    </script>
 </head>
 <body>
     <nav class="topnav">
@@ -28,10 +49,25 @@
             </form>
         </div>
     </nav>
+
+
     <div class="mainstyle">
             <div class="container">
                 <div class="jumbotron jumbotron-billboard">
-                    <img src="img/sword1.png">
+                    <div>
+                        <div class="espacio"></div>
+                        <table id="tabla" class="table table-striped">
+                            <thead>
+                            <tr>
+                                <th>Nombre</th>
+                                <th>Descripción</th>
+                                <th>Rarity</th>
+                                <th>Credit</th>
+                            </tr>
+                            </thead>
+                            <tbody id ="cuerpo_tabla"></tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
