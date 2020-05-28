@@ -15,7 +15,7 @@ import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.List;
-@Api(value = "/MapService", description = "Endpoint to Map Service")
+@Api(value = "/MapService", tags = "Endpoint to Map Service")
 @Path("/map")
 public class MapService {
     static final Logger logger = Logger.getLogger(MapService.class);
@@ -35,9 +35,9 @@ public class MapService {
     @Produces(MediaType.APPLICATION_JSON)
     public Response addMap(Map map) {
        //Checking if anything null or empty which shouldn't be!
-        if(map.getName() ==null || map.getType1MapGrid()==null|| map.getType2EntityPositions()==null|| map.getType2PlayerPosition()==null) return Response.status(400).build();
-        if(map.getName()=="" || map.getType1MapGrid()==""|| map.getType2EntityPositions()==""||map.getType2PlayerPosition() ==""
-                ||map.getName().isEmpty()|| map.getType1MapGrid().isEmpty()|| map.getType2EntityPositions().isEmpty()|| map.getType2PlayerPosition().isEmpty())  return Response.status(400).build();
+        if(map.getName() ==null || map.getType1Map()==null|| map.getType2Objects()==null) return Response.status(400).build();
+        if(map.getName().equals("") || map.getType1Map().equals("")|| map.getType2Objects().equals("")
+                ||map.getName().isEmpty()|| map.getType1Map().isEmpty()|| map.getType2Objects().isEmpty())  return Response.status(400).build();
         //Check if map with same name exists!
         Map tmp = manager.getMapFromName(map);
         //Adding Map

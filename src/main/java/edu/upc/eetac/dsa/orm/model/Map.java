@@ -5,21 +5,19 @@ public class Map {
     private String id;
     private String name;
     private int level; //Indicates the level and the precedence of use in Unity
-    private String type1MapGrid;
-    private String type2PlayerPosition;
-    private String type2EntityPositions;//All of the Object and Enemy Position
+    private String type1Map;
+    private String type2Objects;//All of the Object and Enemy Position
 
     //Empty Constructor
     public Map() {}
     //Complete Constructor
 
-    public Map(String id, String name, int level, String type1MapGrid, String type2PlayerPosition, String type2EntityPositions) {
+    public Map(String id, String name, int level, String type1Map,String type2Objects) {
         this.id = id;
         this.name = name;
         this.level = level;
-        this.type1MapGrid = type1MapGrid;
-        this.type2PlayerPosition = type2PlayerPosition;
-        this.type2EntityPositions = type2EntityPositions;
+        this.type1Map = type1Map;
+        this.type2Objects = type2Objects;
     }
 
     public String getId() {
@@ -46,27 +44,19 @@ public class Map {
         this.level = level;
     }
 
-    public String getType1MapGrid() {
-        return type1MapGrid;
+    public String getType1Map() {
+        return type1Map;
     }
 
-    public void setType1MapGrid(String type1MapGrid) {
-        this.type1MapGrid = type1MapGrid;
+    public void setType1Map(String type1Map) {
+        this.type1Map = type1Map;
     }
 
-    public String getType2PlayerPosition() {
-        return type2PlayerPosition;
+    public String getType2Objects() {
+        return type2Objects;
     }
 
-    public void setType2PlayerPosition(String type2PlayerPosition) {
-        this.type2PlayerPosition = type2PlayerPosition;
-    }
-
-    public String getType2EntityPositions() {
-        return type2EntityPositions;
-    }
-
-    public void setType2EntityPositions(String type2EntityPositions) {
-        this.type2EntityPositions = type2EntityPositions;
+    public void setType2Objects(String type2Objects) {
+        this.type2Objects = type2Objects;
     }
 }
