@@ -32,10 +32,10 @@ public class PlayerService {
     @Path("/signUp")
     @Produces(MediaType.APPLICATION_JSON)
     public Response signUp(Player player) {
-        logger.info("signUp: Username "+player.getUsername()+" ,Password "+player.getPassword());
+
         if(player.getPassword()==null || player.getUsername()==null) return Response.status(400).build();
-        System.out.println("SignUp "+ player.toString());
         if(player.getUsername()=="" || player.getPassword()==""||player.getUsername().isEmpty()|| player.getPassword().isEmpty())  return Response.status(400).build();
+        logger.info("signUp: Username "+player.getUsername()+" ,Password "+player.getPassword());
         String playerId = this.manager.signUp(player.getUsername(),player.getPassword());
         if(playerId == null) return Response.status(409).build();
         //Means we have found the player thus we can return the player as a object filled with its data
@@ -78,7 +78,7 @@ public class PlayerService {
         if(res == -1) return Response.status(404).build();
         return Response.status(201).build();
     }
-    @DELETE
+    @PUT
     @ApiOperation(value = "Delete Player", notes = "Delete Player given PlayerId")
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "Successful"),

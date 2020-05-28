@@ -5,18 +5,18 @@ import edu.upc.eetac.dsa.orm.Session;
 import edu.upc.eetac.dsa.orm.model.Map;
 import edu.upc.eetac.dsa.orm.model.Player;
 
+import java.util.LinkedList;
 import java.util.List;
 
-public class MapDAOImpl implements IMapDAO {
+public class MapDAOImpl implements IMapDAO{
 
-    public String addMap( String name,int level, String type1MapGrid, String type2PlayerPosition, String type2EntityPositions) {
+    public String addMap(Map map) {
 
         Session session = null;
         String id = "";
         try {
             session = FactorySession.openSession();
-            Map map = new Map(name,id,level,type1MapGrid,type2PlayerPosition,type2EntityPositions);
-            session.save(map);
+           id =  session.save(map);
         }
         catch (Exception e) {
             // LOG
@@ -27,7 +27,7 @@ public class MapDAOImpl implements IMapDAO {
         return id;
     }
 
-    public Map getMap(String id) {
+    public Map getMap(String id){
 
         Session session = null;
         Map map = null;
@@ -45,7 +45,30 @@ public class MapDAOImpl implements IMapDAO {
         return map;
     }
 
-    public int updateMap(Map map) {
+    @Override
+    public Map getMapFromName(String name) {
+        Session session = null;
+        Map map = null;
+        try {
+            String query = "SELECT * FROM Map WHERE name = ?";
+            session = FactorySession.openSession();
+            List<String> params = new LinkedList<>();
+            List<Object> result;
+            params.add(name);
+            result = (List)session.queryExecuteGetObject(Map.class, query,params);
+            if(result.size()!=0) return (Map) result.get(0);
+            else return null;
+        }
+        catch (Exception e) {
+            // LOG
+        }
+        finally {
+            session.close();
+        }
+        return map;
+    }
+
+    public int updateMap(Map map){
         int res;
         Session session = null;
         try {
@@ -65,12 +88,11 @@ public class MapDAOImpl implements IMapDAO {
     }
 
 
-    public int deleteMap(String id) {
+    public int deleteMap(Map map){
 
         Session session = null;
         int res=0;
         try {
-            Map map = this.getMap(id);
             session = FactorySession.openSession();
             session.delete(map);
             res=1;
@@ -83,10 +105,9 @@ public class MapDAOImpl implements IMapDAO {
             session.close();
         }
        return  res;
-
     }
 
-    public List<Map> getMaps() {
+    public List<Map> getMaps(){
         Session session = null;
         List<Map> mapList=null;
         try {
