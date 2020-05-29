@@ -3,6 +3,7 @@ package managertests;
 import edu.upc.eetac.dsa.managers.PlayerManager;
 import edu.upc.eetac.dsa.managers.PlayerManagerImpl;
 import edu.upc.eetac.dsa.orm.dao.PlayerDAOImpl;
+import edu.upc.eetac.dsa.orm.model.Player;
 import org.apache.log4j.Logger;
 import org.junit.After;
 import org.junit.Assert;
@@ -22,7 +23,9 @@ public class PlayerManagerTest {
     public void signInTest(){
         logger.info("SignIn Test");
         String ID;
-        ID = playerDAO.addPlayer("kru", "kru", 0, 0, 0, 0);
+        Player player = new Player("kru", "kru", 0, 0, 0, 0);
+        player.setAvatar("kjjkkj");
+        ID = playerDAO.addPlayer(player);
         String signInID = playerDAO.getId("kru","kru");
         Assert.assertEquals(ID,signInID);
         playerDAO.deletePlayer(ID);
@@ -31,9 +34,11 @@ public class PlayerManagerTest {
 
     public void signUpTest(){
         logger.info("SignUp Test");
-        String playerId= manager.signUp("kru","kru");
+        Player player = new Player("kru", "kru", 0, 0, 0, 0);
+        player.setAvatar("kjjkkj");
+        String playerId= manager.signUp(player);
         Assert.assertNotNull(playerId);
-        playerId= manager.signUp("kru","kru");
+        playerId= manager.signUp(player);
         Assert.assertNull(playerId);
         String signInID = playerDAO.getId("kru","kru");
         playerDAO.deletePlayer(signInID);
@@ -50,7 +55,9 @@ public class PlayerManagerTest {
     @Test
     public void deletePlayerTest(){
         logger.info("Delete Player Test");
-        String playerID = manager.signUp("kru","kru");
+        Player player = new Player("kru", "kru", 0, 0, 0, 0);
+        player.setAvatar("kjjkkj");
+        String playerID = manager.signUp(player);
         manager.deletePlayer(playerID);
         Assert.assertNull(playerDAO.getId("kru","kru"));
     }

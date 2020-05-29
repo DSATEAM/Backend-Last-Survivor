@@ -6,7 +6,15 @@ public class RankingDTO implements Comparable<RankingDTO> {
     private int experience;
     private int credits;
     private String username;
+    private String avatar;
 
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
     public String getUsername() {
         return username;
     }

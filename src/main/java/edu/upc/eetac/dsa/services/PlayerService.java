@@ -36,7 +36,10 @@ public class PlayerService {
         if(player.getPassword()==null || player.getUsername()==null) return Response.status(400).build();
         if(player.getUsername()=="" || player.getPassword()==""||player.getUsername().isEmpty()|| player.getPassword().isEmpty())  return Response.status(400).build();
         logger.info("signUp: Username "+player.getUsername()+" ,Password "+player.getPassword());
-        String playerId = this.manager.signUp(player.getUsername(),player.getPassword());
+        //Auto Replace the Avatar if null to Basic Avatar!
+        if(player.getAvatar()==null) {player.setAvatar("basicAvatar");}
+        if(player.getAvatar().isEmpty()|| player.getAvatar().equals("")){player.setAvatar("basicAvatar");}
+        String playerId = this.manager.signUp(player);
         if(playerId == null) return Response.status(409).build();
         //Means we have found the player thus we can return the player as a object filled with its data
         player = this.manager.getPlayer(playerId);
@@ -57,7 +60,7 @@ public class PlayerService {
         if (player.getUsername()=="" || player.getPassword()==""||player.getUsername().isEmpty()|| player.getPassword().isEmpty())  return Response.status(400).build();
         //Not Authorized or no user with the password or Vice versa
         logger.info("signIn: Username "+player.getUsername()+" ,Password "+player.getPassword());
-        String playerId = this.manager.signIn(player.getUsername(),player.getPassword());
+        String playerId = this.manager.signIn(player);
         if(playerId == null) return Response.status(401).build();
         //Means we have found the player thus we can return the player as a object filled with its data
         player = this.manager.getPlayer(playerId);
@@ -66,17 +69,18 @@ public class PlayerService {
     @PUT
     @ApiOperation(value = "update Player", notes = "updates Player and returns code result")
     @ApiResponses(value = {
-            @ApiResponse(code = 201, message = "Successful"),
+            @ApiResponse(code = 201, message = "Successful", response = Player.class),
             @ApiResponse(code = 404, message = "Not Found"),
             @ApiResponse(code = 400, message = "Bad Request")
     })
     @Path("/updatePlayer")
     @Produces(MediaType.APPLICATION_JSON)
     public Response updatePlayer(Player player) {
-        if (player ==null )  return Response.status(400).build();
-        int res  = this.manager.updatePlayer(player);
-        if(res == -1) return Response.status(404).build();
-        return Response.status(201).build();
+        if (player == null )  return Response.status(400).build();
+        player = this.manager.updatePlayer(player);
+        if(player == null) return Response.status(404).build();
+
+        return Response.status(201).entity(player).build();
     }
     @PUT
     @ApiOperation(value = "Delete Player", notes = "Delete Player given PlayerId")
@@ -93,7 +97,7 @@ public class PlayerService {
                 || player.getId()==""||player.getId().isEmpty())  return Response.status(400).build();
         //Not Authorized or no user with the password or Vice versa
         logger.info("Delete User: Username "+player.getUsername()+" ,Password "+player.getPassword());
-        String playerId = this.manager.signIn(player.getUsername(),player.getPassword());
+        String playerId = this.manager.signIn(player);
         int res = this.manager.deletePlayer(playerId);
         if(res == -1) return Response.status(404).build();
         return Response.status(201).build();

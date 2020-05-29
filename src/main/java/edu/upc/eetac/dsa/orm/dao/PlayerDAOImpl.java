@@ -10,13 +10,13 @@ import java.util.List;
 
 public class PlayerDAOImpl implements IPlayerDAO {
 
-    public String addPlayer(String username, String password, int gamesPlayed, int kills, int experience, int credits) {
+    public String addPlayer(Player player) {
         Session session = null;
-        Player pl = new Player(username, password, gamesPlayed, kills, experience, credits);
+
         String id=null;
         try {
             session = FactorySession.openSession();
-            id=session.save(pl);
+            id=session.save(player);
         }
         catch (Exception e) {
             // LOG
@@ -104,23 +104,25 @@ public class PlayerDAOImpl implements IPlayerDAO {
         }
         return res;
     }
-    public int updatePlayer(Player player) {
+    public Player updatePlayer(Player player) {
         int res;
         Session session = null;
         try {
             session = FactorySession.openSession();
             session.update(player);
             res = 1;
+
         }
         catch (Exception e) {
             // LOG
             e.printStackTrace();
             res = -1;
+            player = null;
         }
         finally {
             session.close();
         }
-        return res;
+        return player;
     }
     public List<Player> getPlayers() {
         Session session = null;
