@@ -1,8 +1,8 @@
-function getData(number,array){
-    var ItemsID = array;
+function getData(ids,parentids){
     var obj = {
-        "id": ItemsID[number],
-        "parentId": document.getElementById(myStorage.getItem(id))
+        "id": ids,
+        "parentId": parentids
     }
+    $("#res").text('' + obj)
     return obj;
 }

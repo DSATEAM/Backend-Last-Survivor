@@ -41,7 +41,7 @@
                             dataType: 'json',
                             async: false,
                             contentType: 'application/json',
-                            data: JSON.stringify(getData(numItems+1,ItemsId)),
+                            data: JSON.stringify(getData(ItemsId[numItems],myStorage.getItem("id"))),
                             success: function () {
                                 alert("Sold");
                             },
