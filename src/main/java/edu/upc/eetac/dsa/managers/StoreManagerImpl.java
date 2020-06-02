@@ -59,6 +59,7 @@ public class StoreManagerImpl implements StoreManager {
         List<Item> itemList= player.getListItems();
         itemList.add(item);
         player.setListItems(itemList);
+        itemDAO.addItem(item);
     }
 
     @Override
