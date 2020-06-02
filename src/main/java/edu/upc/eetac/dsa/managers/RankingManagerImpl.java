@@ -24,6 +24,7 @@ public class RankingManagerImpl implements RankingManager{
             pos.setGamesPlayed(p.getGamesPlayed());
             pos.setKills(p.getKills());
             pos.setUsername(p.getUsername());
+            pos.setAvatar(p.getAvatar());
             rankingList.add(pos);
         }
         Collections.sort(rankingList);

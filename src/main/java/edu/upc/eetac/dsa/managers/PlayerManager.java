@@ -6,10 +6,10 @@ import java.util.List;
 
 public interface PlayerManager {
 
-    String signUp(String userName, String Password);
-    String signIn(String userName, String Password);
+    String signUp(Player player);
+    String signIn(Player player);
     int signOut(String ID);
     Player getPlayer(String ID);
-    int updatePlayer(Player player);
+    Player updatePlayer(Player player);
     int deletePlayer(String ID);
 }

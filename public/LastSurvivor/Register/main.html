@@ -11,6 +11,54 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/solid.css">
     <script src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"></script>
     <link rel="stylesheet" type="text/css" href="main.css">
+    <link rel="stylesheet" type="text/css" href="itemsDIV.css">
+    <script src = "JSON_Item.js"></script>
+    <script>
+        var numItems = 0;
+        var ItemsId = new Array();
+        $(document).ready(function() {
+            myStorage = window.localStorage;
+            alert(myStorage.getItem("user"));
+            $.get("http://localhost:8080/Backend/inventory/getItems", function(data){
+                $.each(data,function(index, data){
+                    ItemsId[numItems] = data.id;
+                    name = data.name;
+                    description = data.description;
+                    rarity = data.rarity;
+                    credit = data.credit;
+                    newDiv = document.createElement("div");
+                    newBtn = document.createElement("Button");
+                    newDiv.className = 'itemsDIV';
+                    newBtn.id = "itemBtn" + numItems;
+                    newDiv.innerHTML = '<img src="img/' + name + '.jpg" align="left">' + name  + '<br>' + description + '<br>' + rarity + '<br>' + credit;
+                    newBtn.innerText = name + " " + credit;
+                    newBtn.onclick = function () {
+                        $.ajax
+                        ({
+                            type: "POST",
+                            //the url where you want to sent the userName and password to
+                            url: '/Backend/inventory/addItem',
+                            dataType: 'json',
+                            async: false,
+                            contentType: 'application/json',
+                            data: JSON.stringify(getData(numItems+1,ItemsId)),
+                            success: function () {
+                                alert("Sold");
+                            },
+                            error: function () {
+                                alert("Something went wrong");
+                            }
+                        });
+                    };
+                    document.body.insertBefore(newDiv,document.getElementById("mainstyle"));
+                    document.body.insertBefore(newBtn,document.getElementById("mainstyle"));
+                    N_fila = '<tr>' + '<td>' + name + '</td>' + '<td>' + description + '</td>' + '<td>' + rarity + '</td>' + '<td>' + credit + '</td>' + '</tr>';
+                    $("#tabla").append(N_fila);
+                    numItems++;
+                });
+            });
+        });
+    </script>
 </head>
 <body>
     <nav class="topnav">
@@ -28,10 +76,25 @@
             </form>
         </div>
     </nav>
+
+
     <div class="mainstyle">
             <div class="container">
                 <div class="jumbotron jumbotron-billboard">
-                    <img src="img/sword1.png">
+                    <div>
+                        <div class="espacio"></div>
+                        <table id="tabla" class="table table-striped">
+                            <thead>
+                            <tr>
+                                <th>Nombre</th>
+                                <th>Descripción</th>
+                                <th>Rarity</th>
+                                <th>Credit</th>
+                            </tr>
+                            </thead>
+                            <tbody id ="cuerpo_tabla"></tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>

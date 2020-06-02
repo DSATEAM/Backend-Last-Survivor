@@ -24,19 +24,19 @@ public class PlayerManagerImpl implements PlayerManager {
     }
 
     @Override
-    public String signUp(String username,String password) {
-        if(playerDAO.existUsername(username)) {
+    public String signUp(Player player) {
+        if(playerDAO.existUsername(player.getUsername())) {
             return null;
         }else{
-            String playerID = playerDAO.addPlayer(username, password, 0, 0, 0, 0);
+            String playerID = playerDAO.addPlayer(player);
             return playerID;
         }
     }
 
     @Override
-    public String signIn(String username,String password) {
+    public String signIn(Player player) {
         //If correct return id, else empty String(Not Null)
-        String playerID = playerDAO.getId(username,password);
+        String playerID = playerDAO.getId(player.getUsername(),player.getPassword());
         return playerID;
     }
 
@@ -54,7 +54,7 @@ public class PlayerManagerImpl implements PlayerManager {
     }
 
     @Override
-    public int updatePlayer(Player player) {
+    public Player updatePlayer(Player player) {
         return playerDAO.updatePlayer(player);
     }
 

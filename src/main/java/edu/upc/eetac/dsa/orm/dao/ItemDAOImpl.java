@@ -5,6 +5,7 @@ import edu.upc.eetac.dsa.orm.Session;
 import edu.upc.eetac.dsa.orm.model.Item;
 import org.apache.log4j.Logger;
 
+import java.util.LinkedList;
 import java.util.List;
 
 public class ItemDAOImpl implements IItemDAO{
@@ -103,8 +104,12 @@ public class ItemDAOImpl implements IItemDAO{
         List<Item> listItem = null;
         Item item = null;
         try {
+            List<String> params = new LinkedList<>();
+            params.add("#standard");
+            String query = "SELECT * FROM Item WHERE parentId=?";
             session = FactorySession.openSession();
-            listItem =(List) session.findAll(Item.class);
+            listItem = (List) session.queryExecuteGetObject(Item.class,query,params);
+            //Means we have list of Items now we must get the Standard Items
         }
         catch (Exception e) {
             // LOG

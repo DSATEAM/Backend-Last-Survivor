@@ -10,6 +10,10 @@ public class Player implements Comparable<Player> {
     private int kills;
     private int experience;
     private int credits;
+
+
+
+    private String avatar;
     //TODO Recursive Mapping of Objects Item and Material
     List<Item> listItems;
     //Empty Constructor
@@ -52,7 +56,13 @@ public class Player implements Comparable<Player> {
     public void setGamesPlayed(int gamesPlayed) {
         this.gamesPlayed = gamesPlayed;
     }
+    public String getAvatar() {
+        return avatar;
+    }
 
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
     public int getKills() {
         return kills;
     }

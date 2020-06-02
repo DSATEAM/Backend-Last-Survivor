@@ -14,7 +14,7 @@ import java.util.List;
 
 public class SessionImpl implements Session {
     private final Connection conn;
-    private static final int sizeId = 16;
+    private static final int sizeId = 32;
     public SessionImpl(Connection conn) {
         this.conn = conn;
     }
@@ -221,5 +221,30 @@ public class SessionImpl implements Session {
         }
         return objList;
     }
-
+    @Override
+    public List<Object> queryExecuteGetObject(Class theClass, String queryExecute, List params) {
+        List<Object> objList = new LinkedList<>();
+        PreparedStatement pstm;
+        try {
+            pstm = conn.prepareStatement(queryExecute);
+            int k = 1;
+            for(Object obj: params){
+                pstm.setObject(k, params.get(k-1));
+                k++;
+            }
+            ResultSet resultSet = pstm.executeQuery();
+            while(resultSet.next()) {
+                Object obj = theClass.newInstance();
+                ResultSetMetaData resultSetMetaData = resultSet.getMetaData();
+                for(int i=1;i<=resultSetMetaData.getColumnCount();i++){
+                    String name = resultSetMetaData.getColumnName(i);
+                    obj = ObjectHelper.setter(obj,name, resultSet.getObject(i));
+                }
+                objList.add(obj);
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return objList;
+    }
 }
