@@ -28,6 +28,7 @@ public class StoreManagerImpl implements StoreManager {
             //If items already exist than ignore and go to next
                 //If all of the items same than return 0
         Player player= playerManager.getPlayer(item.getParentId());
+        Item item1= itemDAO.getItem(item.getId());
         List<Item> itemList= player.getListItems();
         boolean found=false;
         int c=0;
@@ -41,7 +42,7 @@ public class StoreManagerImpl implements StoreManager {
             return 0;
         }
         else{
-            int credit=player.getCredits()-item.getCredit();
+            int credit=player.getCredits()-item1.getCredit();
             if(credit>=0){
                 player.setCredits(credit);
                 return 1;
@@ -59,6 +60,7 @@ public class StoreManagerImpl implements StoreManager {
         List<Item> itemList= player.getListItems();
         itemList.add(item);
         player.setListItems(itemList);
+        itemDAO.addItem(item);
     }
 
     @Override

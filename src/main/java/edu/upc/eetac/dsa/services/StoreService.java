@@ -38,6 +38,7 @@ public class StoreService {
     @Path("/addItem")
     @Produces(MediaType.APPLICATION_JSON)
     public Response addItem(Item item) {
+        if(item.getId()==null|| item.getParentId() ==null)  return Response.status(400).build();
         //Check Credit
         int resCode = this.manager.checkPurchase(item);
         if(resCode == 0) return Response.status(409).build();//"Conflict, Items Exists in Player"
@@ -69,8 +70,7 @@ public class StoreService {
     @Path("/deleteItem")
     @Produces(MediaType.APPLICATION_JSON)
     public Response deleteItem(Player player) {
-        if(player.getPassword()==null || player.getUsername()==null|| player.getId() ==null) return Response.status(400).build();
-        if (player.getUsername()=="" || player.getPassword()==""||player.getUsername().isEmpty()|| player.getPassword().isEmpty()
+        if(player.getPassword()==null || player.getUsername()==null|| player.getId() ==null || player.getUsername()=="" || player.getPassword()==""||player.getUsername().isEmpty()|| player.getPassword().isEmpty()
                 || player.getId()==""||player.getId().isEmpty())  return Response.status(400).build();
         //Not Authorized or no user with the password or Vice versa
         /*logger.info("Delete User: Username "+player.getUsername()+" ,Password "+player.getPassword());
