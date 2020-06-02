@@ -1,6 +1,8 @@
 package edu.upc.eetac.dsa.managers;
 
+import edu.upc.eetac.dsa.orm.dao.IPlayerDAO;
 import edu.upc.eetac.dsa.orm.dao.ItemDAOImpl;
+import edu.upc.eetac.dsa.orm.dao.PlayerDAOImpl;
 import edu.upc.eetac.dsa.orm.model.Item;
 import edu.upc.eetac.dsa.orm.model.Player;
 import org.apache.log4j.Logger;
@@ -13,6 +15,7 @@ public class StoreManagerImpl implements StoreManager {
     private static StoreManager instance;
     private static PlayerManager playerManager=PlayerManagerImpl.getInstance();
     private static ItemDAOImpl itemDAO= new ItemDAOImpl();
+    private static PlayerDAOImpl playerDAO= new PlayerDAOImpl();
     private static final Logger log = Logger.getLogger(StoreManagerImpl.class);
     public static StoreManager getInstance() {
         if (instance == null) {
@@ -45,6 +48,7 @@ public class StoreManagerImpl implements StoreManager {
             int credit=player.getCredits()-item1.getCredit();
             if(credit>=0){
                 player.setCredits(credit);
+                playerDAO.updatePlayer(player);
                 return 1;
             }
             else{
