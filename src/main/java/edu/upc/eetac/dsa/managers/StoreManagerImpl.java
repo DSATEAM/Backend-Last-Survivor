@@ -57,10 +57,12 @@ public class StoreManagerImpl implements StoreManager {
     public void addItem(Item item) {
         //Now we can add to the player items and ignore the ones which already exist
         Player player= playerManager.getPlayer(item.getParentId());
+        Item item1 = itemDAO.getItem(item.getId());
+        item1.setParentId(item.getParentId());
         List<Item> itemList= player.getListItems();
-        itemList.add(item);
+        itemList.add(item1);
         player.setListItems(itemList);
-        itemDAO.addItem(item);
+        itemDAO.addItem(item1);
     }
 
     @Override
