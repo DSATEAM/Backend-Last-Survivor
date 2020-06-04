@@ -11,92 +11,90 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/solid.css">
     <script src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"></script>
     <link rel="stylesheet" type="text/css" href="main.css">
-    <link rel="stylesheet" type="text/css" href="itemsDIV.css">
     <script src = "JSON_Item.js"></script>
     <script>
-        var numItems = 0;
-        var ItemsId = new Array();
-        $(document).ready(function() {
+        function getItems(){
             myStorage = window.localStorage;
             alert(myStorage.getItem("user"));
             $.get("http://localhost:8080/Backend/inventory/getItems", function(data){
                 $.each(data,function(index, data){
-                    ItemsId[numItems] = data.id;
                     name = data.name;
                     description = data.description;
                     rarity = data.rarity;
                     credit = data.credit;
+                    idItem=data.id;
                     newDiv = document.createElement("div");
-                    newBtn = document.createElement("Button");
                     newDiv.className = 'itemsDIV';
-                    newBtn.id = "itemBtn" + numItems;
-                    newDiv.innerHTML = '<img src="img/' + name + '.jpg" align="left">' + name  + '<br>' + description + '<br>' + rarity + '<br>' + credit;
-                    newBtn.innerText = name + " " + credit;
-                    newBtn.onclick = function () {
-                        $.ajax
-                        ({
-                            type: "POST",
-                            //the url where you want to sent the userName and password to
-                            url: '/Backend/inventory/addItem',
-                            dataType: 'json',
-                            async: false,
-                            contentType: 'application/json',
-                            data: JSON.stringify(getData(ItemsId[numItems],myStorage.getItem("id"))),
-                            success: function () {
-                                alert("Sold");
-                            },
-                            error: function () {
-                                alert("Something went wrong");
-                            }
-                        });
-                    };
+                    newBtn= '<button class="btn" type="button" id=itemBtn'+name+ 'value='+idItem+ '> Buy '+name +'</button>';
+                    newDiv.innerHTML = '<img class= "image" src="img/' + name + '.jpg" align="left">Weapon: ' + name  + '<br>Description: ' + description + '<br>Rarity: ' + rarity + '<br> Credits: ' + credit+ '<br>' + newBtn;
                     document.body.insertBefore(newDiv,document.getElementById("mainstyle"));
-                    document.body.insertBefore(newBtn,document.getElementById("mainstyle"));
                     N_fila = '<tr>' + '<td>' + name + '</td>' + '<td>' + description + '</td>' + '<td>' + rarity + '</td>' + '<td>' + credit + '</td>' + '</tr>';
                     $("#tabla").append(N_fila);
-                    numItems++;
                 });
             });
+        }
+        function buyItem() {
+            idItem=$(this).getAttribute("value");
+            $.ajax
+            ({
+                type: "POST",
+                //the url where you want to sent the userName and password to
+                url: '/Backend/inventory/addItem',
+                dataType: 'json',
+                async: false,
+                contentType: 'application/json',
+                data: JSON.stringify(getData(idItem,myStorage.getItem("id"))),
+                success: function () {
+                    alert("Sold");
+                },
+                error: function () {
+                    alert("Something went wrong");
+                }
+            });
+        }
+        $(document).ready(function() {
+            getItems();
+            $("Button").click(buyItem);
         });
+
     </script>
 </head>
 <body>
-    <nav class="topnav">
-        <a href="main.html">Home</a>
-        <a href="#">About</a>
-        <a href="#">Contact</a>
-        <div class = "sign">
-            <form>
-                <div id="signInBtn" class="btn-group btn-group-justified">
-                    <a href="index.html" class="btn btn-info">Sign In</a>
-                </div>
-                <div id="signUpBtn" class="btn-group btn-group-justified">
-                    <a href="register.html" class="btn btn-info">Sign Up</a>
-                </div>
-            </form>
-        </div>
-    </nav>
+<nav class="topnav">
+    <a href="main.html">Home</a>
+    <a href="#">About</a>
+    <a href="#">Contact</a>
+    <div class = "sign">
+        <form>
+            <div id="signInBtn" class="btn-group btn-group-justified">
+                <a href="index.html" class="btn btn-info">Sign In</a>
+            </div>
+            <div id="signUpBtn" class="btn-group btn-group-justified">
+                <a href="register.html" class="btn btn-info">Sign Up</a>
+            </div>
+        </form>
+    </div>
+</nav>
 
-
-    <div class="mainstyle">
-            <div class="container">
-                <div class="jumbotron jumbotron-billboard">
-                    <div>
-                        <div class="espacio"></div>
-                        <table id="tabla" class="table table-striped">
-                            <thead>
-                            <tr>
-                                <th>Nombre</th>
-                                <th>Descripción</th>
-                                <th>Rarity</th>
-                                <th>Credit</th>
-                            </tr>
-                            </thead>
-                            <tbody id ="cuerpo_tabla"></tbody>
-                        </table>
-                    </div>
-                </div>
+<div class="mainstyle">
+    <div class="container">
+        <div class="jumbotron jumbotron-billboard">
+            <div>
+                <div class="espacio"></div>
+                <table id="tabla" class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Descripción</th>
+                        <th>Rarity</th>
+                        <th>Credit</th>
+                    </tr>
+                    </thead>
+                    <tbody id ="cuerpo_tabla"></tbody>
+                </table>
             </div>
         </div>
+    </div>
+</div>
 </body>
 </html>

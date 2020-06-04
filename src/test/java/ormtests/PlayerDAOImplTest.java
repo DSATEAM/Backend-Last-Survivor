@@ -6,9 +6,7 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import sun.management.counter.perf.PerfLongArrayCounter;
 
-import javax.print.event.PrintJobAttributeListener;
 
 public class PlayerDAOImplTest{
     PlayerDAOImpl playerDAO ;
