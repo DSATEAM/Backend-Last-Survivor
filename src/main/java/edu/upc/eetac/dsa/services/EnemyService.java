@@ -38,7 +38,7 @@ public class EnemyService {
     })
     @Path("/addEnemy")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response addMap(Enemy enemy) {
+    public Response addEnemies(Enemy enemy) {
         //Checking if anything null or empty which shouldn't be!
         if(enemy.getName() ==null || enemy.getDescription()==null|| enemy.getAvatar()==null) return Response.status(400).build();
         if(enemy.getName().equals("") || enemy.getDescription().equals("")|| enemy.getAvatar().equals("")
@@ -65,7 +65,7 @@ public class EnemyService {
     })
     @Path("/getEnemies")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getItems() {
+    public Response getEnemies() {
         List<Enemy> list = this.manager.getEnemies();
         GenericEntity<List<Enemy>> entity = new GenericEntity<List<Enemy>>(list) {};
         return Response.status(201).entity(entity).build();
