@@ -63,7 +63,7 @@ public class EnemyService {
             @ApiResponse(code = 201, message = "Successful", response = Enemy.class, responseContainer = "List"),
             @ApiResponse(code = 400, message = "Bad Request"),
     })
-    @Path("/getItems")
+    @Path("/getEnemies")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getItems() {
         List<Enemy> list = this.manager.getEnemies();
