@@ -1,6 +1,6 @@
 function getData(ids,parentids){
     var obj = {
-        "id": ids,
+        "id": "#1",
         "parentId": parentids
     }
     $("#res").text('' + obj)
