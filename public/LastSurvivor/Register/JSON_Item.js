@@ -1,7 +1,7 @@
-function getData(ids,parentids){
+function getData(itemId,parentId){
     var obj = {
-        "id": "#1",
-        "parentId": parentids
+        "id": itemId,
+        "parentId": parentId
     }
     $("#res").text('' + obj)
     return obj;
