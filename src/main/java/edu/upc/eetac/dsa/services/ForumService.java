@@ -116,7 +116,7 @@ import java.util.List;
         return Response.status(201).entity(this.manager.getForum(message.getParentId())).build();
     }
 
-    @GET
+    @PUT
     @ApiOperation(value = "getMessages", notes = "gets Messages in a Forum")
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "Successful", response = Message.class, responseContainer = "List"),

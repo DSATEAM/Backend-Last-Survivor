@@ -1,5 +1,6 @@
 package edu.upc.eetac.dsa.managers;
 
+import edu.upc.eetac.dsa.orm.dao.ForumDAOImpl;
 import edu.upc.eetac.dsa.orm.dao.ItemDAOImpl;
 import edu.upc.eetac.dsa.orm.dao.MessageDAOImpl;
 import edu.upc.eetac.dsa.orm.dao.PlayerDAOImpl;
@@ -15,6 +16,7 @@ public class MessageManagerImpl implements MessageManager {
     private static MessageManager instance;
     private static ForumManager forumManager=ForumManagerImpl.getInstance();
     private static MessageDAOImpl messageDAO= new MessageDAOImpl();
+    private static ForumDAOImpl forumDAO= new ForumDAOImpl();
     private static final Logger log = Logger.getLogger(MessageManagerImpl.class);
     public static MessageManager getInstance() {
         if (instance == null) {
