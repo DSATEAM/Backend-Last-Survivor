@@ -128,12 +128,16 @@ public class ForumDAOImpl implements IForumDAO{
 
     public List<Forum> getForums() {
         Session session = null;
-        List forumList=null;
+        List<Forum> forumList=null;
         try {
             session = FactorySession.openSession();
             forumList = (List) session.findAll(Forum.class);
             System.out.println("La lista es " + forumList);
-            
+            for (int i=0; i<forumList.size();i++) {
+                List<Message> messages =(List) session.getList(Message.class, forumList.get(i).getId());
+                forumList.get(i).setListMessages(messages);
+                forumList.set(i,forumList.get(i));
+            }
 
         }
         catch (Exception e) {

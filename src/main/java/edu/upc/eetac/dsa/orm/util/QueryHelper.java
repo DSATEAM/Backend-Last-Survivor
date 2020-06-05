@@ -56,7 +56,7 @@ public class QueryHelper {
     public static String createParentIdQuerySELECT(Object entity) {
         StringBuffer sb = new StringBuffer();
         sb.append("SELECT * FROM ").append(entity.getClass().getSimpleName());
-        sb.append(" WHERE parentID = ?");
+        sb.append(" WHERE parentId = ?");
 
         return sb.toString();
     }
