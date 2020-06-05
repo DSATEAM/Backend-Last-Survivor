@@ -27,7 +27,7 @@
                     idItem=data.id;
                     newDiv = document.createElement("div");
                     newDiv.className = 'itemsDIV';
-                    newBtn= '<button class="btn" type="button" id=itemBtn'+name+ 'value='+idItem+ '> Buy '+name +'</button>';
+                    newBtn= '<button class="btn" type="button" id=itemBtn'+name+ ' value=' +idItem+ '> Buy '+name +'</button>';
                     newDiv.innerHTML = '<img class= "image" src="img/' + name + '.jpg" align="left">Weapon: ' + name  + '<br>Description: ' + description + '<br>Rarity: ' + rarity + '<br> Credits: ' + credit+ '<br>' + newBtn;
                     document.body.insertBefore(newDiv,document.getElementById("mainstyle"));
                     N_fila = '<tr>' + '<td>' + name + '</td>' + '<td>' + description + '</td>' + '<td>' + rarity + '</td>' + '<td>' + credit + '</td>' + '</tr>';
@@ -37,6 +37,7 @@
         }
         function buyItem() {
             console.log("BuyItem");
+            console.log(this);
             idItem=$(this).getAttribute("value");
             $.ajax
             ({
