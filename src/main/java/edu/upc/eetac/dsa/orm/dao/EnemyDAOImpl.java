@@ -3,17 +3,18 @@ package edu.upc.eetac.dsa.orm.dao;
 import edu.upc.eetac.dsa.orm.FactorySession;
 import edu.upc.eetac.dsa.orm.Session;
 import edu.upc.eetac.dsa.orm.model.Enemy;
+import edu.upc.eetac.dsa.orm.model.Map;
 
+import java.util.LinkedList;
 import java.util.List;
 
 public class EnemyDAOImpl implements IEnemyDAO{
 
-    public String addEnemy(String name, String description, int power, int health) {
+    public String addEnemy(Enemy enemy) {
         Session session = null;
         String id=null;
         try {
             session = FactorySession.openSession();
-            Enemy enemy = new Enemy(name, description, power, health);
             id=session.save(enemy);
         }
         catch (Exception e) {
@@ -26,35 +27,32 @@ public class EnemyDAOImpl implements IEnemyDAO{
         return id;
     }
 
-
-    public Enemy getEnemy(String enemyID) {
+    @Override
+    public Enemy getEnemyFromName(String name) {
         Session session = null;
         Enemy enemy = null;
         try {
+            String query = "SELECT * FROM Enemy WHERE name = ?";
             session = FactorySession.openSession();
-            enemy = (Enemy)session.get(Enemy.class, enemyID);
-
+            List<String> params = new LinkedList<>();
+            List<Object> result;
+            params.add(name);
+            result = (List)session.queryExecuteGetObject(Enemy.class, query,params);
+            if(result.size()!=0) return (Enemy) result.get(0);
+            else return null;
         }
         catch (Exception e) {
             // LOG
+            e.printStackTrace();
         }
-
         finally {
             session.close();
         }
-
         return enemy;
     }
 
-
-    public int updateEnemy(String enemyID, String name,String description, int power, int health) {
-        Enemy enemy = this.getEnemy(enemyID);
-        enemy.setName(name);
-        enemy.setDescription(description);
-        enemy.setPower(power);
-        enemy.setHealth(health);
+    public int updateEnemy(Enemy enemy) {
         int res = 0;
-
         Session session = null;
         try {
             session = FactorySession.openSession();
@@ -63,6 +61,7 @@ public class EnemyDAOImpl implements IEnemyDAO{
         }
         catch (Exception e) {
             // LOG
+            res = -1;
         }
         finally {
             session.close();
@@ -71,8 +70,7 @@ public class EnemyDAOImpl implements IEnemyDAO{
     }
 
 
-    public int deleteEnemy(String enemyID) {
-        Enemy enemy = this.getEnemy(enemyID);
+    public int deleteEnemy(Enemy enemy) {
         Session session = null;
         int res = 0;
         try {
@@ -82,6 +80,7 @@ public class EnemyDAOImpl implements IEnemyDAO{
         }
         catch (Exception e) {
             // LOG
+            res = -1;
         }
         finally {
             session.close();
