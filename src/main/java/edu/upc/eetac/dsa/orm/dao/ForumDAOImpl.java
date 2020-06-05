@@ -133,6 +133,7 @@ public class ForumDAOImpl implements IForumDAO{
             session = FactorySession.openSession();
             forumList = (List) session.findAll(Forum.class);
             System.out.println("La lista es " + forumList);
+            
 
         }
         catch (Exception e) {
