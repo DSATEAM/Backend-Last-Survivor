@@ -10,9 +10,6 @@ public class Player implements Comparable<Player> {
     private int kills;
     private int experience;
     private int credits;
-
-
-
     private String avatar;
     //TODO Recursive Mapping of Objects Item and Material
     List<Item> listItems;
