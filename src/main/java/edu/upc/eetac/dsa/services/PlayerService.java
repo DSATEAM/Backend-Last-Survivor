@@ -3,6 +3,7 @@ package edu.upc.eetac.dsa.services;
 import edu.upc.eetac.dsa.managers.PlayerManager;
 import edu.upc.eetac.dsa.managers.PlayerManagerImpl;
 import edu.upc.eetac.dsa.orm.model.Player;
+import edu.upc.eetac.dsa.orm.model.RankingDTO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -13,6 +14,7 @@ import org.apache.log4j.Logger;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.util.List;
 
 @Api(value = "/PlayerService", description = "Endpoint to Player Service")
 @Path("/access")
@@ -82,6 +84,7 @@ public class PlayerService {
 
         return Response.status(201).entity(player).build();
     }
+
     @PUT
     @ApiOperation(value = "Delete Player", notes = "Delete Player given PlayerId")
     @ApiResponses(value = {

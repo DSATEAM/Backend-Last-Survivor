@@ -12,6 +12,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import org.apache.log4j.Logger;
+import org.eclipse.persistence.internal.indirection.BackupValueHolder;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.GenericEntity;
@@ -20,7 +21,7 @@ import javax.ws.rs.core.Response;
 import java.util.List;
 
 @Api(value = "/ForumService", description = "Endpoint to Forum Service")
-    @Path("/create")
+    @Path("/forum")
     public class ForumService {
     static final Logger logger = Logger.getLogger(edu.upc.eetac.dsa.services.ForumService.class);
     private final ForumManager manager;
@@ -42,7 +43,7 @@ import java.util.List;
     @Produces(MediaType.APPLICATION_JSON)
     public Response createForum(Forum forum) {
 
-        if (forum.getName() == null || forum.getParentId() == null || forum.getName() == "" || forum.getParentId() == "" || forum.getName().isEmpty() || forum.getParentId().isEmpty())
+        if (forum.getName() == null || forum.getAdmin() == null || forum.getAvatar() == null || forum.getName() == "" || forum.getAdmin() == "" ||  forum.getAvatar() == "" ||forum.getName().isEmpty() || forum.getAdmin().isEmpty() || forum.getAvatar().isEmpty())
             return Response.status(400).build();
         String forumId = this.manager.createForum(forum);
         logger.info("createForum: " + forum);
@@ -111,7 +112,7 @@ import java.util.List;
     @Path("/addMessage")
     @Produces(MediaType.APPLICATION_JSON)
     public Response addMessage(Message message) {
-        if (message.getParentId() == null) return Response.status(400).build();
+        if (message.getParentId() == null||message.getUsername()== null||message.getAvatar()==null) return Response.status(400).build();
         this.messageManager.addMessage(message);
         return Response.status(201).entity(this.manager.getForum(message.getParentId())).build();
     }
@@ -125,7 +126,7 @@ import java.util.List;
     @Path("/getMessages")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getMessages(Forum forum) {
-        List<Message> list = this.messageManager.getMessages(forum.getParentId());
+        List<Message> list = this.messageManager.getMessages(forum.getId());
         GenericEntity<List<Message>> entity = new GenericEntity<List<Message>>(list) {
         };
         return Response.status(201).entity(entity).build();

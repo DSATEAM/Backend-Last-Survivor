@@ -77,7 +77,7 @@ public class ForumDAOImpl implements IForumDAO{
             session = FactorySession.openSession();
             forum = (Forum) session.get(Forum.class, id);
             //Now that we have the player we must add the items and materials of the player
-            List<Message> messages =(List) session.getList(Message.class, forum.getParentId());
+            List<Message> messages =(List) session.getList(Message.class, forum.getId());
             forum.setListMessages(messages);
         }
         catch (Exception e) {

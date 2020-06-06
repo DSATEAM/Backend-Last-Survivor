@@ -2,6 +2,7 @@ package edu.upc.eetac.dsa.managers;
 
 import edu.upc.eetac.dsa.orm.dao.PlayerDAOImpl;
 import edu.upc.eetac.dsa.orm.model.Player;
+import edu.upc.eetac.dsa.orm.model.RankingDTO;
 import org.apache.log4j.Logger;
 
 import java.util.List;
@@ -9,6 +10,7 @@ import java.util.List;
 public class PlayerManagerImpl implements PlayerManager {
     private static PlayerManager instance;
     PlayerDAOImpl playerDAO = new PlayerDAOImpl();
+    RankingManagerImpl rankingManager= new RankingManagerImpl();
     private static final Logger log = Logger.getLogger(PlayerManagerImpl.class);
     //Singleton implementation for the instance of the GameManager
     private PlayerManagerImpl(){
@@ -16,6 +18,7 @@ public class PlayerManagerImpl implements PlayerManager {
         //this.mapUser = new HashMap<>();
         //this.listGameObjects = new LinkedList<>();
     }
+
     public static PlayerManager getInstance() {
         if (instance == null) {
             instance = new PlayerManagerImpl();

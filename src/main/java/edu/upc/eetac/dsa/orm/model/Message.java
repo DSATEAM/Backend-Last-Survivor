@@ -4,6 +4,7 @@ public class Message {
     String id;
     String parentId;
     String username;
+    String avatar;
     String message;
 
     public String getParentId() {
@@ -12,6 +13,14 @@ public class Message {
 
     public void setParentId(String parentId) {
         this.parentId = parentId;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
     }
 
     public String getUsername() {
@@ -31,10 +40,11 @@ public class Message {
     public void setMessage(String message) { this.message = message; }
     //Empty Constructor
     public Message(){}
-    public Message(String username, String message, String parentId) {
+    public Message(String username, String message, String parentId, String avatar) {
         this.username = username;
         this.parentId=parentId;
         this.message=message;
+        this.avatar=avatar;
 
     }
 
