@@ -11,8 +11,8 @@ import java.util.List;
 public class ItemDAOImpl implements IItemDAO{
     static final Logger logger = Logger.getLogger(ItemDAOImpl.class);
     @Override
-    public String addItem(String parentId, String name, String type, String rarity, String description, int offense, int defense) {
-        Item item = new Item(parentId,name,type,rarity,description,50,offense,defense);
+    public String addItem(String parentId, String name, String type, String rarity, String description, int offense, int defense,float hitRange, float attackCooldown) {
+        Item item = new Item(parentId,name,type,rarity,description,50,offense,defense,hitRange,attackCooldown);
         return saveItem(item);
     }
 

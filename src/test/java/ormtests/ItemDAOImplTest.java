@@ -20,7 +20,7 @@ public class ItemDAOImplTest {
     @Before
     public void setUp() {
         item = null;
-        item = new Item("007","Casino9","Ranged","Extinct","Long lost Item",50,2,0);
+        item = new Item("007","Casino9","Ranged","Extinct","Long lost Item",50,2,0,1.25f,0.75f);
     }
     //Tests
     //Metodo Test para crear un nuevo brote

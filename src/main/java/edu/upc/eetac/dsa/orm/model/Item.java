@@ -10,10 +10,12 @@ public class Item {
     private int credit;
     private int offense;
     private int defense;
+    private float hitRange;
+    private float attackCooldown;
     //Empty Constructor
     public Item() {
     }
-    public Item(String parentId, String name, String type, String rarity, String description, int credit, int offense, int defense) {
+    public Item(String parentId, String name, String type, String rarity, String description, int credit, int offense, int defense,float hitRange, float attackCooldown) {
         this.parentId = parentId;
         this.name = name;
         this.type = type;
@@ -22,6 +24,8 @@ public class Item {
         this.credit = credit;
         this.offense = offense;
         this.defense = defense;
+        this.hitRange = hitRange;
+        this.attackCooldown = attackCooldown;
     }
     public String getId() {
         return id;
@@ -87,5 +91,21 @@ public class Item {
 
     public void setDefense(int defense) {
         this.defense = defense;
+    }
+
+    public float getHitRange() {
+        return hitRange;
+    }
+
+    public void setHitRange(float hitRange) {
+        this.hitRange = hitRange;
+    }
+
+    public float getAttackCooldown() {
+        return attackCooldown;
+    }
+
+    public void setAttackCooldown(float attackCooldown) {
+        this.attackCooldown = attackCooldown;
     }
 }
