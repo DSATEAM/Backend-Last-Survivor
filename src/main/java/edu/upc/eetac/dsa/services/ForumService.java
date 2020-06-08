@@ -112,6 +112,7 @@ import java.util.List;
     @Path("/addMessage")
     @Produces(MediaType.APPLICATION_JSON)
     public Response addMessage(Message message) {
+        logger.info("Add Message:  "+message.toString());
         if (message.getParentId() == null||message.getUsername()== null||message.getAvatar()==null) return Response.status(400).build();
         this.messageManager.addMessage(message);
         return Response.status(201).entity(this.manager.getForum(message.getParentId())).build();
@@ -127,6 +128,7 @@ import java.util.List;
     @Produces(MediaType.APPLICATION_JSON)
     public Response getMessages(Forum forum) {
         List<Message> list = this.messageManager.getMessages(forum.getId());
+
         GenericEntity<List<Message>> entity = new GenericEntity<List<Message>>(list) {
         };
         return Response.status(201).entity(entity).build();

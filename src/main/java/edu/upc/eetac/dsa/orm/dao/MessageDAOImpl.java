@@ -82,6 +82,7 @@ public class MessageDAOImpl implements IMessageDAO {
             session = FactorySession.openSession();
             listMessages = (List) session.queryExecuteGetObject(Message.class,query,params);
             //Means we have list of Items now we must get the Standard Items
+            System.out.println("La lista es " + listMessages);
         }
         catch (Exception e) {
             // LOG

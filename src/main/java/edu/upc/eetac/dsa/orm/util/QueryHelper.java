@@ -21,6 +21,12 @@ public class QueryHelper {
         sb.append(") VALUES (");
         for (String field: fields) {
             sb.append("?,");
+            /*if(field.equals("password")){
+                sb.append("MD5(?),");
+            }
+            else {
+                sb.append("?,");
+            }*/
         }
         sb.deleteCharAt(sb.length()-1);
         sb.append(")");
@@ -48,6 +54,9 @@ public class QueryHelper {
 
         return sb.toString();
     }
+    //SELECT md5(password ) AS pass, username FROM USER WHERE username = ?
+    //SELECT count(*) FROM USER WHERE username = ? AND password = md5(?)
+    //SELECT count(*) AS IS_USER FROM USER WHERE username = ? AND password = md5(?)
     public static String createQuerySELECTALL(Object entity){
         StringBuffer sb = new StringBuffer();
         sb.append("SELECT * FROM ").append(entity.getClass().getSimpleName());
