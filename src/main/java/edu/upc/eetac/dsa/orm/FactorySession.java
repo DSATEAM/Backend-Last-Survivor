@@ -13,9 +13,6 @@ public class FactorySession {
         Session session = new SessionImpl(conn);
         return session;
     }
-
-
-
     private static Connection getConnection() {
         Connection conn = null;
         try
