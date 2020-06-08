@@ -74,6 +74,9 @@ public class ObjectHelper {
             if(paramType == Integer.class){
                 setter = theClass.getMethod(gMethod,Integer.TYPE);
                 setter.invoke(object, value);
+            }else if(paramType == Float.class){
+                setter = theClass.getMethod(gMethod,Float.TYPE);
+                setter.invoke(object, value);
             }else{
                 setter = theClass.getMethod(gMethod,paramType);
                 setter.invoke(object, value);
