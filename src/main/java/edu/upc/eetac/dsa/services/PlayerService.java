@@ -69,7 +69,8 @@ public class PlayerService {
             }
             if ((player.getId().equals("") ||player.getId().isEmpty())) {
                 return true;
-            }}
+            }
+        }
         if(player.getPassword()==null || player.getUsername()==null) {
             return true;
         }
