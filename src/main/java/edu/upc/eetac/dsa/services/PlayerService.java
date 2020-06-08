@@ -33,10 +33,9 @@ public class PlayerService {
     @Path("/signUp")
     @Produces(MediaType.APPLICATION_JSON)
     public Response signUp(Player player) {
-
+        String playerId = this.manager.signUp(player);
         if (isPlayerBad(player,true)) return Response.status(400).build();
         logger.info("signUp: Username "+player.getUsername()+" ,Password "+player.getPassword());
-        String playerId = this.manager.signUp(player);
         if(playerId == null) return Response.status(409).build();
         //Means we have found the player thus we can return the player as a object filled with its data
         player = this.manager.getPlayer(playerId);
