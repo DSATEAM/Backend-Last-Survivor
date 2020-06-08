@@ -5,8 +5,6 @@ import edu.upc.eetac.dsa.orm.model.Player;
 import edu.upc.eetac.dsa.orm.model.RankingDTO;
 import org.apache.log4j.Logger;
 
-import java.util.List;
-
 public class PlayerManagerImpl implements PlayerManager {
     private static PlayerManager instance;
     PlayerDAOImpl playerDAO = new PlayerDAOImpl();
@@ -15,8 +13,6 @@ public class PlayerManagerImpl implements PlayerManager {
     //Singleton implementation for the instance of the GameManager
     private PlayerManagerImpl(){
         //Singleton Private Constructor
-        //this.mapUser = new HashMap<>();
-        //this.listGameObjects = new LinkedList<>();
     }
 
     public static PlayerManager getInstance() {
@@ -31,6 +27,7 @@ public class PlayerManagerImpl implements PlayerManager {
         if(playerDAO.existUsername(player.getUsername())) {
             return null;
         }else{
+            player = checkPlayerAvatar(player);
             String playerID = playerDAO.addPlayer(player);
             return playerID;
         }
@@ -42,27 +39,37 @@ public class PlayerManagerImpl implements PlayerManager {
         String playerID = playerDAO.getId(player.getUsername(),player.getPassword());
         return playerID;
     }
-
     @Override
-    public int signOut(String playerID) {
-        //Remove the Player Local Instance from the List<Players> ?? MAYBE
-        //WHATS THE USE??
-        return 0;
-    }
-
-    @Override
-    public Player getPlayer(String playerID) {
+    public Player getPlayer(String playerId) {
         //Returns Player with Items and Materials list included!
-        return playerDAO.getPlayer(playerID);
+        return playerDAO.getPlayer(playerId);
     }
 
     @Override
     public Player updatePlayer(Player player) {
+        //Check avatar,id is null or empty and add basicAvatar than update
+        if(checkPlayerId(player)){return null;}
+        player = checkPlayerAvatar(player);
         return playerDAO.updatePlayer(player);
     }
-
+    private boolean checkPlayerId(Player player){
+        if(player.getId()== null ){
+            if(player.getId().equals("")||player.getId().isEmpty())
+            {return false;}
+            return false;
+        }
+        return true;
+    }
+    private Player checkPlayerAvatar(Player player){
+        if(player.getAvatar()== null ){
+            if(player.getAvatar().equals("")||player.getAvatar().isEmpty())
+            {player.setAvatar("basicAvatar");}
+            player.setAvatar("basicAvatar");
+        }
+        return player;
+    }
     @Override
-    public int deletePlayer(String playerID) {
-       return playerDAO.deletePlayer(playerID);
+    public int deletePlayer(String playerId) {
+       return playerDAO.deletePlayer(playerId);
     }
 }

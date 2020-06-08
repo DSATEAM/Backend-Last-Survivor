@@ -28,7 +28,30 @@ public class EnemyService {
     public EnemyService(){
         manager = EnemyManagerImpl.getInstance();
     }
-
+    private boolean checkEnemy(Enemy enemy,boolean doCheckId){
+        if(enemy == null){return false;}
+        if(enemy.getId()== null || doCheckId){
+            if(enemy.getId().equals("")||enemy.getId().isEmpty())
+            {return false;}
+            return false;
+        }
+        if(enemy.getName()== null ){
+            if(enemy.getName().equals("")||enemy.getName().isEmpty())
+            {return false;}
+            return false;
+        }
+        if(enemy.getDescription()== null ){
+            if(enemy.getDescription().equals("")||enemy.getDescription().isEmpty())
+            {return false;}
+            return false;
+        }
+        if(enemy.getAvatar()== null ){
+            if(enemy.getDescription().equals("")||enemy.getDescription().isEmpty())
+            {return false;}
+            return false;
+        }
+        return true;
+    }
     @POST
     @ApiOperation(value = "add Enemy", notes = "Adds a new Enemy to db given Enemy")
     @ApiResponses(value = {
@@ -39,17 +62,15 @@ public class EnemyService {
     @Path("/addEnemy")
     @Produces(MediaType.APPLICATION_JSON)
     public Response addEnemies(Enemy enemy) {
-        //Checking if anything null or empty which shouldn't be!
-        if(enemy.getName() ==null || enemy.getDescription()==null|| enemy.getAvatar()==null) return Response.status(400).build();
-        if(enemy.getName().equals("") || enemy.getDescription().equals("")|| enemy.getAvatar().equals("")
-                ||enemy.getName().isEmpty()|| enemy.getDescription().isEmpty()|| enemy.getAvatar().isEmpty())  return Response.status(400).build();
+        //Checking if anything null,except id!
+        if(!checkEnemy(enemy,false)) return Response.status(400).build();
         //Check if enemy with same name exists!
         Enemy tmp = manager.getEnemyFromName(enemy);
         //Adding Map
         if(tmp==null) {
             String mapId = this.manager.addEnemy(enemy);
             logger.info("Added Enemy: " + enemy.toString());
-            if (mapId == null) return Response.status(409).build();
+            if (mapId == null) return Response.status(400).build();
             //Means we have added the enemy thus we can return the enemy as a object filled with its data and id
             enemy.setId(mapId);
             return Response.status(201).entity(enemy).build();
@@ -58,7 +79,7 @@ public class EnemyService {
         }
     }
     @GET
-    @ApiOperation(value = "getEnemy", notes = "gets Enemy in List")
+    @ApiOperation(value = "getEnemies", notes = "gets Enemy in List")
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "Successful", response = Enemy.class, responseContainer = "List"),
             @ApiResponse(code = 400, message = "Bad Request"),
@@ -80,10 +101,9 @@ public class EnemyService {
     @Path("/updateEnemy")
     @Produces(MediaType.APPLICATION_JSON)
     public Response updateEnemy(Enemy enemy) {
-        if (enemy == null )  return Response.status(400).build();
+        if (!checkEnemy(enemy,true) )  return Response.status(400).build();
         int res = this.manager.updateEnemy(enemy);
-        if(res == -1) return Response.status(404).build();
-
+        if(res <=0) return Response.status(404).build();
         return Response.status(201).entity(enemy).build();
     }
     @PUT
@@ -97,11 +117,11 @@ public class EnemyService {
     @Produces(MediaType.APPLICATION_JSON)
     public Response deleteEnemy(Enemy enemy) {
         if(enemy.getId()==null || enemy.getName()==null) return Response.status(400).build();
-        if (enemy.getId()=="" || enemy.getName()==""||enemy.getDescription().isEmpty())  return Response.status(400).build();
+        if (enemy.getId().equals(""))  return Response.status(400).build();
         //Not Authorized or no user with the password or Vice versa
-        logger.info("Delete Enemy: Name "+enemy.getName()+" ,ID "+enemy.getId());
+        logger.info("Delete Enemy: ID "+enemy.getId());
         int res = this.manager.deleteEnemy(enemy);
-        if(res == -1) return Response.status(404).build();
+        if(res <=0) return Response.status(404).build();
         return Response.status(201).build();
     }
 }

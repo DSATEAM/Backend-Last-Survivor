@@ -3,6 +3,7 @@ package edu.upc.eetac.dsa.managers;
 
 import edu.upc.eetac.dsa.orm.dao.EnemyDAOImpl;
 import edu.upc.eetac.dsa.orm.model.Enemy;
+
 import org.apache.log4j.Logger;
 import java.util.List;
 

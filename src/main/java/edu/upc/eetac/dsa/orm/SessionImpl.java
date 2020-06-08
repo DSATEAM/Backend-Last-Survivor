@@ -22,7 +22,7 @@ public class SessionImpl implements Session {
     public String save(Object entity) {
         String insertQuery = QueryHelper.createQueryINSERT(entity);
         RandomUtils randomUtils = new RandomUtils();
-        PreparedStatement pstm = null;
+        PreparedStatement pstm;
         String id = RandomUtils.generateID(sizeId);
         try {
             pstm = conn.prepareStatement(insertQuery);
@@ -97,7 +97,7 @@ public class SessionImpl implements Session {
         }
         return obj;
     }
-    // Given Class (Item,Player) with parentID returns list<Material,Item>
+    // Given Class (Player) with parentID returns list<Item>
     public List<Object> getList(Class theClass,String parentId){
 
          PreparedStatement pstm = null;
@@ -125,9 +125,9 @@ public class SessionImpl implements Session {
         return objList;
     }
     // TODO FINISH THE MOFICATION OF THE OBJECT GIVEN THE UPDATED OBJECT
-    public void update(Object object) {
+    public int update(Object object) {
         String updateQuery = QueryHelper.createQueryUPDATE(object);
-        PreparedStatement pstm;
+        PreparedStatement pstm;int affectedRows = 0;
         try {
             pstm = conn.prepareStatement(updateQuery);
             int i = 1;
@@ -141,15 +141,17 @@ public class SessionImpl implements Session {
             String field=ObjectHelper.getStrFields(object)[0];
             obj = ObjectHelper.getter(object,field);
             pstm.setObject(i, obj);
-            pstm.executeQuery();
+         affectedRows = pstm.executeUpdate();
 
         } catch (Exception e) {
             e.printStackTrace();
         }
+        return affectedRows;
     }
     // TODO FINISH THE DELETE OBJECT FROM DB GIVEN THE OBJECT
-    public void delete(Object object) {
+    public int delete(Object object) {
         String delete = QueryHelper.createQueryDELETE(object);
+        int affectedRows = 0;
         PreparedStatement pstm = null;
         try {
             pstm=conn.prepareStatement(delete);
@@ -158,15 +160,14 @@ public class SessionImpl implements Session {
                     pstm.setObject(1, ObjectHelper.getter(object, field));
                 }
             }
-            pstm.executeQuery();
+          affectedRows = pstm.executeUpdate();
         }
         catch (Exception e){
             e.printStackTrace();
         }
-
-
+        return affectedRows;
     }
-    // TODO FINISH THE GET ALL OF THE DATA FROM DB GIVEN THE CLASS(model)
+    // GET ALL OF THE DATA FROM DB GIVEN THE CLASS(model)
     public List<Object> findAll(Class theClass){
 
         PreparedStatement pstm = null;
@@ -193,7 +194,7 @@ public class SessionImpl implements Session {
         return objList;
 
     }
-    // TODO FINISH THE GET ALL OF THE DATA FROM DB GIVEN THE CLASS(model) & THE PARAMETERS WHICH MATCH THE HASH
+    // GET ALL OF THE DATA FROM DB GIVEN THE CLASS(model) & THE PARAMETERS WHICH MATCH THE HASH
     public List<Object> findAll(Class theClass, HashMap params) {
         return null;
     }

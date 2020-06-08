@@ -1,7 +1,6 @@
 package edu.upc.eetac.dsa.managers;
 
 import edu.upc.eetac.dsa.orm.dao.MapDAOImpl;
-import edu.upc.eetac.dsa.orm.dao.PlayerDAOImpl;
 import edu.upc.eetac.dsa.orm.model.Map;
 import org.apache.log4j.Logger;
 

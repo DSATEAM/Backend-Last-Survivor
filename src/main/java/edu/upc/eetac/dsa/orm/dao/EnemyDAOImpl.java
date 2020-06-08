@@ -56,8 +56,8 @@ public class EnemyDAOImpl implements IEnemyDAO{
         Session session = null;
         try {
             session = FactorySession.openSession();
-            session.update(enemy);
-            res=1;
+            res =session.update(enemy);
+
         }
         catch (Exception e) {
             // LOG
@@ -75,8 +75,7 @@ public class EnemyDAOImpl implements IEnemyDAO{
         int res = 0;
         try {
             session = FactorySession.openSession();
-            session.delete(enemy);
-            res=1;
+            res =session.delete(enemy);
         }
         catch (Exception e) {
             // LOG

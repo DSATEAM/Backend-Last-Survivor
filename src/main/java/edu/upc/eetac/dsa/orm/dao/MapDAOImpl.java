@@ -3,8 +3,6 @@ package edu.upc.eetac.dsa.orm.dao;
 import edu.upc.eetac.dsa.orm.FactorySession;
 import edu.upc.eetac.dsa.orm.Session;
 import edu.upc.eetac.dsa.orm.model.Map;
-import edu.upc.eetac.dsa.orm.model.Player;
-
 import java.util.LinkedList;
 import java.util.List;
 
@@ -69,12 +67,11 @@ public class MapDAOImpl implements IMapDAO{
     }
 
     public int updateMap(Map map){
-        int res;
+        int res = 0;
         Session session = null;
         try {
             session = FactorySession.openSession();
-            session.update(map);
-            res = 1;
+           res = session.update(map);
         }
         catch (Exception e) {
             // LOG
@@ -94,8 +91,7 @@ public class MapDAOImpl implements IMapDAO{
         int res=0;
         try {
             session = FactorySession.openSession();
-            session.delete(map);
-            res=1;
+            res = session.delete(map);
         }
         catch (Exception e) {
             // LOG

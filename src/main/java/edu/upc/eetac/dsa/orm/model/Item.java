@@ -1,8 +1,4 @@
 package edu.upc.eetac.dsa.orm.model;
-
-import java.util.LinkedList;
-import java.util.List;
-
 public class Item {
 
     private String id;

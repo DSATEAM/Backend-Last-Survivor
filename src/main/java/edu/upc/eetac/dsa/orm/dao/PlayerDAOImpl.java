@@ -13,7 +13,7 @@ public class PlayerDAOImpl implements IPlayerDAO {
     public String addPlayer(Player player) {
         Session session = null;
 
-        String id=null;
+        String id;
         try {
             session = FactorySession.openSession();
             id=session.save(player);
@@ -34,7 +34,7 @@ public class PlayerDAOImpl implements IPlayerDAO {
             session = FactorySession.openSession();
             String query = "SELECT * FROM player WHERE username = ?"; List<String> paramsList = new LinkedList<>();
             paramsList.add(username);
-            ids = (List) session.queryExecute(String.class, query,paramsList);
+            ids = session.queryExecute(String.class, query,paramsList);
             return !ids.isEmpty();
         }
         catch (Exception e) {
@@ -53,7 +53,7 @@ public class PlayerDAOImpl implements IPlayerDAO {
             session = FactorySession.openSession();
             String query = "SELECT id FROM player WHERE username = ? AND password = ?"; List<String> paramsList = new LinkedList<>();
             paramsList.add(username);paramsList.add(password);
-            ids = (List) session.queryExecute(String.class, query,paramsList);
+            ids = session.queryExecute(String.class, query,paramsList);
             if(ids.isEmpty()) return null;
             for(Object id : ids){
                 playerId = (String) id;
@@ -92,8 +92,8 @@ public class PlayerDAOImpl implements IPlayerDAO {
         Session session = null;
         try {
             session = FactorySession.openSession();
-            session.delete(player);
-            res = 1;
+           res =  session.delete(player);
+
         }
         catch (Exception e) {
             // LOG
@@ -105,18 +105,20 @@ public class PlayerDAOImpl implements IPlayerDAO {
         return res;
     }
     public Player updatePlayer(Player player) {
-        int res;
         Session session = null;
         try {
             session = FactorySession.openSession();
-            session.update(player);
-            res = 1;
-
+          if(session.update(player)>0)
+          {
+              //Player was updated return player
+              return player;
+          }else{
+              return null;
+          }
         }
         catch (Exception e) {
             // LOG
             e.printStackTrace();
-            res = -1;
             player = null;
         }
         finally {
@@ -126,12 +128,10 @@ public class PlayerDAOImpl implements IPlayerDAO {
     }
     public List<Player> getPlayers() {
         Session session = null;
-        List rankingList=null;
+        List playerList=null;
         try {
             session = FactorySession.openSession();
-            rankingList = (List) session.findAll(Player.class);
-            System.out.println("La lista es " + rankingList);
-
+            playerList = session.findAll(Player.class);
         }
         catch (Exception e) {
             // LOG
@@ -139,7 +139,7 @@ public class PlayerDAOImpl implements IPlayerDAO {
         finally {
             session.close();
         }
-        return rankingList;
+        return playerList;
     }
 
 }

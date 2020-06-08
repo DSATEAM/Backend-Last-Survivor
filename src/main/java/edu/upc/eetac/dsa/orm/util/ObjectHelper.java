@@ -24,7 +24,6 @@ public class ObjectHelper {
         String[] sFieldsArr = new String[sFields.size()];
         sFieldsArr = sFields.toArray(sFieldsArr);
         return sFieldsArr;
-
     }
     //Returns Normal Types(Int,String..) Fields as Fields
     public static Field[] getFields(Object entity) {

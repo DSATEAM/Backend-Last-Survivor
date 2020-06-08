@@ -3,7 +3,6 @@ package edu.upc.eetac.dsa.services;
 import edu.upc.eetac.dsa.managers.PlayerManager;
 import edu.upc.eetac.dsa.managers.PlayerManagerImpl;
 import edu.upc.eetac.dsa.orm.model.Player;
-import edu.upc.eetac.dsa.orm.model.RankingDTO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -35,12 +34,8 @@ public class PlayerService {
     @Produces(MediaType.APPLICATION_JSON)
     public Response signUp(Player player) {
 
-        if(player.getPassword()==null || player.getUsername()==null) return Response.status(400).build();
-        if(player.getUsername()=="" || player.getPassword()==""||player.getUsername().isEmpty()|| player.getPassword().isEmpty())  return Response.status(400).build();
+        if (isPlayerBad(player,true)) return Response.status(400).build();
         logger.info("signUp: Username "+player.getUsername()+" ,Password "+player.getPassword());
-        //Auto Replace the Avatar if null to Basic Avatar!
-        if(player.getAvatar()==null) {player.setAvatar("basicAvatar");}
-        if(player.getAvatar().isEmpty()|| player.getAvatar().equals("")){player.setAvatar("basicAvatar");}
         String playerId = this.manager.signUp(player);
         if(playerId == null) return Response.status(409).build();
         //Means we have found the player thus we can return the player as a object filled with its data
@@ -58,8 +53,7 @@ public class PlayerService {
     @Produces(MediaType.APPLICATION_JSON)
     public Response signIn(Player player) {
 
-        if(player.getPassword()==null || player.getUsername()==null) return Response.status(400).build();
-        if (player.getUsername()=="" || player.getPassword()==""||player.getUsername().isEmpty()|| player.getPassword().isEmpty())  return Response.status(400).build();
+        if (isPlayerBad(player,false)) return Response.status(400).build();
         //Not Authorized or no user with the password or Vice versa
         logger.info("signIn: Username "+player.getUsername()+" ,Password "+player.getPassword());
         String playerId = this.manager.signIn(player);
@@ -68,6 +62,15 @@ public class PlayerService {
         player = this.manager.getPlayer(playerId);
         return Response.status(201).entity(player).build();
     }
+
+    private boolean isPlayerBad(Player player,boolean checkId) {
+        if (player == null ){return true;}
+        if(player.getId() ==null && checkId) return true;
+        if (player.getId()==""||player.getId().isEmpty() && checkId)  return true;
+        if(player.getPassword()==null || player.getUsername()==null) return true;
+        return player.getUsername() == "" || player.getPassword() == "" || player.getUsername().isEmpty() || player.getPassword().isEmpty();
+    }
+
     @PUT
     @ApiOperation(value = "update Player", notes = "updates Player and returns code result")
     @ApiResponses(value = {
@@ -78,10 +81,10 @@ public class PlayerService {
     @Path("/updatePlayer")
     @Produces(MediaType.APPLICATION_JSON)
     public Response updatePlayer(Player player) {
-        if (player == null )  return Response.status(400).build();
+        if(isPlayerBad(player,true))
+        {return Response.status(400).build();}
         player = this.manager.updatePlayer(player);
         if(player == null) return Response.status(404).build();
-
         return Response.status(201).entity(player).build();
     }
 
@@ -95,14 +98,13 @@ public class PlayerService {
     @Path("/deletePlayer")
     @Produces(MediaType.APPLICATION_JSON)
     public Response deletePlayer(Player player) {
-        if(player.getPassword()==null || player.getUsername()==null|| player.getId() ==null) return Response.status(400).build();
-        if (player.getUsername()=="" || player.getPassword()==""||player.getUsername().isEmpty()|| player.getPassword().isEmpty()
-                || player.getId()==""||player.getId().isEmpty())  return Response.status(400).build();
+        if(player.getId() ==null) return Response.status(400).build();
+        if (player.getId()==""||player.getId().isEmpty())  return Response.status(400).build();
+        //if (isPlayerBad(player,true )) return  Response.status(400).build();
         //Not Authorized or no user with the password or Vice versa
-        logger.info("Delete User: Username "+player.getUsername()+" ,Password "+player.getPassword());
-        String playerId = this.manager.signIn(player);
-        int res = this.manager.deletePlayer(playerId);
-        if(res == -1) return Response.status(404).build();
+        logger.info("Delete User: id "+player.getId());
+        int res = this.manager.deletePlayer(player.getId());
+        if(res <=0) return Response.status(404).build();
         return Response.status(201).build();
     }
 }

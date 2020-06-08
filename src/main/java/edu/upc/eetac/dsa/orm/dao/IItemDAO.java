@@ -1,7 +1,6 @@
 package edu.upc.eetac.dsa.orm.dao;
 
 import edu.upc.eetac.dsa.orm.model.Item;
-
 import java.util.List;
 
 public interface IItemDAO {

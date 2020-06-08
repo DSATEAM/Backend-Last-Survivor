@@ -60,12 +60,11 @@ public class ItemDAOImpl implements IItemDAO{
 
     @Override
     public int updateItem(Item item) {
-        Session session = null;int res;
+        Session session = null;int res =0;
         try {
             session = FactorySession.openSession();
             //TODO MAKE UPDATE FUNCTION ALIVE
-            session.update(item);
-            res = 1;
+            res = session.update(item);
         }
         catch (Exception e) {
             // LOG
@@ -80,13 +79,12 @@ public class ItemDAOImpl implements IItemDAO{
 
     @Override
     public int deleteItem(String itemId) {
-        Session session = null; int res;
+        Session session = null; int res = 0;
         Item item = new Item();
         try {
             session = FactorySession.openSession();
             item.setId(itemId);
-            session.delete(item);
-            res =1;
+            res = session.delete(item);
         }
         catch (Exception e) {
             // LOG
