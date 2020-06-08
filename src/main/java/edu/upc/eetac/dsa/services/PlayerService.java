@@ -13,7 +13,6 @@ import org.apache.log4j.Logger;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.util.List;
 
 @Api(value = "/PlayerService", description = "Endpoint to Player Service")
 @Path("/access")
@@ -64,11 +63,17 @@ public class PlayerService {
 
     private boolean isPlayerBad(Player player,boolean checkId) {
         if (player == null ){return true;}
-        if(player.getId() ==null && checkId) return true;
-        if ((player.getId()==""||player.getId().isEmpty()) && checkId)  return true;
-        if(player.getPassword()==null || player.getUsername()==null) return true;
-
-        return player.getUsername() == "" || player.getPassword() == "" || player.getUsername().isEmpty() || player.getPassword().isEmpty();
+        if(checkId){
+            if(player.getId() ==null) {
+                return true;
+            }
+            if ((player.getId().equals("") ||player.getId().isEmpty())) {
+                return true;
+            }}
+        if(player.getPassword()==null || player.getUsername()==null) {
+            return true;
+        }
+        return player.getUsername().equals("") || player.getPassword().equals("") || player.getUsername().isEmpty() || player.getPassword().isEmpty();
     }
 
     @PUT
