@@ -37,7 +37,9 @@ public class PlayerService {
         String playerId = this.manager.signUp(player);
         if(playerId == null) return Response.status(409).build();
         //Means we have found the player thus we can return the player as a object filled with its data
+        String password= player.getPassword();
         player = this.manager.getPlayer(playerId);
+        player.setPassword(password);
         return Response.status(201).entity(player).build();
     }
     @POST
