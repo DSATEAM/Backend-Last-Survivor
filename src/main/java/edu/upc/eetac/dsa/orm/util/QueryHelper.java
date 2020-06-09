@@ -20,13 +20,12 @@ public class QueryHelper {
         sb.deleteCharAt(sb.length()-1);
         sb.append(") VALUES (");
         for (String field: fields) {
-            sb.append("?,");
-            /*if(field.equals("password")){
+            if(field.equals("password")){
                 sb.append("MD5(?),");
             }
             else {
                 sb.append("?,");
-            }*/
+            }
         }
         sb.deleteCharAt(sb.length()-1);
         sb.append(")");
@@ -54,6 +53,12 @@ public class QueryHelper {
 
         return sb.toString();
     }
+    /*public static String createLoginQuerySELECT(Object entity){
+        StringBuffer sb = new StringBuffer();
+        sb.append("SELECT count(*) AS IS_USER FROM USER WHERE username = ? AND password = MD5(?)");
+        return sb.toString();
+    }*/
+
     //SELECT md5(password ) AS pass, username FROM USER WHERE username = ?
     //SELECT count(*) FROM USER WHERE username = ? AND password = md5(?)
     //SELECT count(*) AS IS_USER FROM USER WHERE username = ? AND password = md5(?)
@@ -73,11 +78,16 @@ public class QueryHelper {
         StringBuffer sb = new StringBuffer("UPDATE ");
         sb.append(entity.getClass().getSimpleName());
         sb.append(" SET ");
-
         String [] fields = ObjectHelper.getStrFields(entity);
 
         for (String field: fields) {
-            sb.append(field).append(" = ?,");
+            if(field.equals("password")){
+                sb.append(field).append(" = MD5(?),");
+
+            }
+            else {
+                sb.append(field).append(" = ?,");
+            }
         }
         sb.deleteCharAt(sb.length()-1);
         sb.append(" WHERE id = ?");
