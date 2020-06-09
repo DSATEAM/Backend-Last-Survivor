@@ -13,7 +13,7 @@
     <script src = "JSON_Player.js"></script>
     <script>
         $(document).ready(function(){
-
+            myStorage = window.localStorage;
             $('#btn-signup').click(function(){
 
                 $.ajax
@@ -27,7 +27,10 @@
                     data: JSON.stringify(getData()),
                     success: function () {
                         alert("You are signed up");
-
+                        myStorage.setItem("user",data.username);
+                        myStorage.setItem("password",data.password);
+                        myStorage.setItem("id",data.id);
+                        window.location.pathname = "/LastSurvivor/Register/main.html";
                     },
                     error: function () {
                         alert("Something went wrong");

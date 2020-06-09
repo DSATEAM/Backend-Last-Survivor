@@ -78,21 +78,7 @@ button{
 .topnav a:hover{
     transition: 0.6s all;
 }
-.img {
-    float: left;
-    width:  100px;
-    height: 100px;
-    background-size: cover;
-}
-.left-align-text{text-align:left!important}
-.tableauto {
-    table-layout: auto;
-    width: auto;
-}
-.td_auto{
-    width:auto;
-    min-width:10px;
-}
+
 
 
 

@@ -74,8 +74,8 @@
             var container = '<div class="container">';
             container=container+'<div class="jumbotron jumbotron-billboard">';
             container=container+'<table cellspacing="5" cellpadding="5" class="tableauto">';
-            container=container+'<thead><tr><th class="left-align-text">Image</th><th class="left-align-text">Item</th></tr></thead>';
-            container=container+'<tbody>'+formatTableWithImagesAndButton(item,indx)+'</tbody>';
+            container=container+'<thead><tr><th class="left-align-text">Name: '+item.name+'</th><th class="left-align-text"></th></tr></thead>';
+            container=container+'<tbody class="tableauto">'+formatTableWithImagesAndButton(item,indx)+'</tbody>';
             container=container+'</table></div></div>';
             return container;
         }
@@ -84,7 +84,7 @@
             return "<tr>" +tableRow +"</tr>";
         }
         function formatTableWithImagesAndButton(item,indx){
-            var tableRow = "<tr>" + formatItemImage(item) + "<td>"+formatItemCharacteristics(item);
+            var tableRow = "<tr class='trCss'>" + formatItemImage(item) + "<td>"+formatItemCharacteristics(item);
             tableRow = tableRow + formatItemDescription(item) + formatButton(item,indx) +"</td></tr>";
             return tableRow;
         }
@@ -93,7 +93,14 @@
             return '<td> <img class="img" width="400" height="400"' + 'src ="img/'+item.name+'.jpg"></td>';
         }
         function formatItemCharacteristics(item){
-           var txt = ' <div class="left-align-text"><p>Name: '+item.name+'Type: '+item.type+'Rarity: '+item.rarity + 'Power: '+item.offense+'Defense: '+item.defense+'Credit: '+item.credit+'</p></div>';
+           //var txt =  ' <div class="left-align-text"><p></p></div>';
+            var txt= ' <div class="left-align-text"><p>Type: '+item.type+'</p></div>';
+           txt=txt+ ' <div class="left-align-text"><p>Rarity: '+item.rarity+'</p></div>';
+           txt=txt+ ' <div class="left-align-text"><p>Power: '+item.offense+'</p></div>';
+           txt=txt+ ' <div class="left-align-text"><p>Defense: '+item.defense+'</p></div>';
+           txt=txt+ ' <div class="left-align-text"><p>Credit: '+item.credit+'</p></div>';
+           txt=txt+ ' <div class="left-align-text"><p>Hit Range: ' + item.hitRange+'</p></div>';
+           txt=txt+ ' <div class="left-align-text"><p>Attack Cooldown: ' + item.attackCooldown+'</p></div>';
             return txt;
         }
         function formatItemDescription(item){
@@ -162,22 +169,6 @@
             </table>
         </div>
     </div>
-    <div class="container">
-        <div class="jumbotron jumbotron-billboard">
-            <table id="Items" cellspacing="5" cellpadding="5" class="tableauto">
-                <thead>
-                <tr>
-                    <th class="left-align-text">Image</th>
-                    <th class="left-align-text">Item</th>
-                </tr>
-                </thead>
-                <tbody id ="ItemsWithImages">
-
-                </tbody>
-
-            </table>
-        </div>
-    </div>
 </div>
 </body>
-</html>                                                                                                                                                                                                                                                                                                                                                                                                                                         
+</html>                                                                                                                                                                                                                                                                                                                                                                           

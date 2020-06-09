@@ -15,7 +15,6 @@
     $(document).ready(function(){
       myStorage = window.localStorage;
       $('#btn-signin').click(function(){
-
         $.ajax
         ({
           type: "POST",
@@ -30,10 +29,10 @@
             myStorage.setItem("user",data.username);
             myStorage.setItem("password",data.password);
             myStorage.setItem("id",data.id);
+            window.location.pathname = "/LastSurvivor/Register/main.html";
           },
           error: function () {
             alert("Something went wrong");
-
           }
         })
 
@@ -43,7 +42,7 @@
 </head>
 <body>
 <nav class="topnav">
-  <a href="main.html">Home</a>
+  <a id="htm" href="main.html">Home</a>
   <a href="#">About</a>
   <a href="#">Contact</a>
 </nav>
@@ -74,18 +73,4 @@
       </div> <!-- This is the end of Modal Content -->
     </div>
   </div>
-
-
- 
-
-
-
-
-
-
-
 </body>
-</html>
-
-
-
