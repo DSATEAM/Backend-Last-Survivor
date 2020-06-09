@@ -56,10 +56,13 @@ public class PlayerService {
         if (isPlayerBad(player,false)) return Response.status(400).build();
         //Not Authorized or no user with the password or Vice versa
         logger.info("signIn: Username "+player.getUsername()+" ,Password "+player.getPassword());
+
         String playerId = this.manager.signIn(player);
         if(playerId == null) return Response.status(401).build();
+        String password = player.getPassword();
         //Means we have found the player thus we can return the player as a object filled with its data
         player = this.manager.getPlayer(playerId);
+        player.setPassword(password);
         return Response.status(201).entity(player).build();
     }
 
@@ -91,7 +94,9 @@ public class PlayerService {
     public Response updatePlayer(Player player) {
         if(isPlayerBad(player,true))
         {return Response.status(400).build();}
+        String password = player.getPassword();
         player = this.manager.updatePlayer(player);
+        player.setPassword(password);
         if(player == null) return Response.status(404).build();
         return Response.status(201).entity(player).build();
     }
