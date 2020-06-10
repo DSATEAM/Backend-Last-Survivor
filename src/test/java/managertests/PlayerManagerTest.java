@@ -23,10 +23,10 @@ public class PlayerManagerTest {
     public void signInTest(){
         logger.info("SignIn Test");
         String ID;
-        Player player = new Player("kru", "kru", 0, 0, 0, 0);
+        Player player = new Player("Erica", "Nakiri", 0, 0, 0, 0);
         player.setAvatar("kjjkkj");
         ID = playerDAO.addPlayer(player);
-        String signInID = playerDAO.getId("kru","kru");
+        String signInID = playerDAO.getId("Erica","Nakiri");
         Assert.assertEquals(ID,signInID);
         playerDAO.deletePlayer(ID);
     }
@@ -34,14 +34,14 @@ public class PlayerManagerTest {
 
     public void signUpTest(){
         logger.info("SignUp Test");
-        Player player = new Player("kru", "kru", 0, 0, 0, 0);
-        player.setAvatar("kjjkkj");
-        String playerId= manager.signUp(player);
-        Assert.assertNotNull(playerId);
-        playerId= manager.signUp(player);
-        Assert.assertNull(playerId);
-        String signInID = playerDAO.getId("kru","kru");
-        playerDAO.deletePlayer(signInID);
+        Player player = new Player("Takyumi", "kichan", 0, 0, 0, 0);
+        player.setAvatar("basicAvatar");
+        player = manager.signUp(player);
+        Assert.assertNotNull(player);
+        Player player2 = manager.signUp(player);
+        Assert.assertNull(player2);
+        //String signInID = playerDAO.getId("kru","kru");
+        playerDAO.deletePlayer(player.getId());
     }
     @Test
     public void signOutTest(){
@@ -55,11 +55,11 @@ public class PlayerManagerTest {
     @Test
     public void deletePlayerTest(){
         logger.info("Delete Player Test");
-        Player player = new Player("kru", "kru", 0, 0, 0, 0);
+        Player player = new Player("Yukhira", "Soma", 0, 0, 0, 0);
         player.setAvatar("kjjkkj");
-        String playerID = manager.signUp(player);
-        manager.deletePlayer(playerID);
-        Assert.assertNull(playerDAO.getId("kru","kru"));
+        player = manager.signUp(player);
+        manager.deletePlayer(player.getId());
+        Assert.assertNull(playerDAO.getId("Yukhira","Soma"));
     }
     @After
     public void tearDown() {

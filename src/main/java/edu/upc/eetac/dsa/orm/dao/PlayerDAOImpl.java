@@ -13,14 +13,14 @@ public class PlayerDAOImpl implements IPlayerDAO {
     public String addPlayer(Player player) {
         Session session = null;
 
-        String id;
+        String id = null;
         try {
             session = FactorySession.openSession();
             id=session.save(player);
         }
         catch (Exception e) {
             // LOG
-            return null;
+            e.printStackTrace();
         }
         finally {
             session.close();
@@ -29,21 +29,20 @@ public class PlayerDAOImpl implements IPlayerDAO {
     }
     public Boolean existUsername(String username){
         Session session = null;
-        int users; List ids;
+        List ids = new LinkedList<>();
         try {
             session = FactorySession.openSession();
             String query = "SELECT * FROM player WHERE username = ?"; List<String> paramsList = new LinkedList<>();
             paramsList.add(username);
             ids = session.queryExecute(String.class, query,paramsList);
-            return !ids.isEmpty();
         }
         catch (Exception e) {
-            // LOG
+            e.printStackTrace();
         }
         finally {
             session.close();
         }
-        return false;
+        return !ids.isEmpty();
     }
     //TODO getID of the User given username and password
     public String getId(String username,String password){
@@ -61,6 +60,7 @@ public class PlayerDAOImpl implements IPlayerDAO {
         }
         catch (Exception e) {
             // LOG
+            e.printStackTrace();
         }
         finally {
             session.close();
@@ -75,11 +75,12 @@ public class PlayerDAOImpl implements IPlayerDAO {
             session = FactorySession.openSession();
             player = (Player)session.get(Player.class, playerId);
             //Now that we have the player we must add the items and materials of the player
-            listItems =(List) session.getList(Item.class, playerId);
+            listItems = session.getList(Item.class, playerId);
             player.setListItems(listItems);
         }
         catch (Exception e) {
             // LOG
+            e.printStackTrace();
         }
         finally {
             session.close();
@@ -93,10 +94,10 @@ public class PlayerDAOImpl implements IPlayerDAO {
         try {
             session = FactorySession.openSession();
            res =  session.delete(player);
-
         }
         catch (Exception e) {
             // LOG
+            e.printStackTrace();
             res = -1;
         }
         finally {
@@ -108,18 +109,14 @@ public class PlayerDAOImpl implements IPlayerDAO {
         Session session = null;
         try {
             session = FactorySession.openSession();
-          if(session.update(player)>0)
+          if(session.update(player)<=0) //Player Wasn't updated!
           {
-              //Player was updated return player
-              return player;
-          }else{
-              return null;
+              player =  null;
           }
         }
         catch (Exception e) {
             // LOG
             e.printStackTrace();
-            player = null;
         }
         finally {
             session.close();
@@ -135,6 +132,7 @@ public class PlayerDAOImpl implements IPlayerDAO {
         }
         catch (Exception e) {
             // LOG
+            e.printStackTrace();
         }
         finally {
             session.close();

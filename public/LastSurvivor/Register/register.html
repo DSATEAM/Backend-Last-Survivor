@@ -25,21 +25,27 @@
                     async: false,
                     contentType: 'application/json',
                     data: JSON.stringify(getData()),
-                    success: function () {
-                        alert("You are signed up");
-                        myStorage.setItem("user",data.username);
-                        myStorage.setItem("password",data.password);
-                        myStorage.setItem("id",data.id);
-                        window.location.pathname = "/LastSurvivor/Register/main.html";
+                    statusCode: {
+                        201: function(data) {
+                            alert("You are signed up");
+                            myStorage.setItem("user",data.username);
+                            myStorage.setItem("password",data.password);
+                            myStorage.setItem("id",data.id);
+                            window.location.pathname = "/LastSurvivor/Register/main.html";
+                        }
                     },
-                    error: function () {
-                        alert("Something went wrong");
-
+                    error: function(xhr, textStatus, errorThrown) {
+                        if(xhr.status==409){
+                            alert( "Username already taken!" );
+                        }else if(xhr.status ==400){
+                            alert( "Type Correctly!" );
+                        }else{
+                            alert(xhr.responseText);
+                        }
                     }
                 })
-
             });
-});
+        });
     </script>
 </head>
 <body>
@@ -83,4 +89,3 @@
 </body>
 </html>
 
-      

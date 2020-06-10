@@ -32,14 +32,10 @@ public class PlayerService {
     @Path("/signUp")
     @Produces(MediaType.APPLICATION_JSON)
     public Response signUp(Player player) {
-        if (isPlayerBad(player,false)) return Response.status(400).build();
+        if (isPlayerRequestBad(player,false)) return Response.status(400).build();
         logger.info("signUp: Username "+player.getUsername()+" ,Password "+player.getPassword());
-        String playerId = this.manager.signUp(player);
-        if(playerId == null) return Response.status(409).build();
-        //Means we have found the player thus we can return the player as a object filled with its data
-        String password= player.getPassword();
-        player = this.manager.getPlayer(playerId);
-        player.setPassword(password);
+        player = this.manager.signUp(player);
+        if(player == null) return Response.status(409).build();
         return Response.status(201).entity(player).build();
     }
     @POST
@@ -53,33 +49,33 @@ public class PlayerService {
     @Produces(MediaType.APPLICATION_JSON)
     public Response signIn(Player player) {
 
-        if (isPlayerBad(player,false)) return Response.status(400).build();
+        if (isPlayerRequestBad(player,false)) return Response.status(400).build();
         //Not Authorized or no user with the password or Vice versa
         logger.info("signIn: Username "+player.getUsername()+" ,Password "+player.getPassword());
-
         String playerId = this.manager.signIn(player);
         if(playerId == null) return Response.status(401).build();
         String password = player.getPassword();
-        //Means we have found the player thus we can return the player as a object filled with its data
         player = this.manager.getPlayer(playerId);
         player.setPassword(password);
         return Response.status(201).entity(player).build();
     }
 
-    private boolean isPlayerBad(Player player,boolean checkId) {
+    private boolean isPlayerRequestBad(Player player, boolean checkId) {
         if (player == null ){return true;}
         if(checkId){
-            if(player.getId() ==null) {
+            if(player.getId()==null) {
                 return true;
-            }
-            if ((player.getId().equals("") ||player.getId().isEmpty())) {
-                return true;
+            }else{
+                if ((player.getId().equals("") ||player.getId().isEmpty())) {
+                    return true;
+                }
             }
         }
         if(player.getPassword()==null || player.getUsername()==null) {
             return true;
+        }else{
+            return player.getUsername().equals("") || player.getPassword().equals("") || player.getUsername().isEmpty() || player.getPassword().isEmpty();
         }
-        return player.getUsername().equals("") || player.getPassword().equals("") || player.getUsername().isEmpty() || player.getPassword().isEmpty();
     }
 
     @PUT
@@ -92,11 +88,9 @@ public class PlayerService {
     @Path("/updatePlayer")
     @Produces(MediaType.APPLICATION_JSON)
     public Response updatePlayer(Player player) {
-        if(isPlayerBad(player,true))
+        if(isPlayerRequestBad(player,true))
         {return Response.status(400).build();}
-        String password = player.getPassword();
         player = this.manager.updatePlayer(player);
-        player.setPassword(password);
         if(player == null) return Response.status(404).build();
         return Response.status(201).entity(player).build();
     }
@@ -113,7 +107,7 @@ public class PlayerService {
     public Response deletePlayer(Player player) {
         if(player.getId() ==null) return Response.status(400).build();
         if (player.getId()==""||player.getId().isEmpty())  return Response.status(400).build();
-        //if (isPlayerBad(player,true )) return  Response.status(400).build();
+        //if (isPlayerRequestBad(player,true )) return  Response.status(400).build();
         //Not Authorized or no user with the password or Vice versa
         logger.info("Delete User: id "+player.getId());
         int res = this.manager.deletePlayer(player.getId());

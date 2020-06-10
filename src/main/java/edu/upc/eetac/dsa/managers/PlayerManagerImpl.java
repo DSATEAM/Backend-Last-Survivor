@@ -23,13 +23,14 @@ public class PlayerManagerImpl implements PlayerManager {
     }
 
     @Override
-    public String signUp(Player player) {
+    public Player signUp(Player player) {
         if(playerDAO.existUsername(player.getUsername())) {
             return null;
         }else{
             player = checkPlayerAvatar(player);
             String playerID = playerDAO.addPlayer(player);
-            return playerID;
+            player.setId(playerID);
+            return player;
         }
     }
 
@@ -47,25 +48,15 @@ public class PlayerManagerImpl implements PlayerManager {
 
     @Override
     public Player updatePlayer(Player player) {
-        //Check avatar,id is null or empty and add basicAvatar than update
-        if(checkPlayerId(player)){return null;}
+        //Check avatar, is null or empty and add basicAvatar than update
         player = checkPlayerAvatar(player);
         return playerDAO.updatePlayer(player);
     }
-    private boolean checkPlayerId(Player player){
-        if(player.getId()== null ){
-            if(player.getId().equals("")||player.getId().isEmpty())
-            {return false;}
-            return false;
-        }
-        return true;
-    }
     private Player checkPlayerAvatar(Player player){
-        if(player.getAvatar()== null ){
-            if(player.getAvatar().equals("")||player.getAvatar().isEmpty())
-            {player.setAvatar("basicAvatar");}
+        if(player.getAvatar() == null ){
             player.setAvatar("basicAvatar");
-        }
+        }else if(player.getAvatar().equals("")||player.getAvatar().isEmpty())
+        {player.setAvatar("basicAvatar");}
         return player;
     }
     @Override

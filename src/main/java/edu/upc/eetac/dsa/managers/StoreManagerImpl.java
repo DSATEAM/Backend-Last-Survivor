@@ -13,9 +13,9 @@ import java.util.List;
 
 public class StoreManagerImpl implements StoreManager {
     private static StoreManager instance;
-    private static PlayerManager playerManager=PlayerManagerImpl.getInstance();
-    private static ItemDAOImpl itemDAO= new ItemDAOImpl();
-    private static PlayerDAOImpl playerDAO= new PlayerDAOImpl();
+    private static final PlayerManager playerManager=PlayerManagerImpl.getInstance();
+    private static final ItemDAOImpl itemDAO= new ItemDAOImpl();
+    private static final PlayerDAOImpl playerDAO= new PlayerDAOImpl();
     private static final Logger log = Logger.getLogger(StoreManagerImpl.class);
     public static StoreManager getInstance() {
         if (instance == null) {

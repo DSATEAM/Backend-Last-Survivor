@@ -29,7 +29,7 @@ public class SessionImpl implements Session {
             ObjectHelper.setter(entity,"id",id);
 
             int i = 1;
-            //Only Primitive Types Int String
+            //Only Primitive Types Int String float
             for (String field: ObjectHelper.getStrFields(entity)) {
                 Object objt = ObjectHelper.getter(entity, field);
                 pstm.setObject(i, objt);
@@ -132,7 +132,7 @@ public class SessionImpl implements Session {
             pstm = conn.prepareStatement(updateQuery);
             int i = 1;
             Object obj;
-            //Only Primitive Types Int String
+            //Only Primitive Types Int String float
             for (String field: ObjectHelper.getStrFields(object)) {
                 obj = ObjectHelper.getter(object,field);
                 pstm.setObject(i, obj);
