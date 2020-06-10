@@ -12,6 +12,7 @@ public class Item {
     private int defense;
     private float hitRange;
     private float attackCooldown;
+    private String avatar;
     //Empty Constructor
     public Item() {
     }
@@ -108,4 +109,8 @@ public class Item {
     public void setAttackCooldown(float attackCooldown) {
         this.attackCooldown = attackCooldown;
     }
+
+    public String getAvatar() {return avatar;}
+
+    public void setAvatar(String avatar) {this.avatar = avatar;}
 }
