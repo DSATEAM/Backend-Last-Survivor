@@ -33,27 +33,20 @@ public class StoreManagerImpl implements StoreManager {
         Player player= playerManager.getPlayer(item.getParentId());
         Item item1= itemDAO.getItem(item.getId());
         List<Item> itemList= player.getListItems();
-        boolean found=false;
         int c=0;
-        while((!found)&&(c<itemList.size())){
-            if(itemList.get(c).getId()==item.getId()){
-                found=true;
+        for(int i =0; i<itemList.size();i++){
+            if(itemList.get(i).getName().equals(item1.getName())){
+               return 0;
             }
-            c++;
         }
-        if(found){
-            return 0;
+        int credit=player.getCredits()-item1.getCredit();
+        if(credit>=0){
+            player.setCredits(credit);
+            playerDAO.updatePlayer(player);
+            return 1;
         }
         else{
-            int credit=player.getCredits()-item1.getCredit();
-            if(credit>=0){
-                player.setCredits(credit);
-                playerDAO.updatePlayer(player);
-                return 1;
-            }
-            else{
-                return -1;
-            }
+            return -1;
         }
     }
 

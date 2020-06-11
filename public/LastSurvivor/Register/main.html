@@ -33,7 +33,15 @@
                     Append_data_table(data);
                 },
                 error: function(xhr, textStatus, errorThrown) {
-                    alert("Couldn't retrieve Data from server,Error: "+xhr.responseText);
+                    if(xhr.status==400){
+                        alert( "Bad Request!" );
+                    }else if(xhr.status ==402){
+                        alert( "Not Enough Credits!" );
+                    }else if(xhr.status ==409){
+                        alert( "Conflict, Item Exists in Player!" );
+                    }else{
+                        alert(xhr.responseText);
+                    }
                 }
             })
         }
@@ -139,8 +147,16 @@
                 success: function () {
                     alert("Sold");
                 },
-                error: function () {
-                    alert("Couldn't Buy the Item");
+                error: function(xhr, textStatus, errorThrown) {
+                    if(xhr.status==400){
+                        alert( "Bad Request!" );
+                    }else if(xhr.status ==402){
+                        alert( "Not Enough Credits!" );
+                    }else if(xhr.status ==409){
+                        alert( "Conflict, Item Exists in Player!" );
+                    }else{
+                        alert(xhr.responseText);
+                    }
                 }
             });
         }
