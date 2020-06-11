@@ -5,6 +5,9 @@ import edu.upc.eetac.dsa.orm.model.Player;
 import edu.upc.eetac.dsa.orm.model.RankingDTO;
 import org.apache.log4j.Logger;
 
+import java.io.FileReader;
+import java.util.Properties;
+
 public class PlayerManagerImpl implements PlayerManager {
     private static PlayerManager instance;
     PlayerDAOImpl playerDAO = new PlayerDAOImpl();
@@ -54,9 +57,37 @@ public class PlayerManagerImpl implements PlayerManager {
     }
     private Player checkPlayerAvatar(Player player){
         if(player.getAvatar() == null ){
-            player.setAvatar("basicAvatar");
+            try{
+            // Create Properties object.
+            Properties databaseProperties = new Properties();
+            String dbSettingsPropertyFile = "src/main/resources/basicAvatar.properties";
+            // Properties will use a FileReader object as input.
+            FileReader fReader = new FileReader(dbSettingsPropertyFile);
+            // Load jdbc related properties in above file.
+            databaseProperties.load(fReader);
+            // Get each property value of DataBase.
+            String avatar = databaseProperties.getProperty("user.avatar");
+            player.setAvatar(avatar);
+            }catch (Exception e){
+                e.printStackTrace();
+            }
         }else if(player.getAvatar().equals("")||player.getAvatar().isEmpty())
-        {player.setAvatar("basicAvatar");}
+        {
+            try{
+                // Create Properties object.
+                Properties databaseProperties = new Properties();
+                String dbSettingsPropertyFile = "src/main/resources/basicAvatar.properties";
+                // Properties will use a FileReader object as input.
+                FileReader fReader = new FileReader(dbSettingsPropertyFile);
+                // Load jdbc related properties in above file.
+                databaseProperties.load(fReader);
+                // Get each property value of DataBase.
+                String avatar = databaseProperties.getProperty("user.avatar");
+                player.setAvatar(avatar);
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }
         return player;
     }
     @Override
