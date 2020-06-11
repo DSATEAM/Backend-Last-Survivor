@@ -26,7 +26,7 @@
                     data: JSON.stringify(getData()),
                     statusCode: {
                         201: function(data) {
-                            alert("You are signed up");
+                            //alert("You are signed up");
                             myStorage.setItem("user",data.username);
                             myStorage.setItem("password",data.password);
                             myStorage.setItem("id",data.id);

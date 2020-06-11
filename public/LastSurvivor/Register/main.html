@@ -17,10 +17,25 @@
     <script>
         function getItems(){
             myStorage = window.localStorage;
-            alert(myStorage.getItem("user"));
-            $.get("/Backend/inventory/getItems", function(data){
-                Append_data_table(data);
-            });
+            console.log("User Found in Storage: "+myStorage.getItem("user"));
+            //Later add the functionality of user shown up!
+            $.ajax
+            ({
+                type: "GET",
+                //the url where you want to sent the userName and password to
+                url: '/Backend/inventory/getItems',
+                dataType: 'json',
+                async: false,
+                contentType: 'application/json',
+                data: JSON.stringify(getData()),
+                success: function (data) {
+                    console.log("Items Retrieved Successfully!");
+                    Append_data_table(data);
+                },
+                error: function(xhr, textStatus, errorThrown) {
+                    alert("Couldn't retrieve Data from server,Error: "+xhr.responseText);
+                }
+            })
         }
         //Formatting Data to Correct Table Format with Image
         /*

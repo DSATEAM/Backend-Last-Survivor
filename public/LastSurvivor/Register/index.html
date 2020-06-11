@@ -31,8 +31,14 @@
             myStorage.setItem("id",data.id);
             window.location.pathname = "/LastSurvivor/Register/main.html";
           },
-          error: function () {
-            alert("Something went wrong");
+          error: function(xhr, textStatus, errorThrown) {
+            if(xhr.status==401){
+              alert( "Incorrect Username or Password!" );
+            }else if(xhr.status ==400){
+              alert( "Type Correctly!" );
+            }else{
+              alert(xhr.responseText);
+            }
           }
         })
 
