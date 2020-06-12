@@ -52,7 +52,7 @@ public class PlayerDAOImpl implements IPlayerDAO {
         try {
 
             session = FactorySession.openSession();
-            String query = "SELECT id FROM player WHERE username = ? AND password = MD5(?)"; List<String> paramsList = new LinkedList<>();
+            String query = "SELECT id FROM player WHERE username = ? AND password = AES_ENCRYPT(?,'SALTED_CHARACTER_SET_SECRET_IN_A_WAY')"; List<String> paramsList = new LinkedList<>();
             paramsList.add(username);paramsList.add(password);
             ids = session.queryExecute(String.class, query,paramsList);
             if(ids.isEmpty()) return null;
@@ -165,5 +165,4 @@ public class PlayerDAOImpl implements IPlayerDAO {
         }
         return playerList;
     }
-
 }

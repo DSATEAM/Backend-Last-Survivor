@@ -21,7 +21,7 @@ public class QueryHelper {
         sb.append(") VALUES (");
         for (String field: fields) {
             if(field.equals("password")){
-                sb.append("MD5(?),");
+                sb.append("AES_ENCRYPT(?,'SALTED_CHARACTER_SET_SECRET_IN_A_WAY'),");
             }
             else {
                 sb.append("?,");
@@ -82,7 +82,7 @@ public class QueryHelper {
 
         for (String field: fields) {
             if(field.equals("password")){
-                sb.append(field).append(" = MD5(?),");
+                sb.append(field).append(" = AES_ENCRYPT(?,'SALTED_CHARACTER_SET_SECRET_IN_A_WAY'),");
 
             }
             else {
