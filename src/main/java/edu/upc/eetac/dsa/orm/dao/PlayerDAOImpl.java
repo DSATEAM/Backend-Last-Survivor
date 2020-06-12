@@ -1,4 +1,5 @@
 package edu.upc.eetac.dsa.orm.dao;
+import edu.upc.eetac.dsa.RandomUtils;
 import edu.upc.eetac.dsa.orm.FactorySession;
 import edu.upc.eetac.dsa.orm.Session;
 import edu.upc.eetac.dsa.orm.model.Item;
@@ -49,6 +50,7 @@ public class PlayerDAOImpl implements IPlayerDAO {
         Session session = null;
         String playerId = null; List ids;
         try {
+
             session = FactorySession.openSession();
             String query = "SELECT id FROM player WHERE username = ? AND password = MD5(?)"; List<String> paramsList = new LinkedList<>();
             paramsList.add(username);paramsList.add(password);
@@ -70,13 +72,37 @@ public class PlayerDAOImpl implements IPlayerDAO {
     public Player getPlayer(String playerId){
         Session session = null;
         Player player = null;
-        List<Item> listItems = null;
+
+        List ids;
         try {
             session = FactorySession.openSession();
             player = (Player)session.get(Player.class, playerId);
             //Now that we have the player we must add the items and materials of the player
-            listItems = session.getList(Item.class, playerId);
-            player.setListItems(listItems);
+            String queryTransaction = "SELECT itemId FROM Transaction WHERE playerId = ?";
+            List<String> paramsList = new LinkedList<>();
+            List<Item> resultItemList = new LinkedList<>();
+            paramsList.add(playerId);
+            ids = session.queryExecute(String.class, queryTransaction,paramsList);
+            paramsList.clear();
+            String query = "SELECT * FROM Item WHERE id=?";
+            Item item;
+            List<Item> itemList = new LinkedList<>();
+            if(!ids.isEmpty()){
+
+                for (int i = 0;i<ids.size();i++){
+                    paramsList.add((String) ids.get(i));
+                    //Get the Item from Item table for each id found in transaction for the playerId
+                    resultItemList = session.queryExecuteGetObject(Item.class,query,paramsList);
+                    paramsList.clear();
+                    if(resultItemList!=null) {
+                        if(!resultItemList.isEmpty()){
+                            itemList.add(resultItemList.get(0));
+                        }
+                    }
+                }
+                player.setListItems(itemList);
+            }
+
         }
         catch (Exception e) {
             // LOG

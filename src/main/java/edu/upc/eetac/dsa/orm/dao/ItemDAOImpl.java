@@ -1,5 +1,6 @@
 package edu.upc.eetac.dsa.orm.dao;
 
+import edu.upc.eetac.dsa.RandomUtils;
 import edu.upc.eetac.dsa.orm.FactorySession;
 import edu.upc.eetac.dsa.orm.Session;
 import edu.upc.eetac.dsa.orm.model.Item;
@@ -10,17 +11,13 @@ import java.util.List;
 
 public class ItemDAOImpl implements IItemDAO{
     static final Logger logger = Logger.getLogger(ItemDAOImpl.class);
-    @Override
-    public String addItem(String parentId, String name, String type, String rarity, String description, int offense, int defense,float hitRange, float attackCooldown) {
-        Item item = new Item(parentId,name,type,rarity,description,50,offense,defense,hitRange,attackCooldown);
-        return saveItem(item);
-    }
 
     private String saveItem(Item item) {
         Session session = null;
         String id = "";
         try {
             session = FactorySession.openSession();
+
             id = session.save(item);
         }
         catch (Exception e) {
@@ -30,13 +27,40 @@ public class ItemDAOImpl implements IItemDAO{
         finally {
             session.close();
         }
-
         return id;
     }
 
     @Override
     public String addItem(Item item) {
-        return saveItem(item);
+        return buyItem(item);
+    }
+    @Override
+    public String buyItem(Item item){
+        //Generate Transaction for the Item with itemId and the ParentId(playerId)
+
+        Session session = null;
+        List<String> listIdTransaction = null;
+        try {
+            List<String> params = new LinkedList<>();
+            String query = "INSERT INTO transaction(id,itemId,playerId) VALUES (?,?,?)";
+            session = FactorySession.openSession();
+            RandomUtils randomUtils = new RandomUtils();
+            params.add(RandomUtils.generateID(32));
+            params.add(item.getId());
+            params.add(item.getParentId());
+            listIdTransaction = (List) session.queryExecute(String.class,query,params);
+            if(listIdTransaction !=null) return listIdTransaction.get(0);
+            else{return null;}
+            //Means we have list of Items now we must get the Standard Items
+        }
+        catch (Exception e) {
+            // LOG
+            e.printStackTrace();
+        }
+        finally {
+            session.close();
+        }
+        return null;
     }
 
     @Override
@@ -103,8 +127,7 @@ public class ItemDAOImpl implements IItemDAO{
         Item item = null;
         try {
             List<String> params = new LinkedList<>();
-            params.add("#standard");
-            String query = "SELECT * FROM Item WHERE parentId=?";
+            String query = "SELECT * FROM Item";
             session = FactorySession.openSession();
             listItem = (List) session.queryExecuteGetObject(Item.class,query,params);
             //Means we have list of Items now we must get the Standard Items

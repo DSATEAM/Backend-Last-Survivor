@@ -38,7 +38,8 @@ public class StoreService {
     @Path("/addItem")
     @Produces(MediaType.APPLICATION_JSON)
     public Response addItem(Item item) {
-        if(item.getId()==null|| item.getParentId() ==null)  return Response.status(400).build();
+        if(item.getId()==null || item.getParentId()==null)  return Response.status(400).build();
+        if(item.getId().equals("")||item.getParentId().equals("")||item.getParentId().isEmpty()||item.getId().isEmpty()) return Response.status(400).build();
         //Check Credit
         int resCode = this.manager.checkPurchase(item);
         if(resCode == 0) return Response.status(409).build();//"Conflict, Items Exists in Player"

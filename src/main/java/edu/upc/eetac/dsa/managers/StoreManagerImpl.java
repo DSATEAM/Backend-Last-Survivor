@@ -32,11 +32,13 @@ public class StoreManagerImpl implements StoreManager {
                 //If all of the items same than return 0
         Player player= playerManager.getPlayer(item.getParentId());
         Item item1= itemDAO.getItem(item.getId());
-        List<Item> itemList= player.getListItems();
-        int c=0;
-        for(int i =0; i<itemList.size();i++){
-            if(itemList.get(i).getName().equals(item1.getName())){
-               return 0;
+        List<Item> itemList = player.getListItems();
+        if(itemList!=null){
+            int c=0;
+            for(int i =0; i<itemList.size();i++){
+                if(itemList.get(i).getName().equals(item1.getName())){
+                   return 0;
+                }
             }
         }
         int credit=player.getCredits()-item1.getCredit();
@@ -55,11 +57,16 @@ public class StoreManagerImpl implements StoreManager {
         //Now we can add to the player items and ignore the ones which already exist
         Player player= playerManager.getPlayer(item.getParentId());
         Item item1 = itemDAO.getItem(item.getId());
-        item1.setParentId(item.getParentId());
-        List<Item> itemList= player.getListItems();
-        itemList.add(item1);
-        player.setListItems(itemList);
-        itemDAO.addItem(item1);
+        //item1.setParentId(item.getParentId());
+        //List<Item> itemList= player.getListItems();
+        if(item1!=null && player.getId()!=null){
+            item1.setParentId(player.getId());
+            //if(itemList==null){
+            //    itemList = new LinkedList<>();
+            //}
+            //itemList.add(item1);
+            itemDAO.addItem(item1);
+        }
     }
 
     @Override
