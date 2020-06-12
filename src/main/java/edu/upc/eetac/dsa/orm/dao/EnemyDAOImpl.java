@@ -19,9 +19,11 @@ public class EnemyDAOImpl implements IEnemyDAO{
         }
         catch (Exception e) {
             // LOG
+            e.printStackTrace();
         }
         finally {
-            session.close();
+            if(session!=null)
+            {  session.close();}
         }
 
         return id;
@@ -46,7 +48,8 @@ public class EnemyDAOImpl implements IEnemyDAO{
             e.printStackTrace();
         }
         finally {
-            session.close();
+            if(session!=null)
+            {  session.close();}
         }
         return enemy;
     }
@@ -61,10 +64,12 @@ public class EnemyDAOImpl implements IEnemyDAO{
         }
         catch (Exception e) {
             // LOG
+            e.printStackTrace();
             res = -1;
         }
         finally {
-            session.close();
+            if(session!=null)
+            {  session.close();}
         }
         return res;
     }
@@ -79,10 +84,12 @@ public class EnemyDAOImpl implements IEnemyDAO{
         }
         catch (Exception e) {
             // LOG
+            e.printStackTrace();
             res = -1;
         }
         finally {
-            session.close();
+            if(session!=null)
+            {  session.close();}
         }
 
         return res;
@@ -99,9 +106,11 @@ public class EnemyDAOImpl implements IEnemyDAO{
         }
         catch (Exception e) {
             // LOG
+            e.printStackTrace();
         }
         finally {
-            session.close();
+            if(session!=null)
+            {  session.close();}
         }
         return enemyList;
     }

@@ -43,10 +43,12 @@ import java.util.List;
     @Produces(MediaType.APPLICATION_JSON)
     public Response createForum(Forum forum) {
 
-        if (forum.getName() == null || forum.getAdmin() == null || forum.getAvatar() == null || forum.getName() == "" || forum.getAdmin() == "" ||  forum.getAvatar() == "" ||forum.getName().isEmpty() || forum.getAdmin().isEmpty() || forum.getAvatar().isEmpty())
-            return Response.status(400).build();
+        if (forum.getName() == null || forum.getAdmin() == null || forum.getAvatar() == null)
+        {   return Response.status(400).build();}
+        if(forum.getName().equals("") || forum.getAdmin().equals("") ||  forum.getAvatar().equals("") ||forum.getName().isEmpty() || forum.getAdmin().isEmpty() || forum.getAvatar().isEmpty())
+        { return Response.status(400).build();}
         String forumId = this.manager.createForum(forum);
-        logger.info("createForum: " + forum);
+        logger.info("createForum-> " + forum);
         if (forumId == null) return Response.status(409).build();
         //Means we have found the player thus we can return the player as a object filled with its data
         forum = this.manager.getForum(forumId);
@@ -79,10 +81,10 @@ import java.util.List;
     @Path("/deleteForum")
     @Produces(MediaType.APPLICATION_JSON)
     public Response deleteForum(Forum forum) {
-        if (forum.getId() == null || forum.getId() == "" || forum.getId().isEmpty())
+        if (forum.getId() == null || forum.getId().equals("")|| forum.getId().isEmpty())
             return Response.status(400).build();
         //Not Authorized or no user with the password or Vice versa
-        logger.info("Delete Forum: Name " + forum.getName());
+        logger.info("Delete Forum->Name: " + forum);
         int res = this.manager.deleteForum(forum);
         if (res == -1) return Response.status(404).build();
         return Response.status(201).build();
@@ -112,7 +114,7 @@ import java.util.List;
     @Path("/addMessage")
     @Produces(MediaType.APPLICATION_JSON)
     public Response addMessage(Message message) {
-        logger.info("Add Message:  "+message.toString());
+        logger.info("Add Message-> "+message.toString());
         if (message.getParentId() == null||message.getUsername()== null||message.getAvatar()==null) return Response.status(400).build();
         this.messageManager.addMessage(message);
         return Response.status(201).entity(this.manager.getForum(message.getParentId())).build();

@@ -23,8 +23,7 @@ public class ForumManagerImpl implements ForumManager{
         if(forumDAO.existName(forum.getName())) {
             return null;
         }else{
-            String id= forumDAO.addForum(forum);
-            return id;
+            return forumDAO.addForum(forum);
         }
     }
 

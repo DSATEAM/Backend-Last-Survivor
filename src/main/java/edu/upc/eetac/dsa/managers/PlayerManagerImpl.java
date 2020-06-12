@@ -40,8 +40,7 @@ public class PlayerManagerImpl implements PlayerManager {
     @Override
     public String signIn(Player player) {
         //If correct return id, else empty String(Not Null)
-        String playerID = playerDAO.getId(player.getUsername(),player.getPassword());
-        return playerID;
+        return playerDAO.getId(player.getUsername(),player.getPassword());
     }
     @Override
     public Player getPlayer(String playerId) {

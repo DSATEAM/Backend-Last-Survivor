@@ -18,9 +18,11 @@ public class MapDAOImpl implements IMapDAO{
         }
         catch (Exception e) {
             // LOG
+            e.printStackTrace();
         }
         finally {
-            session.close();
+            if(session!=null)
+                session.close();
         }
         return id;
     }
@@ -36,9 +38,11 @@ public class MapDAOImpl implements IMapDAO{
         }
         catch (Exception e) {
             // LOG
+            e.printStackTrace();
         }
         finally {
-            session.close();
+            if(session!=null)
+                session.close();
         }
         return map;
     }
@@ -58,10 +62,11 @@ public class MapDAOImpl implements IMapDAO{
             else return null;
         }
         catch (Exception e) {
-            // LOG
+            e.printStackTrace();
         }
         finally {
-            session.close();
+            if(session!=null)
+            {  session.close();}
         }
         return map;
     }
@@ -79,7 +84,8 @@ public class MapDAOImpl implements IMapDAO{
             res = -1;
         }
         finally {
-            session.close();
+            if(session!=null)
+            {  session.close();}
         }
         return res;
     }
@@ -95,10 +101,12 @@ public class MapDAOImpl implements IMapDAO{
         }
         catch (Exception e) {
             // LOG
+            e.printStackTrace();
             res = -1;
         }
         finally {
-            session.close();
+            if(session!=null)
+            {  session.close();}
         }
        return  res;
     }
@@ -112,9 +120,11 @@ public class MapDAOImpl implements IMapDAO{
         }
         catch (Exception e) {
             // LOG
+            e.printStackTrace();
         }
         finally {
-            session.close();
+            if(session!=null)
+            {  session.close();}
         }
         return mapList;
     }

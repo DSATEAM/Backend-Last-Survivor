@@ -50,6 +50,6 @@ public class Message {
 
     @Override
     public String toString() {
-        return "Message [username= " + username + ", message= " + message + ", id=" +id + ", avatar=" + avatar +"]";
+        return "Message [username= " + username + ", message= " + message + " , id= " +id+"]";
     }
 }

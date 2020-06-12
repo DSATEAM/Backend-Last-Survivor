@@ -28,29 +28,22 @@ public class EnemyService {
     public EnemyService(){
         manager = EnemyManagerImpl.getInstance();
     }
-    private boolean checkEnemy(Enemy enemy,boolean doCheckId){
-        if(enemy == null){return false;}
-        if(enemy.getId()== null || doCheckId){
-            if(enemy.getId().equals("")||enemy.getId().isEmpty())
-            {return false;}
-            return false;
-        }
-        if(enemy.getName()== null ){
-            if(enemy.getName().equals("")||enemy.getName().isEmpty())
-            {return false;}
-            return false;
-        }
-        if(enemy.getDescription()== null ){
-            if(enemy.getDescription().equals("")||enemy.getDescription().isEmpty())
-            {return false;}
-            return false;
-        }
-        if(enemy.getAvatar()== null ){
-            if(enemy.getDescription().equals("")||enemy.getDescription().isEmpty())
-            {return false;}
-            return false;
-        }
-        return true;
+
+    /**
+     * @param enemy
+     * @param doCheckId
+     * @return status
+     */
+    private boolean ReceivedEnemyObjectStatus(Enemy enemy, boolean doCheckId){
+        if(enemy == null){return true;}
+        if(enemy.getId()== null || doCheckId){return true;}
+        if(enemy.getId().equals("")||enemy.getId().isEmpty()){return true;}
+        if(enemy.getName()== null ){return true;}
+        if(enemy.getName().equals("")||enemy.getName().isEmpty()){return true;}
+        if(enemy.getDescription()== null ){return true;}
+        if(enemy.getDescription().equals("")||enemy.getDescription().isEmpty()){return true;}
+        if(enemy.getAvatar()== null ){return true;}
+        return enemy.getAvatar().equals("") || enemy.getAvatar().isEmpty();
     }
     @POST
     @ApiOperation(value = "add Enemy", notes = "Adds a new Enemy to db given Enemy")
@@ -63,7 +56,7 @@ public class EnemyService {
     @Produces(MediaType.APPLICATION_JSON)
     public Response addEnemies(Enemy enemy) {
         //Checking if anything null,except id!
-        if(!checkEnemy(enemy,false)) return Response.status(400).build();
+        if(ReceivedEnemyObjectStatus(enemy, false)) return Response.status(400).build();
         //Check if enemy with same name exists!
         Enemy tmp = manager.getEnemyFromName(enemy);
         //Adding Map
@@ -101,7 +94,7 @@ public class EnemyService {
     @Path("/updateEnemy")
     @Produces(MediaType.APPLICATION_JSON)
     public Response updateEnemy(Enemy enemy) {
-        if (!checkEnemy(enemy,true) )  return Response.status(400).build();
+        if (ReceivedEnemyObjectStatus(enemy, true))  return Response.status(400).build();
         int res = this.manager.updateEnemy(enemy);
         if(res <=0) return Response.status(404).build();
         return Response.status(201).entity(enemy).build();
@@ -117,9 +110,9 @@ public class EnemyService {
     @Produces(MediaType.APPLICATION_JSON)
     public Response deleteEnemy(Enemy enemy) {
         if(enemy.getId()==null || enemy.getName()==null) return Response.status(400).build();
-        if (enemy.getId().equals(""))  return Response.status(400).build();
+        if (enemy.getId().equals("") ||  enemy.getId().isEmpty())  return Response.status(400).build();
         //Not Authorized or no user with the password or Vice versa
-        logger.info("Delete Enemy: ID "+enemy.getId());
+        logger.info("Delete Enemy->ID: "+enemy.getId());
         int res = this.manager.deleteEnemy(enemy);
         if(res <=0) return Response.status(404).build();
         return Response.status(201).build();

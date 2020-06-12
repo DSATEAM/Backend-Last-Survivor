@@ -41,7 +41,7 @@ public class RankingService {
     public Response getPlayers() {
         List<RankingDTO> list = this.manager.getPlayers();
         logger.info("Ranking: "+list);
-        if (list == null|| list.equals("[]")) return Response.status(404).build();
+        if (list == null) return Response.status(404).build();
         GenericEntity<List<RankingDTO>> entity = new GenericEntity<List<RankingDTO>>(list) {};
         return Response.status(201).entity(entity).build();
     }

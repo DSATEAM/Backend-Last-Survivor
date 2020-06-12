@@ -14,17 +14,19 @@ public class ForumDAOImpl implements IForumDAO{
     public String addForum(Forum forum) {
         Session session = null;
 
-        String id=null;
+        String id;
         try {
             session = FactorySession.openSession();
             id=session.save(forum);
         }
         catch (Exception e) {
             // LOG
+            e.printStackTrace();
             return null;
         }
         finally {
-            session.close();
+            if(session!=null)
+            {  session.close();}
         }
         return id;
     }
@@ -36,14 +38,16 @@ public class ForumDAOImpl implements IForumDAO{
             session = FactorySession.openSession();
             String query = "SELECT * FROM forum WHERE name = ?"; List<String> paramsList = new LinkedList<>();
             paramsList.add(name);
-            ids = (List) session.queryExecute(String.class, query,paramsList);
+            ids = session.queryExecute(String.class, query,paramsList);
             return !ids.isEmpty();
         }
         catch (Exception e) {
             // LOG
+            e.printStackTrace();
         }
         finally {
-            session.close();
+            if(session!=null)
+            {  session.close();}
         }
         return false;
     }
@@ -55,7 +59,7 @@ public class ForumDAOImpl implements IForumDAO{
             session = FactorySession.openSession();
             String query = "SELECT id FROM forum WHERE name = ?"; List<String> paramsList = new LinkedList<>();
             paramsList.add(name);
-            ids = (List) session.queryExecute(String.class, query,paramsList);
+            ids = session.queryExecute(String.class, query,paramsList);
             if(ids.isEmpty()) return null;
             for(Object id : ids){
                 forumId = (String) id;
@@ -63,9 +67,11 @@ public class ForumDAOImpl implements IForumDAO{
         }
         catch (Exception e) {
             // LOG
+            e.printStackTrace();
         }
         finally {
-            session.close();
+            if(session!=null)
+            {  session.close();}
         }
         return forumId;
     }
@@ -82,9 +88,11 @@ public class ForumDAOImpl implements IForumDAO{
         }
         catch (Exception e) {
             // LOG
+            e.printStackTrace();
         }
         finally {
-            session.close();
+            if(session!=null)
+            {  session.close();}
         }
         return forum;
     }
@@ -98,30 +106,33 @@ public class ForumDAOImpl implements IForumDAO{
         }
         catch (Exception e) {
             // LOG
+            e.printStackTrace();
             res = -1;
         }
         finally {
-            session.close();
+            if(session!=null)
+            {  session.close();}
         }
         return res;
     }
     public Forum updateForum(Forum forum) {
-        int res;
+
         Session session = null;
         try {
             session = FactorySession.openSession();
             session.update(forum);
-            res = 1;
+
 
         }
         catch (Exception e) {
             // LOG
             e.printStackTrace();
-            res = -1;
+
             forum = null;
         }
         finally {
-            session.close();
+            if(session!=null)
+            {  session.close();}
         }
         return forum;
     }
@@ -142,9 +153,11 @@ public class ForumDAOImpl implements IForumDAO{
         }
         catch (Exception e) {
             // LOG
+            e.printStackTrace();
         }
         finally {
-            session.close();
+            if(session!=null)
+            {  session.close();}
         }
         return forumList;
     }

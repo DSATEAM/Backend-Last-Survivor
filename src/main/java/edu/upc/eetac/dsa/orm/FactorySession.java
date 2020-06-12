@@ -10,8 +10,7 @@ import java.util.Properties;
 public class FactorySession {
     public static Session openSession() {
         Connection conn = getConnection();
-        Session session = new SessionImpl(conn);
-        return session;
+        return new SessionImpl(conn);
     }
     private static Connection getConnection() {
         Connection conn = null;
