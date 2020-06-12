@@ -19,7 +19,7 @@ import java.sql.DriverManager;
 
 public class Main {
     static final Logger logger = Logger.getLogger(Main.class);
-    public static final String host_address = "localhost:8080"; //Substitute with 147.83.7.205
+    public static final String host_address = "147.83.7.205:8080"; //Substitute with 147.83.7.205
     public static final String BASE_URI = "http://"+host_address+"/Backend/";
     /**
      * Starts Grizzly HTTP server exposing JAX-RS resources defined in this application.
