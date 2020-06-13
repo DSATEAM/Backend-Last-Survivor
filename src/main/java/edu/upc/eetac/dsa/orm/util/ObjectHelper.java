@@ -25,7 +25,7 @@ public class ObjectHelper {
         sFieldsArr = sFields.toArray(sFieldsArr);
         return sFieldsArr;
     }
-    //Returns Normal Types(Int,String..) Fields as Fields
+    //Returns Normal Types(Int,String..)Fields as Field
     public static Field[] getFields(Object entity) {
 
         Class theClass = entity.getClass();

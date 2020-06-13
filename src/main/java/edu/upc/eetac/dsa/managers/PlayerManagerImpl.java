@@ -2,7 +2,6 @@ package edu.upc.eetac.dsa.managers;
 
 import edu.upc.eetac.dsa.orm.dao.PlayerDAOImpl;
 import edu.upc.eetac.dsa.orm.model.Player;
-import edu.upc.eetac.dsa.orm.model.RankingDTO;
 import org.apache.log4j.Logger;
 
 import java.io.FileReader;
@@ -40,6 +39,7 @@ public class PlayerManagerImpl implements PlayerManager {
     @Override
     public String signIn(Player player) {
         //If correct return id, else empty String(Not Null)
+        player = checkPlayerAvatar(player);
         return playerDAO.getId(player.getUsername(),player.getPassword());
     }
     @Override

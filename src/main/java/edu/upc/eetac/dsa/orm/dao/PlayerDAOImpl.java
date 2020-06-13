@@ -50,11 +50,11 @@ public class PlayerDAOImpl implements IPlayerDAO {
         Session session = null;
         String playerId = null; List ids;
         try {
-
             session = FactorySession.openSession();
-            String query = "SELECT id FROM player WHERE username = ? AND password = AES_ENCRYPT(?,'SALTED_CHARACTER_SET_SECRET_IN_A_WAY')"; List<String> paramsList = new LinkedList<>();
-            paramsList.add(username);paramsList.add(password);
+            String query = "SELECT id FROM player WHERE username = ? AND password = AES_ENCRYPT(?,'SALTED_CHARACTER_SECRET_KEY')"; List<String> paramsList = new LinkedList<>();
+            paramsList.add(username);paramsList.add(password);paramsList.add(password);
             ids = session.queryExecute(String.class, query,paramsList);
+            if(ids ==null) return null;
             if(ids.isEmpty()) return null;
             for(Object id : ids){
                 playerId = (String) id;
@@ -65,7 +65,8 @@ public class PlayerDAOImpl implements IPlayerDAO {
             e.printStackTrace();
         }
         finally {
-            session.close();
+            if(session!=null)
+                session.close();
         }
         return playerId;
     }
@@ -109,7 +110,8 @@ public class PlayerDAOImpl implements IPlayerDAO {
             e.printStackTrace();
         }
         finally {
-            session.close();
+            if(session!=null)
+                session.close();
         }
         return player;
     }
@@ -127,7 +129,8 @@ public class PlayerDAOImpl implements IPlayerDAO {
             res = -1;
         }
         finally {
-            session.close();
+            if(session!=null)
+                session.close();
         }
         return res;
     }
@@ -145,7 +148,8 @@ public class PlayerDAOImpl implements IPlayerDAO {
             e.printStackTrace();
         }
         finally {
-            session.close();
+            if(session!=null)
+                session.close();
         }
         return player;
     }
@@ -161,7 +165,8 @@ public class PlayerDAOImpl implements IPlayerDAO {
             e.printStackTrace();
         }
         finally {
-            session.close();
+            if(session!=null)
+                session.close();
         }
         return playerList;
     }

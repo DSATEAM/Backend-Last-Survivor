@@ -4,12 +4,10 @@ import edu.upc.eetac.dsa.RandomUtils;
 import edu.upc.eetac.dsa.orm.util.ObjectHelper;
 import edu.upc.eetac.dsa.orm.util.QueryHelper;
 
+import java.lang.reflect.Array;
 import java.lang.reflect.Field;
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 
 public class SessionImpl implements Session {
@@ -20,22 +18,26 @@ public class SessionImpl implements Session {
     }
     // Saves an Object(Player,Item,Material...) in DB excluded ListFields(use saveList for this)!z
     public String save(Object entity) {
-        String insertQuery = QueryHelper.createQueryINSERT(entity);
+
+        String[] insertQueryAndFieldsOrdered = QueryHelper.createQueryINSERT(entity);
+        String insertQuery = insertQueryAndFieldsOrdered[0];
+        //Not Using getStrFields, but in exchange use Ordered Fields obtained from createQuery for the password bug!
+        String[] fieldsOrdered = Arrays.copyOfRange(insertQueryAndFieldsOrdered,1,(insertQueryAndFieldsOrdered.length));
         RandomUtils randomUtils = new RandomUtils();
-        PreparedStatement pstm;
+        PreparedStatement preparedStatement;
         String id = RandomUtils.generateID(sizeId);
         try {
-            pstm = conn.prepareStatement(insertQuery);
+            preparedStatement = conn.prepareStatement(insertQuery);
             ObjectHelper.setter(entity,"id",id);
 
             int i = 1;
             //Only Primitive Types Int String float
-            for (String field: ObjectHelper.getStrFields(entity)) {
+            for (String field: fieldsOrdered) {
                 Object objt = ObjectHelper.getter(entity, field);
-                pstm.setObject(i, objt);
+                preparedStatement.setObject(i, objt);
                 i++;
             }
-            pstm.executeQuery();
+            preparedStatement.executeQuery();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -62,7 +64,7 @@ public class SessionImpl implements Session {
         }
 
     }
-    // TODO FINISHED!
+
     public void close() {
         try {
             this.conn.close();
@@ -124,20 +126,21 @@ public class SessionImpl implements Session {
         }
         return objList;
     }
-    // TODO FINISH THE MOFICATION OF THE OBJECT GIVEN THE UPDATED OBJECT
+    // FINISH THE MODFICATION OF THE OBJECT GIVEN THE UPDATED OBJECT
     public int update(Object object) {
-        String updateQuery = QueryHelper.createQueryUPDATE(object);
+        String[] updateQueryAndFieldsOrdered = QueryHelper.createQueryUPDATE(object);
+        String updateQuery = updateQueryAndFieldsOrdered[0];
+        //Not Using getStrFields, but in exchange use Ordered Fields obtained from createQueryUpdate for the password bug!
+        String[] fieldsOrdered = Arrays.copyOfRange(updateQueryAndFieldsOrdered,1,(updateQueryAndFieldsOrdered.length));
         PreparedStatement pstm;int affectedRows = 0;
         try {
             pstm = conn.prepareStatement(updateQuery);
-            int i = 1;
+            int i = 0;
             Object obj;
             //Only Primitive Types Int String float
-            for (String field: ObjectHelper.getStrFields(object)) {
+            for (String field: fieldsOrdered) {
                 obj = ObjectHelper.getter(object,field);
-                if(!field.equals("password")){
-                    pstm.setObject(i, obj);
-                }
+                pstm.setObject(i, obj);
                 i++;
             }
             String field=ObjectHelper.getStrFields(object)[0];
@@ -150,7 +153,7 @@ public class SessionImpl implements Session {
         }
         return affectedRows;
     }
-    // TODO FINISH THE DELETE OBJECT FROM DB GIVEN THE OBJECT
+    // FINISH THE DELETE OBJECT FROM DB GIVEN THE OBJECT
     public int delete(Object object) {
         String delete = QueryHelper.createQueryDELETE(object);
         int affectedRows = 0;
