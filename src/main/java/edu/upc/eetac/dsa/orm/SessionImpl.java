@@ -143,11 +143,7 @@ public class SessionImpl implements Session {
                 pstm.setObject(i, obj);
                 i++;
             }
-            String field=ObjectHelper.getStrFields(object)[0];
-            obj = ObjectHelper.getter(object,field);
-            pstm.setObject(i, obj);
          affectedRows = pstm.executeUpdate();
-
         } catch (Exception e) {
             e.printStackTrace();
         }
