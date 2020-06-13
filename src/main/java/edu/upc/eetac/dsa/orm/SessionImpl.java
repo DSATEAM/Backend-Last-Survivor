@@ -127,23 +127,22 @@ public class SessionImpl implements Session {
         return objList;
     }
     // FINISH THE MODFICATION OF THE OBJECT GIVEN THE UPDATED OBJECT
-    public int update(Object object) {
-        String[] updateQueryAndFieldsOrdered = QueryHelper.createQueryUPDATE(object);
+    public int update(Object entity) {
+        String[] updateQueryAndFieldsOrdered = QueryHelper.createQueryUPDATE(entity);
         String updateQuery = updateQueryAndFieldsOrdered[0];
         //Not Using getStrFields, but in exchange use Ordered Fields obtained from createQueryUpdate for the password bug!
         String[] fieldsOrdered = Arrays.copyOfRange(updateQueryAndFieldsOrdered,1,(updateQueryAndFieldsOrdered.length));
-        PreparedStatement pstm;int affectedRows = 0;
+        PreparedStatement preparedStatement;int affectedRows = 0;
         try {
-            pstm = conn.prepareStatement(updateQuery);
-            int i = 0;
-            Object obj;
+            preparedStatement = conn.prepareStatement(updateQuery);
+            int i = 1;
             //Only Primitive Types Int String float
             for (String field: fieldsOrdered) {
-                obj = ObjectHelper.getter(object,field);
-                pstm.setObject(i, obj);
+                Object objt = ObjectHelper.getter(entity, field);
+                preparedStatement.setObject(i, objt);
                 i++;
             }
-         affectedRows = pstm.executeUpdate();
+         affectedRows = preparedStatement.executeUpdate();
         } catch (Exception e) {
             e.printStackTrace();
         }
