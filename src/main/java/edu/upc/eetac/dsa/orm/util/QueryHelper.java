@@ -1,7 +1,4 @@
 package edu.upc.eetac.dsa.orm.util;
-
-import com.sun.xml.internal.org.jvnet.fastinfoset.FastInfosetException;
-
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
