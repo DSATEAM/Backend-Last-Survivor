@@ -135,7 +135,9 @@ public class SessionImpl implements Session {
             //Only Primitive Types Int String float
             for (String field: ObjectHelper.getStrFields(object)) {
                 obj = ObjectHelper.getter(object,field);
-                pstm.setObject(i, obj);
+                if(!field.equals("password")){
+                    pstm.setObject(i, obj);
+                }
                 i++;
             }
             String field=ObjectHelper.getStrFields(object)[0];
