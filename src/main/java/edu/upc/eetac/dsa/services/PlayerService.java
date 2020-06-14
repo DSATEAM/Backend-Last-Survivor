@@ -34,6 +34,7 @@ public class PlayerService {
     public Response signUp(Player player) {
         if (isPlayerRequestBad(player,false)) return Response.status(400).build();
         logger.info("signUp: Username "+player.getUsername()+" ,Password "+player.getPassword());
+
         player = this.manager.signUp(player);
         if(player == null) return Response.status(409).build();
         return Response.status(201).entity(player).build();

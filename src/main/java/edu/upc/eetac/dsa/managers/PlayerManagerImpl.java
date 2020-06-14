@@ -30,7 +30,9 @@ public class PlayerManagerImpl implements PlayerManager {
             return null;
         }else{
             player = checkPlayerAvatar(player);
+            String password = player.getPassword();
             String playerID = playerDAO.addPlayer(player);
+            player.setPassword(password);
             player.setId(playerID);
             return player;
         }
@@ -52,7 +54,10 @@ public class PlayerManagerImpl implements PlayerManager {
     public Player updatePlayer(Player player) {
         //Check avatar, is null or empty and add basicAvatar than update
         player = checkPlayerAvatar(player);
-        return playerDAO.updatePlayer(player);
+        String password = player.getPassword();
+        player = playerDAO.updatePlayer(player);
+        player.setPassword(password);
+        return player;
     }
     private Player checkPlayerAvatar(Player player){
         if(player.getAvatar() == null ){
