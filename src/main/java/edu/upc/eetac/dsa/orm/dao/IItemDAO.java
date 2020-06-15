@@ -4,8 +4,8 @@ import edu.upc.eetac.dsa.orm.model.Item;
 import java.util.List;
 
 public interface IItemDAO {
-    void addItem(Item item);
-    void buyItem(Item item);
+    String addItem(Item item);
+    String buyItem(Item item);
     Item getItem(String itemId);
     int updateItem(Item item);
     int deleteItem(String itemId);

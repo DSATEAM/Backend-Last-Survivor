@@ -31,11 +31,11 @@ public class ItemDAOImpl implements IItemDAO{
     }
 
     @Override
-    public void addItem(Item item) {
-        buyItem(item);
+    public String addItem(Item item) {
+        return buyItem(item);
     }
     @Override
-    public void buyItem(Item item){
+    public String buyItem(Item item){
         //Generate Transaction for the Item with itemId and the ParentId(playerId)
 
         Session session = null;
@@ -44,17 +44,18 @@ public class ItemDAOImpl implements IItemDAO{
             List<String> params = new LinkedList<>();
             String query = "INSERT INTO transaction(id,itemId,playerId) VALUES (?,?,?)";
             session = FactorySession.openSession();
-            RandomUtils randomUtils = new RandomUtils();
-            params.add(RandomUtils.generateID(32));
+            String transactionId = RandomUtils.generateID(32);
+            params.add(transactionId);
             params.add(item.getId());
             params.add(item.getParentId());
             session.queryExecute(String.class,query,params);
-
+            return transactionId;
             //Means we have list of Items now we must get the Standard Items
         }
         catch (Exception e) {
             // LOG
             e.printStackTrace();
+            return null;
         }
         finally {
             if(session!=null)
