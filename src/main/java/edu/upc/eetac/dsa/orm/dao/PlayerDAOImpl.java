@@ -51,7 +51,8 @@ public class PlayerDAOImpl implements IPlayerDAO {
         String playerId = null; List ids;
         try {
             session = FactorySession.openSession();
-            String query = "SELECT id FROM player WHERE username = ? AND password = AES_ENCRYPT(?,'SALTED_CHARACTER_SECRET_KEY')"; List<String> paramsList = new LinkedList<>();
+            String query = "SELECT id FROM player WHERE username = ? AND password = AES_ENCRYPT(?,'SALTED_CHARACTER_SECRET_KEY')";
+            List<String> paramsList = new LinkedList<>();
             paramsList.add(username);paramsList.add(password);
             ids = session.queryExecute(String.class, query,paramsList);
             if(ids ==null) return null;
@@ -69,6 +70,23 @@ public class PlayerDAOImpl implements IPlayerDAO {
                 session.close();
         }
         return playerId;
+    }
+    public int updateCredits (String username,int credits){
+        Session session=null;
+        String cred=String.valueOf(credits);
+        try {
+            session = FactorySession.openSession();
+            String query = "UPDATE player set credits= ? WHERE username = ?";
+            List<String> paramsList = new LinkedList<>();
+            paramsList.add(cred);
+            paramsList.add(username);
+            session.queryExecute(String.class, query, paramsList);
+            return 0;
+        }
+        catch (Exception e){
+            e.printStackTrace();
+            return 1;
+        }
     }
     public Player getPlayer(String playerId){
         Session session = null;

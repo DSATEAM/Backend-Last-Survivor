@@ -44,7 +44,7 @@ public class StoreManagerImpl implements StoreManager {
         int credit=player.getCredits()-item1.getCredit();
         if(credit>=0){
             player.setCredits(credit);
-            playerDAO.updatePlayer(player);
+            playerDAO.updateCredits(player.getUsername(), credit);
             return 1;
         }
         else{
