@@ -4,7 +4,7 @@ CREATE DATABASE LastSurvivor;
 USE LastSurvivor;
 
 CREATE TABLE item (id VARCHAR(32) UNIQUE, name VARCHAR(255), type VARCHAR(255), rarity VARCHAR(255), description VARCHAR(255),credit INT, offense INT, defense INT,hitRange FLOAT(6),attackCooldown FLOAT(6), avatar MEDIUMTEXT); 
-CREATE TABLE player (id VARCHAR(32) UNIQUE, username VARCHAR(255), password VARCHAR(255),avatar MEDIUMTEXT,gamesPlayed INT,kills INT ,experience INT, credits INT);
+CREATE TABLE player (id VARCHAR(32) UNIQUE, username VARCHAR(255), password VARCHAR(255),avatar MEDIUMTEXT,gamesPlayed INT,kills INT ,experience INT, credits INT, maxFloor INT);
 CREATE TABLE forum (id VARCHAR(32) UNIQUE, admin VARCHAR(32),name VARCHAR(255),avatar MEDIUMTEXT );
 CREATE TABLE message (id VARCHAR(32) UNIQUE, parentId VARCHAR(32) , username VARCHAR(32),avatar MEDIUMTEXT,message VARCHAR(255) );
 CREATE TABLE enemy (id VARCHAR(32) UNIQUE, name VARCHAR(255),description VARCHAR(8000),avatar MEDIUMTEXT,experience INT,damage INT ,health INT);

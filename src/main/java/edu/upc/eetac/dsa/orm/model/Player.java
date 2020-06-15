@@ -11,6 +11,7 @@ public class Player implements Comparable<Player> {
     private int experience;
     private int credits;
     private String avatar;
+    private int maxFloor;
     //TODO Recursive Mapping of Objects Item and Material
     List<Item> listItems;
     //Empty Constructor
@@ -107,4 +108,8 @@ public class Player implements Comparable<Player> {
         }
         return this.getGamesPlayed()-o.getGamesPlayed();
     }
+
+    public int getMaxFloor() {return maxFloor;}
+
+    public void setMaxFloor(int maxFloor) {this.maxFloor = maxFloor;}
 }
