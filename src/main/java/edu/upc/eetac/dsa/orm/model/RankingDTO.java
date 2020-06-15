@@ -7,6 +7,7 @@ public class RankingDTO implements Comparable<RankingDTO> {
     private int credits;
     private String username;
     private String avatar;
+    private int maxFloor;
 
     public String getAvatar() {
         return avatar;
@@ -50,10 +51,16 @@ public class RankingDTO implements Comparable<RankingDTO> {
     }
 
     public void setCredits(int credits) {this.credits = credits;}
+    public void setMaxFloor(int floor){this.maxFloor=floor;}
+    public int getMaxFloor(){return this.maxFloor;}
 
 
     @Override
     public int compareTo(RankingDTO o) {
+        int maxFloorRes=o.getMaxFloor()-this.getMaxFloor();
+        if (maxFloorRes!=0){
+            return maxFloorRes;
+        }
         int expResult=o.getExperience()-this.getExperience();
         if (expResult!=0){
             return expResult;

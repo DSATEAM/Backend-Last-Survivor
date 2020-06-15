@@ -98,6 +98,10 @@ public class Player implements Comparable<Player> {
 
     @Override
     public int compareTo(Player o) {
+        int maxFloorRes=o.getMaxFloor()-this.getMaxFloor();
+        if (maxFloorRes!=0){
+            return maxFloorRes;
+        }
         int expResult=o.getExperience()-this.getExperience();
         if (expResult!=0){
             return expResult;
