@@ -31,7 +31,9 @@ public class StoreManagerImpl implements StoreManager {
             //If items already exist than ignore and go to next
                 //If all of the items same than return 0
         Player player= playerManager.getPlayer(item.getParentId());
+        if(player==null) return -1;
         Item item1= itemDAO.getItem(item.getId());
+        if(item1==null) return -1;
         List<Item> itemList = player.getListItems();
         if(itemList!=null){
             int c=0;

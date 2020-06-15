@@ -84,12 +84,11 @@ public class SessionImpl implements Session {
             pstm = conn.prepareStatement(selectQuery);
             pstm.setObject(1, id);
             ResultSet resultSet =  pstm.executeQuery();
-            int i = 0;
             //INVOKE SETTER FOR EACH CORRESPONDING PROPERTY OF THE TABLE TO MAP WITH OBJECT
             while (resultSet.next()){
                 //SQL WILL NEVER RETURN LIST AS A RESULT
                 ResultSetMetaData resultSetMetaData = resultSet.getMetaData();
-                for(i=1;i<=resultSetMetaData.getColumnCount();i++){
+                for(int i=1;i<=resultSetMetaData.getColumnCount();i++){
                     String name = resultSetMetaData.getColumnName(i);
                        ObjectHelper.setter(obj,name, resultSet.getObject(i));
                 }

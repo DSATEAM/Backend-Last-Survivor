@@ -76,11 +76,11 @@ public class PlayerDAOImpl implements IPlayerDAO {
         String cred=String.valueOf(credits);
         try {
             session = FactorySession.openSession();
-            String query = "UPDATE player set credits= ? WHERE username = ?";
+            String query = "UPDATE player set credits= ? WHERE username = '"+username+"'";
             List<String> paramsList = new LinkedList<>();
             paramsList.add(cred);
-            paramsList.add(username);
-            session.queryExecute(String.class, query, paramsList);
+            //paramsList.add(username);
+            session.queryExecute(Integer.class, query, paramsList);
             return 0;
         }
         catch (Exception e){
