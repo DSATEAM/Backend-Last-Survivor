@@ -31,15 +31,15 @@ public class ItemDAOImpl implements IItemDAO{
     }
 
     @Override
-    public String addItem(Item item) {
-        return buyItem(item);
+    public void addItem(Item item) {
+        buyItem(item);
     }
     @Override
-    public String buyItem(Item item){
+    public void buyItem(Item item){
         //Generate Transaction for the Item with itemId and the ParentId(playerId)
 
         Session session = null;
-        List<String> listIdTransaction = null;
+
         try {
             List<String> params = new LinkedList<>();
             String query = "INSERT INTO transaction(id,itemId,playerId) VALUES (?,?,?)";
@@ -48,9 +48,8 @@ public class ItemDAOImpl implements IItemDAO{
             params.add(RandomUtils.generateID(32));
             params.add(item.getId());
             params.add(item.getParentId());
-            listIdTransaction = (List) session.queryExecute(String.class,query,params);
-            if(listIdTransaction !=null) return listIdTransaction.get(0);
-            else{return null;}
+            session.queryExecute(String.class,query,params);
+
             //Means we have list of Items now we must get the Standard Items
         }
         catch (Exception e) {
@@ -58,9 +57,9 @@ public class ItemDAOImpl implements IItemDAO{
             e.printStackTrace();
         }
         finally {
-            session.close();
+            if(session!=null)
+            {  session.close();}
         }
-        return null;
     }
 
     @Override
@@ -76,7 +75,8 @@ public class ItemDAOImpl implements IItemDAO{
             e.printStackTrace();
         }
         finally {
-            session.close();
+            if(session!=null)
+            {  session.close();}
         }
 
         return item;
@@ -84,10 +84,9 @@ public class ItemDAOImpl implements IItemDAO{
 
     @Override
     public int updateItem(Item item) {
-        Session session = null;int res =0;
+        Session session = null; int res =0;
         try {
             session = FactorySession.openSession();
-            //TODO MAKE UPDATE FUNCTION ALIVE
             res = session.update(item);
         }
         catch (Exception e) {
@@ -96,7 +95,8 @@ public class ItemDAOImpl implements IItemDAO{
             res = -1;
         }
         finally {
-            session.close();
+            if(session!=null)
+            {  session.close();}
         }
         return res;
     }
@@ -116,7 +116,8 @@ public class ItemDAOImpl implements IItemDAO{
             res = -1;
         }
         finally {
-            session.close();
+            if(session!=null)
+            {  session.close();}
         }
         return res;
     }
@@ -137,7 +138,8 @@ public class ItemDAOImpl implements IItemDAO{
             e.printStackTrace();
         }
         finally {
-            session.close();
+            if(session!=null)
+            {  session.close();}
         }
 
         return listItem;
