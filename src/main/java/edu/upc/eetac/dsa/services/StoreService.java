@@ -39,6 +39,7 @@ public class StoreService {
         if(item.getId()==null || item.getParentId()==null)  return Response.status(400).build();
         if(item.getId().equals("")||item.getParentId().equals("")||item.getParentId().isEmpty()||item.getId().isEmpty()) return Response.status(400).build();
         //Check Credit
+        if(item.getId().equals("#4")) return Response.status(409).build();//"Conflict,Baton!
         int resCode = this.manager.checkPurchase(item);
         if(resCode == 0) return Response.status(409).build();//"Conflict, Items Exists in Player"
         if(resCode == -1) return Response.status(402).build();//"Not Enough Credits"
