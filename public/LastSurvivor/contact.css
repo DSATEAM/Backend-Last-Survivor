@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto');
 body{
     font-family: 'Roboto' , sans-serif;
-    background: url("./img/armory.jpg") no-repeat center center fixed;
+    background: url("img/background.jpg") no-repeat center center fixed;
     background-size: cover;
 
 }
@@ -151,7 +151,7 @@ button{
     width:auto;
     min-width:5px;
 }
-.trCss{
+.trCss {
     margin-top: 0px;
     margin-bottom: 0px;
 }
