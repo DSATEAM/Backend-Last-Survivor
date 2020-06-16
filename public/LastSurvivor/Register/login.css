@@ -52,15 +52,29 @@ body{
     padding-top: 15px;
     color: slategray;
 }
-button{
-    width: 40%;
-    margin: 5px 0 25px;
-}
-.btn{
+
+
+.btn-info{
     background-color: darkcyan;
     color: azure;
 }
 
+button{
+    width: 40%;
+    margin: 5px 0 25px;
+}
+.image-img{
+    margin: 0px 20px 0px 0px;
+    height: 400px;
+    width: 400px;
+    border-radius: 5px ;
+    box-shadow: 0px 0px 2px #848484;
+}
+.btn{
+    background-color: darkcyan;
+    width: 200px;
+    color: azure;
+}
 
 .topnav{
     overflow: hidden;
