@@ -1,0 +1,249 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto');
+body{
+    font-family: 'Roboto' , sans-serif;
+    background: url("img/city.jpg") no-repeat center center fixed;
+    background-size: cover;
+
+}
+
+.main-section{
+    margin: 0 auto;
+    margin-top: 130px;
+    padding: 0;
+}
+.modal-content{
+    background-color: darkslategrey;
+    opacity: .75;
+    padding: 0 18px;
+    box-shadow: 0 0 3px #848484;
+}
+.form-group{
+    margin-bottom: 25px;
+}
+
+.form-group input{
+    height: 42px;
+    border-radius: 5px;
+    border: 0;
+    font-size: 18px;
+    padding-left: 54px;
+}
+.fa-user{
+    position: absolute;
+    left: 20px;
+    font-size: 30px;
+    padding-top: 15px;
+    color: slategray;
+}
+.fa-lock{
+    position: absolute;
+    left: 20px;
+    font-size: 30px;
+    padding-top: 15px;
+    color: slategray;
+}
+.btn-info{
+    background-color: darkcyan;
+    color: azure;
+}
+
+.btn{
+    background-color: darkcyan;
+    width: 200px;
+    color: azure;
+}
+
+.topnav{
+    overflow: hidden;
+    background-color: transparent !important;
+}
+.topnav a{
+    float: left;
+    display: block;
+    color: #9eebcf;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 17px;
+}
+.topnav a:hover{
+    transition: 0.6s all;
+}
+.sign{
+    float: right;
+    padding: 6px;
+    margin-top: 8px;
+    margin-right: 16px;
+    border: none;
+    cursor: pointer;
+}
+
+
+.img {
+    float: left;
+    width:  400px;
+    height: 400px;
+    background-size: cover;
+    border-radius: 10px ;
+    box-shadow: 0px 0px 2px #848484;
+}
+.left-align-text{
+    text-align:left;
+    margin-top: 0px;
+    margin-right: 20px;
+    margin-bottom: 0px;
+    margin-left: 20px;
+    text-decoration: none;
+    font-size: 20px;
+}
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font: inherit;
+    vertical-align: baseline;
+}
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
+    display: block;
+}
+
+body {
+    line-height: 1;
+}
+/* Banner */
+
+#banner {
+    padding: 0 0 0 0;
+    background-size: cover;
+    background-position: top;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    text-align: center;
+    border-top: 0.25em solid darkcyan;
+}
+#banner h1 {
+    font-size: 7.5em;
+    font-weight: 100;
+    color: #fff;
+    line-height: 1em;
+    margin: 0 0 0.1em 0;
+    padding: 0;
+}
+section.p{
+    font-size: 4.5em;
+    color: rgba(255, 255, 255, 0.55);
+    margin-bottom: 0;
+}
+#banner p {
+    font-size: 4.5em;
+    color: rgba(255, 255, 255, 0.55);
+    margin-bottom: 0;
+}
+/* Section/Article */
+
+section.special, article.special {
+    text-align: center;
+}
+
+section.special article, article.special article {
+    text-align: left;
+}
+
+section.wrapper, article.wrapper {
+    padding: 0.15em 0;
+}
+.video-div{
+    position: center;
+    height: 650px;
+    overflow: hidden;
+}
+.trailer-video{
+    object-fit: cover;
+    /* Center the video */
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+    position: center;
+    resize: both;
+    /* Take full width */
+    height: 650px;
+}
+.center {
+    margin: auto;
+    width: 75%;
+    border: 3px #CCC479;
+    padding: 10px;
+}
+section.wrapper header, article.wrapper header {
+    margin-bottom: 1.5em;
+}
+
+section.wrapper header h2, article.wrapper header h2 {
+    font-size: 2.75em;
+    margin: 0 0 .5em 0;
+}
+
+section.wrapper header p, article.wrapper header p {
+    font-size: 1em;
+}
+
+section.wrapper article header, article.wrapper article header {
+    margin: 0;
+}
+/*Section Style and color    */
+section.wrapper.style1, article.wrapper.style1 {
+    background: #CCC479;
+    color: azure;
+}
+section.wrapper.style2, article.wrapper.style2 {
+    background: black;
+    color: blanchedalmond;
+}
+section.wrapper.style1 header h2, article.wrapper.style1 header h2 {
+    color: #fff;
+}
+
+section.wrapper.style1 header p, article.wrapper.style1 header p {
+    color: azure;
+}
+/*Name Header Style    */
+section.wrapper.style1 h3, article.wrapper.style1 h3 {
+    color: #FFF;
+}
+
+header p {
+    color: #bbb;
+    position: relative;
+    margin: 0 0 0.75em 0;
+}
+
+header h2 + p {
+    font-size: 4.25em;
+    margin-top: -0.15em;
+}
+
+.center2 {
+    margin: auto;
+    display:block;
+    width: 90%;
+    border: 3px #CCC479;
+}
+/* Three image containers (use 25% for four, and 50% for two, etc) */
+.column {
+    width: 30%;
+    margin: auto;
+}
+
+/* Clear floats after image containers */
+.row::after {
+    content: "";
+    clear: both;
+    display: table;
+    alignment: center;
+    align-self: center;
+}
+.text-image{
+    color: whitesmoke;
+    font-size: 2em;
+}

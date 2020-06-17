@@ -20,9 +20,9 @@
 <body>
 <!-- HERE GOES ALL OF THE HTML TOP NAVIGATION BAR-->
 <nav class="topnav">
-    <a id="htm" href="main.html">Home</a>
+    <a id="home-main" href="index.html">Home</a>
+    <a id="htm" href="store.html">Store</a>
     <a id ="about" href="about.html" >About</a>
-    <a id ="contact" href="contact.html">Contact</a>
     <div class = "sign">
         <form>
             <div id="signInBtn" class="btn-group btn-group-justified">
@@ -36,9 +36,49 @@
 </nav>
 <div id="contact-body">
     <!-- HERE GOES ALL OF THE HTML BODY CODE-->
-
-
-
+    <div class="container">
+        <div class="jumbotron jumbotron-billboard">
+            <div style="text-align:center">
+                <h2>Contact Us</h2>
+                <p>Swing by for a cup of coffee, or leave us a message:</p>
+            </div>
+            <div class="row">
+                <div class="column">
+                    <img src="img/eetac.jpg" style="width:100%" class="img">
+                </div>
+                <div class="column">
+                    <form action="/action_page.php">
+                        <label for="fname">First Name</label>
+                        <input type="text" id="fname" name="firstname" placeholder="Your name..">
+                        <label for="lname">Last Name</label>
+                        <input type="text" id="lname" name="lastname" placeholder="Your last name..">
+                        <label for="country">Country</label>
+                        <select id="country" name="country">
+                            <option value="Spain">Spain</option>
+                            <option value="France">France</option>
+                            <option value="Portugal">Portugal</option>
+                            <option value="Germany">Germany</option>
+                            <option value="Poland">Poland</option>
+                            <option value="Italy">Italy</option>
+                            <option value="Bulgaria">Bulgaria</option>
+                            <option value="Netherlands">Netherlands</option>
+                            <option value="Canada">Canada</option>
+                            <option value="USA">USA</option>
+                        </select>
+                        <label for="subject">Subject</label>
+                        <textarea id="subject" name="subject" placeholder="Write something.." style="height:170px"></textarea>
+                        <div class = "sign">
+                            <form>
+                                <div id="submit" class="btn-group btn-group-justified">
+                                    <a class="btn btn-info">Submit</a>
+                                </div>
+                            </form>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 </body>

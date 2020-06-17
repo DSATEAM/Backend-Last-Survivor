@@ -73,7 +73,7 @@ public class Main {
         // System.out.println(String.format("Jersey app started with WADL available at "
         //   + "%s application.wadl\nHit enter to stop it...", BASE_URI));
         //Formatting BASE_URI FOR SWAGGER
-        String swagger_uri = "http://"+host_address+"/swagger3/";
+        String swagger_uri = "http://"+host_address+"/LastSurvivor/index.html";
         System.out.println(String.format("RestApi Started at " + "%s\nHit enter to stop it...", swagger_uri));
          System.in.read();
         server.shutdownNow();

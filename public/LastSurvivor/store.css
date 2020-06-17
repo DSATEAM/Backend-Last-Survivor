@@ -1,0 +1,161 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto');
+body{
+    font-family: 'Roboto' , sans-serif;
+    background: url("img/armory.jpg") no-repeat center center fixed;
+    background-size: cover;
+
+}
+
+.main-section{
+    margin: 0 auto;
+    margin-top: 130px;
+    padding: 0;
+}
+.modal-content{
+    background-color: darkslategrey;
+    opacity: .75;
+    padding: 0 18px;
+    box-shadow: 0px 0px 3px #848484;
+}
+.user-img{
+    margin-top: -50px;
+    margin-bottom: 35px;
+}
+.user-img img{
+    height: 100px;
+    width: 100px;
+    border-radius: 5px ;
+    box-shadow: 0px 0px 2px #848484;
+}
+.form-group{
+    margin-bottom: 25px;
+}
+
+.form-group input{
+    height: 42px;
+    border-radius: 5px;
+    border: 0;
+    font-size: 18px;
+    padding-left: 54px;
+}
+.fa-user{
+    position: absolute;
+    left: 20px;
+    font-size: 30px;
+    padding-top: 15px;
+    color: slategray;
+}
+.fa-lock{
+    position: absolute;
+    left: 20px;
+    font-size: 30px;
+    padding-top: 15px;
+    color: slategray;
+}
+.btn-info{
+    background-color: darkcyan;
+    color: azure;
+}
+
+
+button{
+    width: 40%;
+    margin: 5px 0 25px;
+}
+.image-img{
+    margin: 0px 20px 0px 0px;
+    height: 400px;
+    width: 400px;
+    border-radius: 5px ;
+    box-shadow: 0px 0px 2px #848484;
+}
+.btn{
+    background-color: darkcyan;
+    width: 200px;
+    color: azure;
+}
+
+.topnav{
+    overflow: hidden;
+    background-color: transparent !important;
+}
+.topnav a{
+    float: left;
+    display: block;
+    color: #9eebcf;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 17px;
+}
+.topnav a:hover{
+    transition: 0.6s all;
+}
+.sign{
+    float: right;
+    padding: 6px;
+    margin-top: 8px;
+    margin-right: 16px;
+    border: none;
+    cursor: pointer;
+}
+.jumbotron-billboard{
+    background-color: darkslategrey;
+    opacity: .75;
+    padding: 0 18px;
+    box-shadow: 0px 0px 3px #848484;
+    font-family: 'Roboto', sans-serif;
+    position: center;
+    color: white;
+}
+.itemsDIV{
+    background-color: darkslategrey;
+    margin-bottom: 50px;
+    margin-left: 50px;
+    margin-top: 50px;
+    opacity: .75;
+    padding: 0 18px 0 18px;
+    box-shadow: 0px 3px #848484;
+    width: 80%;
+    height: 80%;
+    overflow: hidden;
+    font-family: 'Roboto' , sans-serif;
+    position: center;
+    color:white;
+}
+
+.img {
+    float: left;
+    width:  400px;
+    height: 400px;
+    background-size: cover;
+    border-radius: 10px ;
+    box-shadow: 0px 0px 2px #848484;
+}
+.left-align-text{
+    text-align:left;
+    margin-top: 0px;
+    margin-right: 20px;
+    margin-bottom: 0px;
+    margin-left: 20px;
+    text-decoration: none;
+    font-size: 20px;
+}
+
+.tableauto {
+    table-layout: auto;
+    width: auto;
+    height: fit-content;
+}
+.td_auto{
+    width:auto;
+    min-width:5px;
+}
+.trCss{
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+.video{
+    width: 100%;
+    margin: 0px;
+}
