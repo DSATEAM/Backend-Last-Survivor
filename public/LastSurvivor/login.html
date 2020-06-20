@@ -29,7 +29,7 @@
             myStorage.setItem("user",data.username);
             myStorage.setItem("password",data.password);
             myStorage.setItem("id",data.id);
-            window.location.pathname = "/LastSurvivor/Register/main.html";
+            window.location.pathname = "/LastSurvivor/store.html";
           },
           error: function(xhr, textStatus, errorThrown) {
             if(xhr.status==401){
@@ -49,7 +49,7 @@
 <body>
 <nav class="topnav">
   <a id="home-main" href="index.html">Home</a>
-  <a id="htm" href="store.html">Home</a>
+  <a id="htm" href="store.html">Store</a>
   <a id ="about" href="about.html" >About</a>
   <a id ="contact" href="contact.html">Contact</a>
   <div class = "sign">

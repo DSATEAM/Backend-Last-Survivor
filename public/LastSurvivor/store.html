@@ -33,11 +33,11 @@
                     Append_data_table(data);
                 },
                 error: function(xhr, textStatus, errorThrown) {
-                    if(xhr.status==400){
+                    if(Number(xhr.status)===400){
                         alert( "Bad Request!" );
-                    }else if(xhr.status ==402){
+                    }else if(Number(xhr.status)===402){
                         alert( "Not Enough Credits!" );
-                    }else if(xhr.status ==409){
+                    }else if(Number(xhr.status)===409){
                         alert( "Conflict, Item Exists in Player!" );
                     }else{
                         alert(xhr.responseText);

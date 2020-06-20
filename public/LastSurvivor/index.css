@@ -167,9 +167,10 @@ section.wrapper, article.wrapper {
     position: center;
     resize: both;
     /* Take full width */
-    height: 650px;
+    height: 100%;
 }
 .center {
+    height: 50%;
     margin: auto;
     width: 75%;
     border: 3px #CCC479;
