@@ -16,7 +16,7 @@
     <script src = "JSON_Item.js"></script>
     <script>
         function getItems(){
-            myStorage = window.localStorage;
+            const myStorage = window.localStorage;
             console.log("User Found in Storage: "+myStorage.getItem("user"));
             //Later add the functionality of user shown up!
             $.ajax

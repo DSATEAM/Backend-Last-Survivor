@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto');
 body{
     font-family: 'Roboto' , sans-serif;
-    background: url("img/fight.jpg") no-repeat center center fixed;
+    background: url("img/LoginBackground.jpg") no-repeat center center fixed;
     background-size: cover;
 
 }

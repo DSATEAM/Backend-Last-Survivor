@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto');
 body{
     font-family: 'Roboto' , sans-serif;
-    background: url("img/laststand.jpg") no-repeat center center fixed;
+    background: url("img/aboutBackground.jpg") no-repeat center center fixed;
     background-size: cover;
 
 }
@@ -146,7 +146,6 @@ section.special, article.special {
 section.special article, article.special article {
     text-align: left;
 }
-
 section.wrapper, article.wrapper {
     padding: 6em 0;
 }

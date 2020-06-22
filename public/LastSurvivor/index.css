@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto');
 body{
     font-family: 'Roboto' , sans-serif;
-    background: url("img/city.jpg") no-repeat center center fixed;
+    background: url("img/mainPageBackground.jpg") no-repeat center center fixed;
     background-size: cover;
 
 }
@@ -157,6 +157,9 @@ section.wrapper, article.wrapper {
     height: 650px;
     overflow: hidden;
 }
+.mainPageContent{
+    height: fit-content;
+}
 .trailer-video{
     object-fit: cover;
     /* Center the video */
@@ -181,12 +184,14 @@ section.wrapper header, article.wrapper header {
 }
 
 section.wrapper header h2, article.wrapper header h2 {
-    font-size: 2.75em;
+    font-size: 3.75em;
+    color: #85203b;
     margin: 0 0 .5em 0;
 }
 
 section.wrapper header p, article.wrapper header p {
-    font-size: 1em;
+    font-size: 2em;
+    color: #cb3b3b;
 }
 
 section.wrapper article header, article.wrapper article header {
@@ -194,25 +199,21 @@ section.wrapper article header, article.wrapper article header {
 }
 /*Section Style and color    */
 section.wrapper.style1, article.wrapper.style1 {
-    background: #CCC479;
+    background: darkcyan;
     color: azure;
 }
 section.wrapper.style2, article.wrapper.style2 {
-    background: black;
+    background: darkcyan;
     color: blanchedalmond;
 }
-section.wrapper.style1 header h2, article.wrapper.style1 header h2 {
-    color: #fff;
+section.wrapper.style1 header h2, article.wrapper.style1 header h2 p{
+    color: azure;
 }
 
 section.wrapper.style1 header p, article.wrapper.style1 header p {
     color: azure;
 }
 /*Name Header Style    */
-section.wrapper.style1 h3, article.wrapper.style1 h3 {
-    color: #FFF;
-}
-
 header p {
     color: #bbb;
     position: relative;
@@ -232,10 +233,13 @@ header h2 + p {
 }
 /* Three image containers (use 25% for four, and 50% for two, etc) */
 .column {
-    width: 30%;
+    width: 33%;
     margin: auto;
 }
-
+.column2 {
+    width: 49%;
+    margin: auto;
+}
 /* Clear floats after image containers */
 .row::after {
     content: "";
